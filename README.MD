@@ -3,7 +3,8 @@
 [![N|Solid](https://it-man.website/res/pics/ic-256.png)](https://it-man.website)
 
 tickMeter - это программа для измерения тикрейта и пинга в PUBG
-
+![N|Solid](https://it-man.website/res/pics/tickMeter-scr1.jpg)
+![N|Solid](https://it-man.website/res/pics/tickMeter-scr2.jpg)
 # HOW TO
   1. Установить WinPCAP и перезагрузить комп https://www.winpcap.org/install/
   2. Запустить tickMeter.exe и указать сетевое подключение
