@@ -11,8 +11,11 @@ tickMeter - это программа для измерения тикрейта
  - статистика трафика
  
 ![N|Solid](https://it-man.website/res/pics/main_win.jpg)
+
 ![N|Solid](https://it-man.website/res/pics/win_overlay.jpg)
+
 ![N|Solid](https://it-man.website/res/pics/rtss_overlay.jpg)
+
 # HOW TO
   1. Установить WinPCAP и перезагрузить комп https://www.winpcap.org/install/
   2. Запустить tickMeter.exe и указать сетевое подключение
