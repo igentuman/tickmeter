@@ -21,7 +21,7 @@ using System.Runtime.InteropServices;
 using Newtonsoft.Json;
 using System.Globalization;
 using System.Threading;
-namespace NSHW
+namespace tickMeter
 {
     
 
@@ -160,6 +160,16 @@ namespace NSHW
             pen = new Pen(Color.DarkRed);
             
         }
+        protected void showAll()
+        {
+            label6.Visible = true;
+            label5.Visible = true;
+            label2.Visible = true;
+            label4.Visible = true;
+            label7.Visible = true;
+            label9.Visible = true;
+            label10.Visible = true;
+        }
 
         [PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
         protected override void WndProc(ref Message m)
@@ -169,15 +179,20 @@ namespace NSHW
                 this.BackColor = SystemColors.Control;
                 this.TransparencyKey = Color.PaleVioletRed;
                 this.FormBorderStyle = FormBorderStyle.FixedToolWindow;
-                this.Height = 462;
-                
+                this.Height = 336;
+                this.Width = 759;
+                showAll();
+
+
             }
             else if (m.Msg == WM_ACTIVATE & m.WParam == (IntPtr)WA_CLICKACTIVE)
             {
                 this.BackColor = SystemColors.Control;
                 this.TransparencyKey = Color.PaleVioletRed;
                 this.FormBorderStyle = FormBorderStyle.FixedToolWindow;
-                this.Height = 462;
+                this.Height = 336;
+                this.Width = 759;
+                showAll();
 
             }
             else if (m.Msg == WM_ACTIVATE & m.WParam == (IntPtr)WA_INACTIVE)
@@ -185,8 +200,25 @@ namespace NSHW
                 this.BackColor = SystemColors.WindowFrame;
                 this.TransparencyKey = SystemColors.WindowFrame;
                 this.FormBorderStyle = FormBorderStyle.None;
-                this.Height = 140;
+                this.Height = 160;
+                this.Width = 475;
 
+                if( ! settings_ip_checkbox.Checked)
+                {
+                    label6.Visible = false;
+                    label5.Visible = false;
+                }
+                if (!settings_ping_checkbox.Checked)
+                {
+                    label2.Visible = false;
+                    label4.Visible = false;
+                    label7.Visible = false;
+                }
+                if (!settings_traffic_checkbox.Checked)
+                {
+                    label9.Visible = false;
+                    label10.Visible = false;
+                }
             }
             base.WndProc(ref m);
         }
@@ -208,11 +240,17 @@ namespace NSHW
             udpscr = udp.SourcePort.ToString();
             udpdes = udp.DestinationPort.ToString();
             int portSRC = int.Parse(udpscr);
+            int portDES = int.Parse(udpdes);
             if (portSRC > 6999 && portSRC < 7999)
             {
                 server = ip.Source.ToString();
+                downloadTraf += udp.TotalLength;
                 ticks++;
-            }    
+            }
+            if (portDES > 6999 && portDES < 7999)
+            {
+                uploadTraf += udp.TotalLength;
+            }
         }
 
 
@@ -256,20 +294,39 @@ namespace NSHW
             }
 
 
+            if(settings_chart_checkbox.Checked)
+            {
+                await Task.Run(
+                        () => {
+                            graph.Invoke(new Action(() => graph.Image = UpdateGraph(ticksHistory.ToList<int>())));
+                        });
+            }
+            if (settings_traffic_checkbox.Checked)
+            {
+                float formatedUpload = (float)uploadTraf / (1024 * 1024);
+                float formatedDownload = (float)downloadTraf / (1024 * 1024);
+                await Task.Run(
+                       () => {
+                           label10.Invoke(new Action(() => label10.Text = formatedUpload.ToString("N2")+" / "+ formatedDownload.ToString("N2")+" mb"));
+                       });
+            }
 
-            await Task.Run(
-                   () => {
-                       graph.Invoke(new Action(() => graph.Image = UpdateGraph(ticksHistory.ToList<int>())));
-                   });
+            if (settings_ip_checkbox.Checked)
+            {
+                await Task.Run(
+                       () => {
+                       label6.Invoke(new Action(() => label6.Text = server));
+                       });
+            }
             if(checkBox3.Checked)
             {
                 await Task.Run(
                    () => {
 
-                       tickMeter.RivaTuner.print(buildRivaOutput());
+                       RivaTuner.print(buildRivaOutput());
                    });
+               
             }
-
         }
 
         public Bitmap UpdateGraph(List<int> ticks)
@@ -315,7 +372,8 @@ namespace NSHW
 
         private async Task PingServer()
         {
-            if (!trackingFlag)
+            
+            if (!trackingFlag || !settings_ping_checkbox.Checked)
             {
                 return;
             }
@@ -328,7 +386,7 @@ namespace NSHW
             }
             
 
-            label6.Text = server;
+            
             if (lastPingedServer != server)
             {
                 await Task.Run(
@@ -411,20 +469,10 @@ namespace NSHW
             backgroundWorker1.RunWorkerAsync();
         }
 
-        private void GUI_Load(object sender, EventArgs e)
-        {
-            //SetWindowPos(this.Handle, HWND_TOPMOST, 0, 0, 0, 0, TOPMOST_FLAGS);
-        }
 
         public async Task startTracking()
         {
            
-            if(!IsGameRunning())
-            {
-                //stopTracking();
-                //MessageBox.Show("Пубжик не запущен!","STOP IT! Get some help", MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                //return;
-            }
             lineID = 0;
             uploadTraf = 0;
             downloadTraf = 0;
@@ -506,17 +554,12 @@ namespace NSHW
 
         private void label8_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://www.youtube.com/channel/UConzx4k6IVXSs9PsY9Snkbg");
-        }
-
-        private void graph_Click(object sender, EventArgs e)
-        {
-            
+            Process.Start("https://www.youtube.com/channel/UConzx4k6IVXSs9PsY9Snkbg");
         }
 
         private string getTextFormat()
         {
-            return "<C0=ff8300><C1=5CD689><C2=32b503><C3=CC0000><C4=FFD500><C5=999999><C6=666666><C7=4DA6FF><C8=b70707><S0=40><S1=60>";
+            return "<C0=ff8300><C1=5CD689><C2=32b503><C3=CC0000><C4=FFD500><C5=999999><C6=666666><C7=4DA6FF><C8=b70707><S0=50><S1=70>";
         }
 
         public string FormatTickrate()
@@ -541,6 +584,13 @@ namespace NSHW
             return "<C><S>IP: " + server+Environment.NewLine;
         }
 
+        public string FormatTraffic()
+        {
+            float formatedUpload = (float)uploadTraf / (1024 * 1024);
+            float formatedDownload = (float)downloadTraf / (1024 * 1024);
+            return "<C><S>UP/DL: " + formatedUpload.ToString("N2")+" / " + formatedDownload.ToString("N2") + "<S1> Mb";
+        }
+
         public string FormatPing()
         {
             string pingFont = "";
@@ -561,14 +611,27 @@ namespace NSHW
         {
             string output = getTextFormat();
             output += FormatTickrate();
-            output += FormatServer();
-            output += FormatPing();
+
+            if (settings_ip_checkbox.Checked)
+            {
+                output += FormatServer();
+            }
+            
+            if(settings_ping_checkbox.Checked)
+            {
+                output += FormatPing();
+
+            }
+            if(settings_traffic_checkbox.Checked)
+            {
+                output += FormatTraffic();
+            }
             return output;
         }
 
         private void checkBox3_CheckedChanged(object sender, EventArgs e)
         {
-            tickMeter.RivaTuner.print("");
+            RivaTuner.print("");
             if(checkBox3.Checked)
             {
                 SetWindowPos(this.Handle, HWND_NOTOPMOST, 0, 0, 0, 0, TOPMOST_FLAGS);
