@@ -45,6 +45,10 @@
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.RetryTimer = new System.Windows.Forms.Timer(this.components);
             this.label8 = new System.Windows.Forms.Label();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.graph = new System.Windows.Forms.PictureBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            ((System.ComponentModel.ISupportInitialize)(this.graph)).BeginInit();
             this.SuspendLayout();
             // 
             // label3
@@ -52,11 +56,11 @@
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label3.Font = new System.Drawing.Font("Verdana", 20F, System.Drawing.FontStyle.Bold);
+            this.label3.Font = new System.Drawing.Font("Unispace", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.OrangeRed;
             this.label3.Location = new System.Drawing.Point(12, 9);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(146, 39);
+            this.label3.Size = new System.Drawing.Size(162, 39);
             this.label3.TabIndex = 18;
             this.label3.Text = "Tickrate:";
             this.label3.UseCompatibleTextRendering = true;
@@ -67,7 +71,7 @@
             this.adapters_label.BackColor = System.Drawing.Color.Transparent;
             this.adapters_label.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.adapters_label.ForeColor = System.Drawing.Color.Black;
-            this.adapters_label.Location = new System.Drawing.Point(15, 196);
+            this.adapters_label.Location = new System.Drawing.Point(11, 250);
             this.adapters_label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.adapters_label.Name = "adapters_label";
             this.adapters_label.Size = new System.Drawing.Size(323, 23);
@@ -80,10 +84,10 @@
             this.adapters_list.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.adapters_list.FormattingEnabled = true;
             this.adapters_list.ItemHeight = 24;
-            this.adapters_list.Location = new System.Drawing.Point(18, 223);
+            this.adapters_list.Location = new System.Drawing.Point(12, 277);
             this.adapters_list.Margin = new System.Windows.Forms.Padding(4);
             this.adapters_list.Name = "adapters_list";
-            this.adapters_list.Size = new System.Drawing.Size(470, 32);
+            this.adapters_list.Size = new System.Drawing.Size(415, 32);
             this.adapters_list.TabIndex = 12;
             this.adapters_list.SelectedIndexChanged += new System.EventHandler(this.adapters_list_SelectedIndexChanged);
             // 
@@ -103,11 +107,11 @@
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label1.Font = new System.Drawing.Font("Verdana", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Font = new System.Drawing.Font("Unispace", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.OrangeRed;
             this.label1.Location = new System.Drawing.Point(178, 6);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(40, 53);
+            this.label1.Size = new System.Drawing.Size(36, 53);
             this.label1.TabIndex = 24;
             this.label1.Text = "0";
             this.label1.UseCompatibleTextRendering = true;
@@ -118,11 +122,11 @@
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label2.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.Font = new System.Drawing.Font("Unispace", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.OrangeRed;
             this.label2.Location = new System.Drawing.Point(178, 94);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(85, 40);
+            this.label2.Size = new System.Drawing.Size(77, 39);
             this.label2.TabIndex = 25;
             this.label2.Text = "0 ms";
             this.label2.UseCompatibleTextRendering = true;
@@ -138,11 +142,11 @@
             this.label4.AutoSize = true;
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label4.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label4.Font = new System.Drawing.Font("Unispace", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.OrangeRed;
             this.label4.Location = new System.Drawing.Point(12, 94);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(99, 40);
+            this.label4.Size = new System.Drawing.Size(111, 39);
             this.label4.TabIndex = 26;
             this.label4.Text = "Ping :";
             this.label4.UseCompatibleTextRendering = true;
@@ -152,11 +156,11 @@
             this.label5.AutoSize = true;
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label5.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label5.Font = new System.Drawing.Font("Unispace", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.OrangeRed;
             this.label5.Location = new System.Drawing.Point(12, 53);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(123, 40);
+            this.label5.Size = new System.Drawing.Size(128, 39);
             this.label5.TabIndex = 27;
             this.label5.Text = "Server:";
             this.label5.UseCompatibleTextRendering = true;
@@ -167,11 +171,11 @@
             this.label6.BackColor = System.Drawing.Color.Transparent;
             this.label6.Cursor = System.Windows.Forms.Cursors.Hand;
             this.label6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label6.Font = new System.Drawing.Font("Verdana", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label6.Font = new System.Drawing.Font("Unispace", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.OrangeRed;
             this.label6.Location = new System.Drawing.Point(178, 53);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(277, 40);
+            this.label6.Size = new System.Drawing.Size(264, 39);
             this.label6.TabIndex = 28;
             this.label6.Text = "000.000.000.000";
             this.label6.UseCompatibleTextRendering = true;
@@ -196,7 +200,7 @@
             this.checkBox1.AutoSize = true;
             this.checkBox1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.checkBox1.ForeColor = System.Drawing.Color.Black;
-            this.checkBox1.Location = new System.Drawing.Point(19, 167);
+            this.checkBox1.Location = new System.Drawing.Point(15, 224);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(259, 23);
             this.checkBox1.TabIndex = 30;
@@ -216,7 +220,7 @@
             this.label8.Cursor = System.Windows.Forms.Cursors.Hand;
             this.label8.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label8.ForeColor = System.Drawing.Color.Blue;
-            this.label8.Location = new System.Drawing.Point(13, 139);
+            this.label8.Location = new System.Drawing.Point(9, 168);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(272, 18);
@@ -224,12 +228,59 @@
             this.label8.Text = "Youtube: Беларуский Айтишник";
             this.label8.Click += new System.EventHandler(this.label8_Click);
             // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.checkBox2.ForeColor = System.Drawing.Color.Black;
+            this.checkBox2.Location = new System.Drawing.Point(40, 327);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(281, 23);
+            this.checkBox2.TabIndex = 33;
+            this.checkBox2.Text = "Отображать график тикрейта";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.Visible = false;
+            // 
+            // graph
+            // 
+            this.graph.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.graph.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.graph.Enabled = false;
+            this.graph.Image = global::tickMeter.Properties.Resources.grid;
+            this.graph.InitialImage = global::tickMeter.Properties.Resources.grid;
+            this.graph.Location = new System.Drawing.Point(12, 316);
+            this.graph.Name = "graph";
+            this.graph.Size = new System.Drawing.Size(418, 177);
+            this.graph.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.graph.TabIndex = 34;
+            this.graph.TabStop = false;
+            this.graph.Visible = false;
+            this.graph.Click += new System.EventHandler(this.graph_Click);
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Checked = true;
+            this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox3.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.checkBox3.ForeColor = System.Drawing.Color.Black;
+            this.checkBox3.Location = new System.Drawing.Point(15, 195);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(184, 23);
+            this.checkBox3.TabIndex = 35;
+            this.checkBox3.Text = "Вывод через RTSS";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
+            // 
             // GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(501, 258);
+            this.ClientSize = new System.Drawing.Size(442, 313);
+            this.Controls.Add(this.checkBox3);
+            this.Controls.Add(this.graph);
+            this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label7);
@@ -250,6 +301,7 @@
             this.TransparencyKey = System.Drawing.SystemColors.Info;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.GUI_FormClosed);
             this.Load += new System.EventHandler(this.GUI_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.graph)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -271,6 +323,9 @@
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Timer RetryTimer;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.PictureBox graph;
+        private System.Windows.Forms.CheckBox checkBox3;
     }
 }
 
