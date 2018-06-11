@@ -44,6 +44,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.RetryTimer = new System.Windows.Forms.Timer(this.components);
+            this.label8 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label3
@@ -65,7 +66,7 @@
             this.adapters_label.AutoSize = true;
             this.adapters_label.BackColor = System.Drawing.Color.Transparent;
             this.adapters_label.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.adapters_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.adapters_label.ForeColor = System.Drawing.Color.Black;
             this.adapters_label.Location = new System.Drawing.Point(15, 196);
             this.adapters_label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.adapters_label.Name = "adapters_label";
@@ -193,11 +194,11 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold);
-            this.checkBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.checkBox1.Location = new System.Drawing.Point(19, 165);
+            this.checkBox1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.checkBox1.ForeColor = System.Drawing.Color.Black;
+            this.checkBox1.Location = new System.Drawing.Point(19, 167);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(300, 27);
+            this.checkBox1.Size = new System.Drawing.Size(259, 23);
             this.checkBox1.TabIndex = 30;
             this.checkBox1.Text = "Логгировать тикрейт в CSV";
             this.checkBox1.UseVisualStyleBackColor = true;
@@ -208,12 +209,28 @@
             this.RetryTimer.Interval = 5000;
             this.RetryTimer.Tick += new System.EventHandler(this.RetryTimer_Tick);
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.BackColor = System.Drawing.Color.Transparent;
+            this.label8.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.label8.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label8.ForeColor = System.Drawing.Color.Blue;
+            this.label8.Location = new System.Drawing.Point(13, 139);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(272, 18);
+            this.label8.TabIndex = 31;
+            this.label8.Text = "Youtube: Беларуский Айтишник";
+            this.label8.Click += new System.EventHandler(this.label8_Click);
+            // 
             // GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(501, 268);
+            this.ClientSize = new System.Drawing.Size(501, 258);
+            this.Controls.Add(this.label8);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
@@ -253,6 +270,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Timer RetryTimer;
+        private System.Windows.Forms.Label label8;
     }
 }
 

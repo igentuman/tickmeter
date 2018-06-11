@@ -162,7 +162,7 @@ namespace NSHW
                 this.BackColor = SystemColors.WindowFrame;
                 this.TransparencyKey = SystemColors.WindowFrame;
                 this.FormBorderStyle = FormBorderStyle.None;
-                this.Height = 170;
+                this.Height = 140;
 
             }
             base.WndProc(ref m);
@@ -440,6 +440,11 @@ namespace NSHW
                     await startTracking();
                 }
             }
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://www.youtube.com/channel/UConzx4k6IVXSs9PsY9Snkbg");
         }
     }
 }
