@@ -13,8 +13,8 @@ tickMeter - это программа для измерения тикрейта
 Скачать скомпилированные версии можно тут https://bitbucket.org/dvman8bit/tickmeter/downloads/
 Отправить баг или предложение: https://bitbucket.org/dvman8bit/tickmeter/issues?status=new
 
-Подпишись на Youtube-канал: https://www.youtube.com/channel/UConzx4k6IVXSs9PsY9Snkbg
-Вступай в группу: https://vk.com/some_itshneg
-Discord: https://discord.gg/wdJmH6G
-Угостить меня пивком: https://it-man.website/donate/
+ - Подпишись на Youtube-канал: https://www.youtube.com/channel/UConzx4k6IVXSs9PsY9Snkbg
+ - Вступай в группу: https://vk.com/some_itshneg
+ - Discord: https://discord.gg/wdJmH6G
+ - Угостить меня пивком: https://it-man.website/donate/
 
