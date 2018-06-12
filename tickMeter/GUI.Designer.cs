@@ -42,16 +42,16 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.settings_log_checkobx = new System.Windows.Forms.CheckBox();
             this.RetryTimer = new System.Windows.Forms.Timer(this.components);
             this.label8 = new System.Windows.Forms.Label();
             this.settings_chart_checkbox = new System.Windows.Forms.CheckBox();
             this.graph = new System.Windows.Forms.PictureBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.settings_rtss_output = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.settings_ip_checkbox = new System.Windows.Forms.CheckBox();
-            this.settings_ping_checkbox = new System.Windows.Forms.CheckBox();
             this.settings_traffic_checkbox = new System.Windows.Forms.CheckBox();
+            this.settings_ping_checkbox = new System.Windows.Forms.CheckBox();
+            this.settings_ip_checkbox = new System.Windows.Forms.CheckBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.graph)).BeginInit();
@@ -78,23 +78,23 @@
             this.adapters_label.BackColor = System.Drawing.Color.Transparent;
             this.adapters_label.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.adapters_label.ForeColor = System.Drawing.Color.Black;
-            this.adapters_label.Location = new System.Drawing.Point(11, 218);
+            this.adapters_label.Location = new System.Drawing.Point(7, 228);
             this.adapters_label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.adapters_label.Name = "adapters_label";
-            this.adapters_label.Size = new System.Drawing.Size(323, 23);
+            this.adapters_label.Size = new System.Drawing.Size(244, 23);
             this.adapters_label.TabIndex = 15;
-            this.adapters_label.Text = "Выбери сетевое подключение :";
+            this.adapters_label.Text = "Сетевое подключение :";
             // 
             // adapters_list
             // 
             this.adapters_list.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.adapters_list.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.adapters_list.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.adapters_list.FormattingEnabled = true;
-            this.adapters_list.ItemHeight = 24;
-            this.adapters_list.Location = new System.Drawing.Point(12, 245);
+            this.adapters_list.ItemHeight = 16;
+            this.adapters_list.Location = new System.Drawing.Point(8, 255);
             this.adapters_list.Margin = new System.Windows.Forms.Padding(4);
             this.adapters_list.Name = "adapters_list";
-            this.adapters_list.Size = new System.Drawing.Size(415, 32);
+            this.adapters_list.Size = new System.Drawing.Size(236, 24);
             this.adapters_list.TabIndex = 12;
             this.adapters_list.SelectedIndexChanged += new System.EventHandler(this.adapters_list_SelectedIndexChanged);
             // 
@@ -202,17 +202,17 @@
             this.label7.TabIndex = 29;
             this.label7.UseCompatibleTextRendering = true;
             // 
-            // checkBox1
+            // settings_log_checkobx
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkBox1.ForeColor = System.Drawing.Color.Black;
-            this.checkBox1.Location = new System.Drawing.Point(6, 57);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(232, 23);
-            this.checkBox1.TabIndex = 30;
-            this.checkBox1.Text = "Логгировать тикрейт в CSV";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.settings_log_checkobx.AutoSize = true;
+            this.settings_log_checkobx.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.settings_log_checkobx.ForeColor = System.Drawing.Color.Black;
+            this.settings_log_checkobx.Location = new System.Drawing.Point(6, 57);
+            this.settings_log_checkobx.Name = "settings_log_checkobx";
+            this.settings_log_checkobx.Size = new System.Drawing.Size(232, 23);
+            this.settings_log_checkobx.TabIndex = 30;
+            this.settings_log_checkobx.Text = "Логгировать тикрейт в CSV";
+            this.settings_log_checkobx.UseVisualStyleBackColor = true;
             // 
             // RetryTimer
             // 
@@ -225,20 +225,21 @@
             this.label8.AutoSize = true;
             this.label8.BackColor = System.Drawing.Color.Transparent;
             this.label8.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label8.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label8.Font = new System.Drawing.Font("Verdana", 14.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label8.ForeColor = System.Drawing.Color.Blue;
-            this.label8.Location = new System.Drawing.Point(9, 190);
+            this.label8.Location = new System.Drawing.Point(9, 301);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(272, 18);
+            this.label8.Size = new System.Drawing.Size(230, 23);
             this.label8.TabIndex = 31;
-            this.label8.Text = "Youtube: Беларуский Айтишник";
+            this.label8.Text = "Беларуский Айтишник";
             this.label8.Click += new System.EventHandler(this.label8_Click);
             // 
             // settings_chart_checkbox
             // 
             this.settings_chart_checkbox.AutoSize = true;
-            this.settings_chart_checkbox.Enabled = false;
+            this.settings_chart_checkbox.Checked = true;
+            this.settings_chart_checkbox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.settings_chart_checkbox.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.settings_chart_checkbox.ForeColor = System.Drawing.Color.Black;
             this.settings_chart_checkbox.Location = new System.Drawing.Point(6, 178);
@@ -250,63 +251,64 @@
             // 
             // graph
             // 
-            this.graph.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.graph.Cursor = System.Windows.Forms.Cursors.Hand;
             this.graph.Enabled = false;
             this.graph.Image = global::tickMeter.Properties.Resources.grid;
             this.graph.InitialImage = global::tickMeter.Properties.Resources.grid;
-            this.graph.Location = new System.Drawing.Point(15, 399);
+            this.graph.Location = new System.Drawing.Point(11, 175);
             this.graph.Name = "graph";
-            this.graph.Size = new System.Drawing.Size(418, 177);
+            this.graph.Size = new System.Drawing.Size(416, 175);
             this.graph.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.graph.TabIndex = 34;
             this.graph.TabStop = false;
-            this.graph.Visible = false;
             // 
-            // checkBox3
+            // settings_rtss_output
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Checked = true;
-            this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox3.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.checkBox3.ForeColor = System.Drawing.Color.Black;
-            this.checkBox3.Location = new System.Drawing.Point(6, 28);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(163, 23);
-            this.checkBox3.TabIndex = 35;
-            this.checkBox3.Text = "Вывод через RTSS";
-            this.checkBox3.UseVisualStyleBackColor = true;
-            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
+            this.settings_rtss_output.AutoSize = true;
+            this.settings_rtss_output.Checked = true;
+            this.settings_rtss_output.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.settings_rtss_output.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.settings_rtss_output.ForeColor = System.Drawing.Color.Black;
+            this.settings_rtss_output.Location = new System.Drawing.Point(6, 28);
+            this.settings_rtss_output.Name = "settings_rtss_output";
+            this.settings_rtss_output.Size = new System.Drawing.Size(163, 23);
+            this.settings_rtss_output.TabIndex = 35;
+            this.settings_rtss_output.Text = "Вывод через RTSS";
+            this.settings_rtss_output.UseVisualStyleBackColor = true;
+            this.settings_rtss_output.CheckedChanged += new System.EventHandler(this.settings_rtss_output_CheckedChanged);
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.settings_traffic_checkbox);
             this.groupBox1.Controls.Add(this.settings_ping_checkbox);
             this.groupBox1.Controls.Add(this.settings_ip_checkbox);
             this.groupBox1.Controls.Add(this.settings_chart_checkbox);
-            this.groupBox1.Controls.Add(this.checkBox3);
-            this.groupBox1.Controls.Add(this.checkBox1);
+            this.groupBox1.Controls.Add(this.settings_rtss_output);
+            this.groupBox1.Controls.Add(this.settings_log_checkobx);
+            this.groupBox1.Controls.Add(this.adapters_label);
+            this.groupBox1.Controls.Add(this.adapters_list);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox1.Location = new System.Drawing.Point(477, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(256, 265);
+            this.groupBox1.Size = new System.Drawing.Size(256, 334);
             this.groupBox1.TabIndex = 36;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Настройки";
             // 
-            // settings_ip_checkbox
+            // settings_traffic_checkbox
             // 
-            this.settings_ip_checkbox.AutoSize = true;
-            this.settings_ip_checkbox.Checked = true;
-            this.settings_ip_checkbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.settings_ip_checkbox.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.settings_ip_checkbox.ForeColor = System.Drawing.Color.Black;
-            this.settings_ip_checkbox.Location = new System.Drawing.Point(6, 91);
-            this.settings_ip_checkbox.Name = "settings_ip_checkbox";
-            this.settings_ip_checkbox.Size = new System.Drawing.Size(139, 23);
-            this.settings_ip_checkbox.TabIndex = 36;
-            this.settings_ip_checkbox.Text = "Отображать IP";
-            this.settings_ip_checkbox.UseVisualStyleBackColor = true;
+            this.settings_traffic_checkbox.AutoSize = true;
+            this.settings_traffic_checkbox.Checked = true;
+            this.settings_traffic_checkbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.settings_traffic_checkbox.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.settings_traffic_checkbox.ForeColor = System.Drawing.Color.Black;
+            this.settings_traffic_checkbox.Location = new System.Drawing.Point(6, 149);
+            this.settings_traffic_checkbox.Name = "settings_traffic_checkbox";
+            this.settings_traffic_checkbox.Size = new System.Drawing.Size(178, 23);
+            this.settings_traffic_checkbox.TabIndex = 39;
+            this.settings_traffic_checkbox.Text = "Отображать трафик";
+            this.settings_traffic_checkbox.UseVisualStyleBackColor = true;
             // 
             // settings_ping_checkbox
             // 
@@ -322,19 +324,19 @@
             this.settings_ping_checkbox.Text = "Отображать Ping и страну";
             this.settings_ping_checkbox.UseVisualStyleBackColor = true;
             // 
-            // settings_traffic_checkbox
+            // settings_ip_checkbox
             // 
-            this.settings_traffic_checkbox.AutoSize = true;
-            this.settings_traffic_checkbox.Checked = true;
-            this.settings_traffic_checkbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.settings_traffic_checkbox.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.settings_traffic_checkbox.ForeColor = System.Drawing.Color.Black;
-            this.settings_traffic_checkbox.Location = new System.Drawing.Point(6, 149);
-            this.settings_traffic_checkbox.Name = "settings_traffic_checkbox";
-            this.settings_traffic_checkbox.Size = new System.Drawing.Size(178, 23);
-            this.settings_traffic_checkbox.TabIndex = 39;
-            this.settings_traffic_checkbox.Text = "Отображать трафик";
-            this.settings_traffic_checkbox.UseVisualStyleBackColor = true;
+            this.settings_ip_checkbox.AutoSize = true;
+            this.settings_ip_checkbox.Checked = true;
+            this.settings_ip_checkbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.settings_ip_checkbox.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.settings_ip_checkbox.ForeColor = System.Drawing.Color.Black;
+            this.settings_ip_checkbox.Location = new System.Drawing.Point(6, 91);
+            this.settings_ip_checkbox.Name = "settings_ip_checkbox";
+            this.settings_ip_checkbox.Size = new System.Drawing.Size(139, 23);
+            this.settings_ip_checkbox.TabIndex = 36;
+            this.settings_ip_checkbox.Text = "Отображать IP";
+            this.settings_ip_checkbox.UseVisualStyleBackColor = true;
             // 
             // label9
             // 
@@ -370,12 +372,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(739, 282);
+            this.ClientSize = new System.Drawing.Size(739, 356);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.graph);
-            this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -383,8 +384,6 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.adapters_label);
-            this.Controls.Add(this.adapters_list);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -393,6 +392,7 @@
             this.Text = "tickMeter";
             this.TransparencyKey = System.Drawing.SystemColors.Info;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.GUI_FormClosed);
+            this.Load += new System.EventHandler(this.GUI_Load);
             ((System.ComponentModel.ISupportInitialize)(this.graph)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -414,12 +414,12 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox settings_log_checkobx;
         private System.Windows.Forms.Timer RetryTimer;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.CheckBox settings_chart_checkbox;
         private System.Windows.Forms.PictureBox graph;
-        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.CheckBox settings_rtss_output;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.CheckBox settings_traffic_checkbox;
         private System.Windows.Forms.CheckBox settings_ping_checkbox;

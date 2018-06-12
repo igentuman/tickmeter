@@ -46,8 +46,10 @@ namespace tickMeter
         int uploadTraf;
         int downloadTraf;
         Bitmap chartBckg;
-        int chartLeftPadding = 22;
-        int chartXStep = 2;
+        int chartLeftPadding = 25;
+        int chartXStep = 4;
+        int appInitHeigh;
+        int appInitWidth;
         Graphics g;
         Pen pen;
         List<int> ticksHistory;
@@ -146,7 +148,7 @@ namespace tickMeter
 
                 if (Adapter.Description != null)
                 {
-                    adapters_list.Items.Add(Adapter.Description);
+                    adapters_list.Items.Add(Adapter.Description.Replace("Network adapter ",""));
                 }
                 else
                 {
@@ -179,8 +181,8 @@ namespace tickMeter
                 this.BackColor = SystemColors.Control;
                 this.TransparencyKey = Color.PaleVioletRed;
                 this.FormBorderStyle = FormBorderStyle.FixedToolWindow;
-                this.Height = 336;
-                this.Width = 759;
+                this.Height = appInitHeigh;
+                this.Width = appInitWidth;
                 showAll();
 
 
@@ -190,8 +192,8 @@ namespace tickMeter
                 this.BackColor = SystemColors.Control;
                 this.TransparencyKey = Color.PaleVioletRed;
                 this.FormBorderStyle = FormBorderStyle.FixedToolWindow;
-                this.Height = 336;
-                this.Width = 759;
+                this.Height = appInitHeigh;
+                this.Width = appInitWidth;
                 showAll();
 
             }
@@ -200,7 +202,10 @@ namespace tickMeter
                 this.BackColor = SystemColors.WindowFrame;
                 this.TransparencyKey = SystemColors.WindowFrame;
                 this.FormBorderStyle = FormBorderStyle.None;
-                this.Height = 160;
+                if( ! settings_chart_checkbox.Checked)
+                {
+                    this.Height = 160;
+                }
                 this.Width = 475;
 
                 if( ! settings_ip_checkbox.Checked)
@@ -272,9 +277,11 @@ namespace tickMeter
                 tickRate = 61;
             }
             ticksHistory.Add(tickRate);
-            if(ticksHistory.Count>10)
+            if(ticksHistory.Count>(graph.Image.Width-chartLeftPadding)/chartXStep)
             {
-                ticksHistory.Remove(0);
+                ticksHistory.RemoveAt(0);
+                ticksHistory = ticksHistory.ToList<int>();
+                
             }
             label1.Text = tickRate.ToString();
             if(tickRate < 30)
@@ -288,7 +295,7 @@ namespace tickMeter
                 label1.ForeColor = Color.ForestGreen;
             }
             lineID++;
-            if(checkBox1.Checked)
+            if(settings_log_checkobx.Checked)
             {
                 logData += lineID.ToString() + "," + tickRate.ToString() + Environment.NewLine;
             }
@@ -318,7 +325,7 @@ namespace tickMeter
                        label6.Invoke(new Action(() => label6.Text = server));
                        });
             }
-            if(checkBox3.Checked)
+            if(settings_rtss_output.Checked)
             {
                 await Task.Run(
                    () => {
@@ -331,14 +338,14 @@ namespace tickMeter
 
         public Bitmap UpdateGraph(List<int> ticks)
         {
-            chartBckg = new Bitmap(graph.Image);
+            chartBckg = new Bitmap(graph.InitialImage);
             Graphics g = Graphics.FromImage(chartBckg);
             int w = graph.Image.Width;
             int h = graph.Image.Height;
-            float scale =  h / 61; //2.8
+            float scale =  (float)h / 61; //2.8
             for (int i = 1; i < ticks.Count; i++)
             {
-                g.DrawLine(new Pen(Color.Red, 1), new Point(chartLeftPadding + (i - 1) * chartXStep, h - (int)(ticksHistory[i - 1]*scale)), new Point(chartLeftPadding + i * chartXStep, h - (int)(ticksHistory[i]*scale)));
+                g.DrawLine(new Pen(Color.Red, 1), new Point(chartLeftPadding + (i - 1) * chartXStep, h - (int)((float)ticks[i - 1]*scale)), new Point(chartLeftPadding + i * chartXStep, h - (int)((float)ticks[i]*scale)));
             }
             return chartBckg;
         }
@@ -485,14 +492,14 @@ namespace tickMeter
                 backgroundWorker1.RunWorkerAsync();
             }
             adapters_list.Enabled = false;
-            checkBox1.Enabled = false;
+            settings_log_checkobx.Enabled = false;
             timer3.Enabled = true;
         }
 
         public void stopTracking()
         {
             adapters_list.Enabled = true;
-            checkBox1.Enabled = true;
+            settings_log_checkobx.Enabled = true;
             timer3.Enabled = false;
             timer1.Enabled = false;
             trackingFlag = false;
@@ -502,16 +509,22 @@ namespace tickMeter
             label2.Text = "0 ms";
             label1.ForeColor = Color.OrangeRed;
             label2.ForeColor = Color.OrangeRed;
+            graph.Image = graph.InitialImage;
+            ticksHistory.Clear();
             if (backgroundWorker1.IsBusy)
             {
                 backgroundWorker1.CancelAsync();
             }
             adapters_list.SelectedIndex = -1;
-            if (checkBox1.Checked)
+            if (settings_log_checkobx.Checked)
             {
+                if( ! Directory.Exists("logs"))
+                {
+                    Directory.CreateDirectory("logs");
+                }
                 File.AppendAllText(@"logs\" + server + "_ticks.csv", logData);
             }
-            tickMeter.RivaTuner.print("");
+            RivaTuner.print("");
 
         }
 
@@ -588,7 +601,7 @@ namespace tickMeter
         {
             float formatedUpload = (float)uploadTraf / (1024 * 1024);
             float formatedDownload = (float)downloadTraf / (1024 * 1024);
-            return "<C><S>UP/DL: " + formatedUpload.ToString("N2")+" / " + formatedDownload.ToString("N2") + "<S1> Mb";
+            return "<C><S>UP/DL: " + formatedUpload.ToString("N2")+" / " + formatedDownload.ToString("N2") + "<S1> Mb" + Environment.NewLine;
         }
 
         public string FormatPing()
@@ -629,16 +642,22 @@ namespace tickMeter
             return output;
         }
 
-        private void checkBox3_CheckedChanged(object sender, EventArgs e)
+        private void settings_rtss_output_CheckedChanged(object sender, EventArgs e)
         {
             RivaTuner.print("");
-            if(checkBox3.Checked)
+            if(settings_rtss_output.Checked)
             {
                 SetWindowPos(this.Handle, HWND_NOTOPMOST, 0, 0, 0, 0, TOPMOST_FLAGS);
             } else
             {
                 SetWindowPos(this.Handle, HWND_TOPMOST, 0, 0, 0, 0, TOPMOST_FLAGS);
             }
+        }
+
+        private void GUI_Load(object sender, EventArgs e)
+        {
+            appInitHeigh = this.Height;
+            appInitWidth = this.Width;
         }
     }
 }
