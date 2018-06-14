@@ -21,6 +21,9 @@ using System.Runtime.InteropServices;
 using Newtonsoft.Json;
 using System.Globalization;
 using System.Threading;
+using System.Text.RegularExpressions;
+using System.Resources;
+
 namespace tickMeter
 {
     
@@ -53,7 +56,7 @@ namespace tickMeter
         Graphics g;
         Pen pen;
         List<int> ticksHistory;
-        string RivaTunerText = "";
+
         private const int WM_ACTIVATE = 0x0006;
         private const int WA_ACTIVE = 1;
         private const int WA_CLICKACTIVE = 2;
@@ -124,11 +127,11 @@ namespace tickMeter
 
             try
             {
-                AdaptersList = LivePacketDevice.AllLocalMachine.Where(adapter => adapter.Description.Contains("Microsoft") == false).ToList();
+                AdaptersList = LivePacketDevice.AllLocalMachine.ToList();
             }
             catch(Exception)
             {
-                MessageBox.Show("WinPCAP точно установлен?");
+                MessageBox.Show("Install WinPCAP. Try to run as admin");
             }
 
             PcapDotNetAnalysis.OptIn = true;
@@ -136,7 +139,7 @@ namespace tickMeter
             if (AdaptersList.Count == 0)
             {
 
-                MessageBox.Show("Не вижу сетевых подключений");
+                MessageBox.Show("No network connections found");
 
                 return;
 
@@ -148,7 +151,10 @@ namespace tickMeter
 
                 if (Adapter.Description != null)
                 {
-                    adapters_list.Items.Add(Adapter.Description.Replace("Network adapter ",""));
+                    string addr = Adapter.Addresses.First().ToString();
+                    var match = Regex.Match(addr, "(\\d)+\\.(\\d)+\\.(\\d)+\\.(\\d)+");
+  
+                     adapters_list.Items.Add(match.Value + " " + Adapter.Description.Replace("Network adapter ","").Replace("'Microsoft' ",""));
                 }
                 else
                 {
@@ -329,7 +335,10 @@ namespace tickMeter
             {
                 await Task.Run(
                    () => {
-
+                       if (!RivaTuner.IsRivaRunning())
+                       {
+                           RivaTuner.RunRiva();
+                       }
                        RivaTuner.print(buildRivaOutput());
                    });
                
@@ -361,7 +370,7 @@ namespace tickMeter
             {
                 if (communicator.DataLink.Kind != DataLinkKind.Ethernet)
                 {
-                    MessageBox.Show("Мне нужны только Ethernet подключения!");
+                    MessageBox.Show("Ethernet connections only!");
 
                     return;
                 }
@@ -476,6 +485,19 @@ namespace tickMeter
             backgroundWorker1.RunWorkerAsync();
         }
 
+        public void switchToEnglish()
+        {
+
+            settings_lbl.Text = Resources.en.ResourceManager.GetString(settings_lbl.Name);
+            settings_rtss_output.Text = Resources.en.ResourceManager.GetString(settings_rtss_output.Name);
+            settings_log_checkobx.Text = Resources.en.ResourceManager.GetString(settings_log_checkobx.Name);
+            settings_ip_checkbox.Text = Resources.en.ResourceManager.GetString(settings_ip_checkbox.Name);
+            settings_ping_checkbox.Text = Resources.en.ResourceManager.GetString(settings_ping_checkbox.Name);
+            settings_traffic_checkbox.Text = Resources.en.ResourceManager.GetString(settings_traffic_checkbox.Name);
+            settings_chart_checkbox.Text = Resources.en.ResourceManager.GetString(settings_chart_checkbox.Name);
+            network_connection_lbl.Text = Resources.en.ResourceManager.GetString(network_connection_lbl.Name);
+
+        }
 
         public async Task startTracking()
         {
@@ -516,7 +538,7 @@ namespace tickMeter
                 backgroundWorker1.CancelAsync();
             }
             adapters_list.SelectedIndex = -1;
-            if (settings_log_checkobx.Checked)
+            if (settings_log_checkobx.Checked && logData.Length > 1)
             {
                 if( ! Directory.Exists("logs"))
                 {
@@ -524,7 +546,11 @@ namespace tickMeter
                 }
                 File.AppendAllText(@"logs\" + server + "_ticks.csv", logData);
             }
-            RivaTuner.print("");
+            if (RivaTuner.IsRivaRunning())
+            {
+                RivaTuner.print("");
+            }
+            
 
         }
 
@@ -644,8 +670,14 @@ namespace tickMeter
 
         private void settings_rtss_output_CheckedChanged(object sender, EventArgs e)
         {
-            RivaTuner.print("");
-            if(settings_rtss_output.Checked)
+            if (RivaTuner.IsRivaRunning())
+            {
+                RivaTuner.print("");
+            } else
+            {
+                RivaTuner.RunRiva();
+            }
+            if (settings_rtss_output.Checked)
             {
                 SetWindowPos(this.Handle, HWND_NOTOPMOST, 0, 0, 0, 0, TOPMOST_FLAGS);
             } else
@@ -658,6 +690,16 @@ namespace tickMeter
         {
             appInitHeigh = this.Height;
             appInitWidth = this.Width;
+            CultureInfo ci = CultureInfo.InstalledUICulture;
+            if (ci.TwoLetterISOLanguageName == "en")
+            {
+                switchToEnglish();
+            }
+        }
+
+        private void network_connection_lbl_Click(object sender, EventArgs e)
+        {
+            switchToEnglish();
         }
     }
 }

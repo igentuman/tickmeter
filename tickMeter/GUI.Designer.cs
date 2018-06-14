@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GUI));
             this.label3 = new System.Windows.Forms.Label();
-            this.adapters_label = new System.Windows.Forms.Label();
+            this.network_connection_lbl = new System.Windows.Forms.Label();
             this.adapters_list = new System.Windows.Forms.ComboBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
@@ -46,16 +46,16 @@
             this.RetryTimer = new System.Windows.Forms.Timer(this.components);
             this.label8 = new System.Windows.Forms.Label();
             this.settings_chart_checkbox = new System.Windows.Forms.CheckBox();
-            this.graph = new System.Windows.Forms.PictureBox();
             this.settings_rtss_output = new System.Windows.Forms.CheckBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.settings_lbl = new System.Windows.Forms.GroupBox();
             this.settings_traffic_checkbox = new System.Windows.Forms.CheckBox();
             this.settings_ping_checkbox = new System.Windows.Forms.CheckBox();
             this.settings_ip_checkbox = new System.Windows.Forms.CheckBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
+            this.graph = new System.Windows.Forms.PictureBox();
+            this.settings_lbl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.graph)).BeginInit();
-            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label3
@@ -72,29 +72,31 @@
             this.label3.Text = "Tickrate:";
             this.label3.UseCompatibleTextRendering = true;
             // 
-            // adapters_label
+            // network_connection_lbl
             // 
-            this.adapters_label.AutoSize = true;
-            this.adapters_label.BackColor = System.Drawing.Color.Transparent;
-            this.adapters_label.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.adapters_label.ForeColor = System.Drawing.Color.Black;
-            this.adapters_label.Location = new System.Drawing.Point(7, 228);
-            this.adapters_label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.adapters_label.Name = "adapters_label";
-            this.adapters_label.Size = new System.Drawing.Size(244, 23);
-            this.adapters_label.TabIndex = 15;
-            this.adapters_label.Text = "Сетевое подключение :";
+            this.network_connection_lbl.AutoSize = true;
+            this.network_connection_lbl.BackColor = System.Drawing.Color.Transparent;
+            this.network_connection_lbl.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.network_connection_lbl.ForeColor = System.Drawing.Color.Black;
+            this.network_connection_lbl.Location = new System.Drawing.Point(7, 228);
+            this.network_connection_lbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.network_connection_lbl.Name = "network_connection_lbl";
+            this.network_connection_lbl.Size = new System.Drawing.Size(238, 23);
+            this.network_connection_lbl.TabIndex = 15;
+            this.network_connection_lbl.Text = "Сетевое подключение:";
+            this.network_connection_lbl.Click += new System.EventHandler(this.network_connection_lbl_Click);
             // 
             // adapters_list
             // 
             this.adapters_list.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.adapters_list.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.adapters_list.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.adapters_list.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.adapters_list.FormattingEnabled = true;
-            this.adapters_list.ItemHeight = 16;
+            this.adapters_list.ItemHeight = 15;
             this.adapters_list.Location = new System.Drawing.Point(8, 255);
             this.adapters_list.Margin = new System.Windows.Forms.Padding(4);
             this.adapters_list.Name = "adapters_list";
-            this.adapters_list.Size = new System.Drawing.Size(236, 24);
+            this.adapters_list.Size = new System.Drawing.Size(241, 23);
             this.adapters_list.TabIndex = 12;
             this.adapters_list.SelectedIndexChanged += new System.EventHandler(this.adapters_list_SelectedIndexChanged);
             // 
@@ -249,19 +251,6 @@
             this.settings_chart_checkbox.Text = "График тикрейта";
             this.settings_chart_checkbox.UseVisualStyleBackColor = true;
             // 
-            // graph
-            // 
-            this.graph.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.graph.Enabled = false;
-            this.graph.Image = global::tickMeter.Properties.Resources.grid;
-            this.graph.InitialImage = global::tickMeter.Properties.Resources.grid;
-            this.graph.Location = new System.Drawing.Point(11, 175);
-            this.graph.Name = "graph";
-            this.graph.Size = new System.Drawing.Size(416, 175);
-            this.graph.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.graph.TabIndex = 34;
-            this.graph.TabStop = false;
-            // 
             // settings_rtss_output
             // 
             this.settings_rtss_output.AutoSize = true;
@@ -277,24 +266,24 @@
             this.settings_rtss_output.UseVisualStyleBackColor = true;
             this.settings_rtss_output.CheckedChanged += new System.EventHandler(this.settings_rtss_output_CheckedChanged);
             // 
-            // groupBox1
+            // settings_lbl
             // 
-            this.groupBox1.Controls.Add(this.label8);
-            this.groupBox1.Controls.Add(this.settings_traffic_checkbox);
-            this.groupBox1.Controls.Add(this.settings_ping_checkbox);
-            this.groupBox1.Controls.Add(this.settings_ip_checkbox);
-            this.groupBox1.Controls.Add(this.settings_chart_checkbox);
-            this.groupBox1.Controls.Add(this.settings_rtss_output);
-            this.groupBox1.Controls.Add(this.settings_log_checkobx);
-            this.groupBox1.Controls.Add(this.adapters_label);
-            this.groupBox1.Controls.Add(this.adapters_list);
-            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBox1.Location = new System.Drawing.Point(477, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(256, 334);
-            this.groupBox1.TabIndex = 36;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Настройки";
+            this.settings_lbl.Controls.Add(this.label8);
+            this.settings_lbl.Controls.Add(this.settings_traffic_checkbox);
+            this.settings_lbl.Controls.Add(this.settings_ping_checkbox);
+            this.settings_lbl.Controls.Add(this.settings_ip_checkbox);
+            this.settings_lbl.Controls.Add(this.settings_chart_checkbox);
+            this.settings_lbl.Controls.Add(this.settings_rtss_output);
+            this.settings_lbl.Controls.Add(this.settings_log_checkobx);
+            this.settings_lbl.Controls.Add(this.network_connection_lbl);
+            this.settings_lbl.Controls.Add(this.adapters_list);
+            this.settings_lbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.settings_lbl.Location = new System.Drawing.Point(477, 12);
+            this.settings_lbl.Name = "settings_lbl";
+            this.settings_lbl.Size = new System.Drawing.Size(256, 334);
+            this.settings_lbl.TabIndex = 36;
+            this.settings_lbl.TabStop = false;
+            this.settings_lbl.Text = "Настройки";
             // 
             // settings_traffic_checkbox
             // 
@@ -367,6 +356,19 @@
             this.label10.UseCompatibleTextRendering = true;
             this.label10.UseMnemonic = false;
             // 
+            // graph
+            // 
+            this.graph.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.graph.Enabled = false;
+            this.graph.Image = global::tickMeter.Properties.Resources.grid;
+            this.graph.InitialImage = global::tickMeter.Properties.Resources.grid;
+            this.graph.Location = new System.Drawing.Point(11, 175);
+            this.graph.Name = "graph";
+            this.graph.Size = new System.Drawing.Size(416, 175);
+            this.graph.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.graph.TabIndex = 34;
+            this.graph.TabStop = false;
+            // 
             // GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -375,7 +377,7 @@
             this.ClientSize = new System.Drawing.Size(739, 356);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.settings_lbl);
             this.Controls.Add(this.graph);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
@@ -393,9 +395,9 @@
             this.TransparencyKey = System.Drawing.SystemColors.Info;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.GUI_FormClosed);
             this.Load += new System.EventHandler(this.GUI_Load);
+            this.settings_lbl.ResumeLayout(false);
+            this.settings_lbl.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.graph)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -403,7 +405,7 @@
 
         #endregion
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label adapters_label;
+        private System.Windows.Forms.Label network_connection_lbl;
         private System.Windows.Forms.ComboBox adapters_list;
         private System.Windows.Forms.Timer timer1;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
@@ -420,7 +422,7 @@
         private System.Windows.Forms.CheckBox settings_chart_checkbox;
         private System.Windows.Forms.PictureBox graph;
         private System.Windows.Forms.CheckBox settings_rtss_output;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox settings_lbl;
         private System.Windows.Forms.CheckBox settings_traffic_checkbox;
         private System.Windows.Forms.CheckBox settings_ping_checkbox;
         private System.Windows.Forms.CheckBox settings_ip_checkbox;
