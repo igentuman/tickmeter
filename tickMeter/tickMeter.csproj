@@ -115,6 +115,7 @@
     <Compile Include="GUI.Designer.cs">
       <DependentUpon>GUI.cs</DependentUpon>
     </Compile>
+    <Compile Include="NetworkStats.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\en.Designer.cs">

@@ -23,6 +23,7 @@ using System.Globalization;
 using System.Threading;
 using System.Text.RegularExpressions;
 using System.Resources;
+using static tickMeter.NetworkStats;
 
 namespace tickMeter
 {
@@ -153,8 +154,12 @@ namespace tickMeter
                 {
                     string addr = Adapter.Addresses.First().ToString();
                     var match = Regex.Match(addr, "(\\d)+\\.(\\d)+\\.(\\d)+\\.(\\d)+");
-  
-                     adapters_list.Items.Add(match.Value + " " + Adapter.Description.Replace("Network adapter ","").Replace("'Microsoft' ",""));
+                    if(match.Value == "")
+                    {
+                        addr = Adapter.Addresses[1].ToString();
+                        match = Regex.Match(addr, "(\\d)+\\.(\\d)+\\.(\\d)+\\.(\\d)+");
+                    }
+                    adapters_list.Items.Add(match.Value + " " + Adapter.Description.Replace("Network adapter ","").Replace("'Microsoft' ",""));
                 }
                 else
                 {
@@ -699,7 +704,8 @@ namespace tickMeter
 
         private void network_connection_lbl_Click(object sender, EventArgs e)
         {
-            switchToEnglish();
+            //just for tests
+            //List<Port> ports = GetNetStatPorts("TslGame","UDPv4");
         }
     }
 }
