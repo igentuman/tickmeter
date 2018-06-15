@@ -27,13 +27,21 @@ tickMeter - это программа для измерения тикрейта
  - Отправить баг или предложение: https://bitbucket.org/dvman8bit/tickmeter/issues?status=new
 
 # CHANGELOG
+
 v1.1 
 https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.1.zip
 добавлена поддержка вывода в RTSS
 учет трафика
-v1.1 
+
+v1.2 
 https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.2.zip
 вывод графика тикрейта
+
+v1.3
+https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.3.zip
+English translation
+Список подключений с IP
+
 
  - Подпишись на Youtube-канал: https://www.youtube.com/channel/UConzx4k6IVXSs9PsY9Snkbg
  - Вступай в группу: https://vk.com/some_itshneg
