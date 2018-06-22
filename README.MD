@@ -2,7 +2,7 @@
 
 [![N|Solid](https://it-man.website/res/pics/ic-256.png)](https://it-man.website)
 
-tickMeter - это программа для измерения тикрейта и пинга в PUBG
+tickMeter - это программа для измерения тикрейта, пинга и трафика в PUBG
 # фичи
  - 2 вида оверлея
  - тикрейт
@@ -29,18 +29,41 @@ tickMeter - это программа для измерения тикрейта
 # CHANGELOG
 
 v1.1 
+
 https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.1.zip
+
 добавлена поддержка вывода в RTSS
+
 учет трафика
 
+
 v1.2 
+
 https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.2.zip
+
 вывод графика тикрейта
 
+
 v1.3
+
 https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.3.zip
+
 English translation
+
 Список подключений с IP
+
+
+v1.4
+
+https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.4.zip
+
+https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.4-installer.exe
+
+Переписан код
+
+Более стабильная и точная работа
+
+Первый шаг к расширяемости
 
 
  - Подпишись на Youtube-канал: https://www.youtube.com/channel/UConzx4k6IVXSs9PsY9Snkbg

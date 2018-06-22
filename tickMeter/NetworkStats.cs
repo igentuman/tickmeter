@@ -22,14 +22,16 @@ namespace tickMeter
                 using (Process p = new Process())
                 {
 
-                    ProcessStartInfo ps = new ProcessStartInfo();
-                    ps.Arguments = "-a -n -o";
-                    ps.FileName = "netstat.exe";
-                    ps.UseShellExecute = false;
-                    ps.WindowStyle = ProcessWindowStyle.Hidden;
-                    ps.RedirectStandardInput = true;
-                    ps.RedirectStandardOutput = true;
-                    ps.RedirectStandardError = true;
+                    ProcessStartInfo ps = new ProcessStartInfo
+                    {
+                        Arguments = "-a -n -o",
+                        FileName = "netstat.exe",
+                        UseShellExecute = false,
+                        WindowStyle = ProcessWindowStyle.Hidden,
+                        RedirectStandardInput = true,
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true
+                    };
 
                     p.StartInfo = ps;
                     p.Start();
@@ -69,16 +71,16 @@ namespace tickMeter
                             }
                             Ports.Add(new Port
                             {
-                                protocol = protocol,
-                                port_number = port_number,
-                                process_name = process_name,
-                                raw_data = row
+                                Protocol = protocol,
+                                PortNumber = port_number,
+                                ProcessName = process_name,
+                                RawData = row
                             });
                         }
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new List<Port>();
             }
@@ -95,18 +97,18 @@ namespace tickMeter
 
         public class Port
         {
-            public string name
+            public string Name
             {
                 get
                 {
-                    return string.Format("{0} ({1} port {2})", this.process_name, this.protocol, this.port_number);
+                    return string.Format("{0} ({1} port {2})", ProcessName, Protocol, PortNumber);
                 }
                 set { }
             }
-            public string port_number { get; set; }
-            public string process_name { get; set; }
-            public string protocol { get; set; }
-            public string raw_data { get; set; }
+            public string PortNumber { get; set; }
+            public string ProcessName { get; set; }
+            public string Protocol { get; set; }
+            public string RawData { get; set; }
         }
     }
 }

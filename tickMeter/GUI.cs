@@ -1,131 +1,71 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.IO;
 using System.Windows.Forms;
 using PcapDotNet.Analysis;
 using PcapDotNet.Core;
 using PcapDotNet.Packets;
-using PcapDotNet.Base;
-using PcapDotNet.Packets.IpV4;
-using PcapDotNet.Packets.Transport;
 using System.Threading.Tasks;
-using System.Net;
 using System.Diagnostics;
 using System.Security.Permissions;
 using System.Runtime.InteropServices;
-using Newtonsoft.Json;
 using System.Globalization;
-using System.Threading;
 using System.Text.RegularExpressions;
-using System.Resources;
-using static tickMeter.NetworkStats;
+using tickMeter.GameManagers;
 
 namespace tickMeter
 {
-    
-
     public partial class GUI : Form
     {
-        
-
         private  IList<LivePacketDevice> AdaptersList;
         private PacketDevice selectedAdapter;
-        public bool trackingFlag = false;
-        public string server = "0.0.0.0";
-        string udpscr = "";
-        string udpdes = "";
-        int ticks = 0;
-        int lineID = 0;
-        string logData = "";
-        int tickRate = 0;
-        string lastPingedServer = "";
+        public ConnectionsManager NetworkConnectionsMngr;
+
+        public TickMeterState meterState;
+        public string udpscr = "";
+        public string udpdes = "";
+        
         int restarts = 0;
         int restartLimit = 1;
         int lastSelectedAdapterID = -1;
-        int uploadTraf;
-        int downloadTraf;
+        
         Bitmap chartBckg;
         int chartLeftPadding = 25;
         int chartXStep = 4;
         int appInitHeigh;
         int appInitWidth;
-        Graphics g;
-        Pen pen;
-        List<int> ticksHistory;
+        bool OnScreen;
+        PubgStatsManager PubgMngr;
 
         private const int WM_ACTIVATE = 0x0006;
         private const int WA_ACTIVE = 1;
         private const int WA_CLICKACTIVE = 2;
         private const int WA_INACTIVE = 0;
+
         private static readonly IntPtr HWND_TOPMOST = new IntPtr(-1);
         private static readonly IntPtr HWND_NOTOPMOST = new IntPtr(-2);
+
         private const UInt32 SWP_NOSIZE = 0x0001;
         private const UInt32 SWP_NOMOVE = 0x0002;
         private const UInt32 SWP_SIZE = 0x0003;
         private const UInt32 SWP_MOVE = 0x0004;
+
         private const UInt32 TOPMOST_FLAGS = SWP_NOMOVE | SWP_NOSIZE;
         private const UInt32 NOTOPMOST_FLAGS = SWP_MOVE | SWP_SIZE;
+
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
-        public class IpInfo
-        {
 
-            [JsonProperty("ip")]
-            public string Ip { get; set; }
-
-            [JsonProperty("hostname")]
-            public string Hostname { get; set; }
-
-            [JsonProperty("city")]
-            public string City { get; set; }
-
-            [JsonProperty("region")]
-            public string Region { get; set; }
-
-            [JsonProperty("country")]
-            public string Country { get; set; }
-
-            [JsonProperty("loc")]
-            public string Loc { get; set; }
-
-            [JsonProperty("org")]
-            public string Org { get; set; }
-
-            [JsonProperty("postal")]
-            public string Postal { get; set; }
-        }
-
-        public string GetUserCountryByIp(string ip)
-        {
-            IpInfo ipInfo = new IpInfo();
-            try
-            {
-                string info = new WebClient().DownloadString("http://ipinfo.io/" + ip);
-                ipInfo = JsonConvert.DeserializeObject<IpInfo>(info);
-                RegionInfo myRI1 = new RegionInfo(ipInfo.Country);
-                ipInfo.Country = myRI1.EnglishName;
-            }
-            catch (Exception)
-            {
-                ipInfo.Country = null;
-            }
-            country = ipInfo.Country;
-            return ipInfo.Country;
-        }
-
-        string country = "";
-        int ping = 0;
-
+        /// <summary>
+        /// Form initialization
+        /// </summary>
         public GUI()
         {
             InitializeComponent();
-
             try
             {
                 AdaptersList = LivePacketDevice.AllLocalMachine.ToList();
@@ -136,14 +76,10 @@ namespace tickMeter
             }
 
             PcapDotNetAnalysis.OptIn = true;
-
             if (AdaptersList.Count == 0)
             {
-
                 MessageBox.Show("No network connections found");
-
                 return;
-
             }
 
             for (int i = 0; i != AdaptersList.Count; ++i)
@@ -164,76 +100,86 @@ namespace tickMeter
                 else
                 {
                     adapters_list.Items.Add("Unknown");
-
                 }
             }
-
-
-            ticksHistory = new List<int>();
-            pen = new Pen(Color.DarkRed);
-            
+            NetworkConnectionsMngr = new ConnectionsManager();
+            meterState = new TickMeterState
+            {
+                ConnMngr = NetworkConnectionsMngr,
+            };
+            PubgMngr = new PubgStatsManager
+            {
+                ConnMngr = NetworkConnectionsMngr,
+                meterState = meterState
+            };
         }
-        protected void showAll()
+
+        protected void ShowAll()
         {
-            label6.Visible = true;
+            serverLbl.Visible = true;
             label5.Visible = true;
-            label2.Visible = true;
+            pingLbl.Visible = true;
             label4.Visible = true;
-            label7.Visible = true;
+            countryLbl.Visible = true;
             label9.Visible = true;
-            label10.Visible = true;
+            trafficLbl.Visible = true;
         }
 
-        [PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
+        [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
         protected override void WndProc(ref Message m)
         {
             if (m.Msg == WM_ACTIVATE & m.WParam == (IntPtr)WA_ACTIVE)
             {
-                this.BackColor = SystemColors.Control;
-                this.TransparencyKey = Color.PaleVioletRed;
-                this.FormBorderStyle = FormBorderStyle.FixedToolWindow;
-                this.Height = appInitHeigh;
-                this.Width = appInitWidth;
-                showAll();
-
-
+                OnScreen = true;
+                BackColor = SystemColors.Control;
+                TransparencyKey = Color.PaleVioletRed;
+                FormBorderStyle = FormBorderStyle.FixedToolWindow;
+                Height = appInitHeigh;
+                Width = appInitWidth;
+                ShowAll();
             }
             else if (m.Msg == WM_ACTIVATE & m.WParam == (IntPtr)WA_CLICKACTIVE)
             {
-                this.BackColor = SystemColors.Control;
-                this.TransparencyKey = Color.PaleVioletRed;
-                this.FormBorderStyle = FormBorderStyle.FixedToolWindow;
-                this.Height = appInitHeigh;
-                this.Width = appInitWidth;
-                showAll();
-
+                OnScreen = true;
+                BackColor = SystemColors.Control;
+                TransparencyKey = Color.PaleVioletRed;
+                FormBorderStyle = FormBorderStyle.FixedToolWindow;
+                Height = appInitHeigh;
+                Width = appInitWidth;
+                ShowAll();
             }
             else if (m.Msg == WM_ACTIVATE & m.WParam == (IntPtr)WA_INACTIVE)
             {
-                this.BackColor = SystemColors.WindowFrame;
-                this.TransparencyKey = SystemColors.WindowFrame;
-                this.FormBorderStyle = FormBorderStyle.None;
-                if( ! settings_chart_checkbox.Checked)
+                OnScreen = true;
+                BackColor = SystemColors.WindowFrame;
+                TransparencyKey = SystemColors.WindowFrame;
+                FormBorderStyle = FormBorderStyle.None;
+                
+                if(settings_rtss_output.Checked)
                 {
-                    this.Height = 160;
+                    OnScreen = false;
                 }
-                this.Width = 475;
+                if ( ! settings_chart_checkbox.Checked)
+                {
+                    Height = 160;
+                }
+                Width = 475;
 
                 if( ! settings_ip_checkbox.Checked)
                 {
-                    label6.Visible = false;
+                    serverLbl.Visible = false;
                     label5.Visible = false;
                 }
                 if (!settings_ping_checkbox.Checked)
                 {
-                    label2.Visible = false;
+                    pingLbl.Visible = false;
                     label4.Visible = false;
-                    label7.Visible = false;
+                    countryLbl.Visible = false;
                 }
                 if (!settings_traffic_checkbox.Checked)
                 {
                     label9.Visible = false;
-                    label10.Visible = false;
+                    trafficLbl.Visible = false;
                 }
             }
             base.WndProc(ref m);
@@ -241,142 +187,110 @@ namespace tickMeter
 
       
 
-        private void PacketHandler(Packet packet)
+        private async void PacketHandler(Packet packet)
         {
-            if(! trackingFlag)
+            if (!meterState.IsTracking) return;
+            //using async game managers to track network stats
+            switch (meterState.Game)
             {
-                return;
-            }
-            this.udpscr = "";
-            this.udpdes = ""; 
-
-            IpV4Datagram ip = packet.Ethernet.IpV4;
-            UdpDatagram udp = ip.Udp;
-            
-            udpscr = udp.SourcePort.ToString();
-            udpdes = udp.DestinationPort.ToString();
-            int portSRC = int.Parse(udpscr);
-            int portDES = int.Parse(udpdes);
-            if (portSRC > 6999 && portSRC < 7999)
-            {
-                server = ip.Source.ToString();
-                downloadTraf += udp.TotalLength;
-                ticks++;
-            }
-            if (portDES > 6999 && portDES < 7999)
-            {
-                uploadTraf += udp.TotalLength;
+                case PubgStatsManager.GameCode:
+                    await Task.Run(() => { PubgMngr.ProcessPacket(packet, this); });
+                    break;
+                default://run all managers to detect game
+                    await Task.Run(() => { PubgMngr.ProcessPacket(packet, this); });
+                    break;
             }
         }
 
 
-        private async void timer1_Tick(object sender, EventArgs e)
+        private async void TicksLoop_Tick(object sender, EventArgs e)
         {
-
             
-            if (!trackingFlag || !IsGameRunning())
-            {
-                return;
-            }
-            tickRate = ticks;
-            ticks = 0;
 
-            //временная затычка
-            if (tickRate > 61)
+            if (settings_rtss_output.Checked)
             {
-                ticks = tickRate - 61;
-                tickRate = 61;
-            }
-            ticksHistory.Add(tickRate);
-            if(ticksHistory.Count>(graph.Image.Width-chartLeftPadding)/chartXStep)
-            {
-                ticksHistory.RemoveAt(0);
-                ticksHistory = ticksHistory.ToList<int>();
-                
-            }
-            label1.Text = tickRate.ToString();
-            if(tickRate < 30)
-            {
-                label1.ForeColor = Color.Red;
-            } else if(tickRate < 50)
-            {
-                label1.ForeColor = Color.DarkOrange;
-            } else
-            {
-                label1.ForeColor = Color.ForestGreen;
-            }
-            lineID++;
-            if(settings_log_checkobx.Checked)
-            {
-                logData += lineID.ToString() + "," + tickRate.ToString() + Environment.NewLine;
+                await Task.Run(() => { RivaTuner.BuildRivaOutput(this); });
             }
 
+            //form overlay isn't visible, quit
+            if (!OnScreen) return;
 
-            if(settings_chart_checkbox.Checked)
+            //update tickrate
+            Color TickRateColor = Color.ForestGreen;
+            if (meterState.OutputTickRate < 30)
             {
-                await Task.Run(
-                        () => {
-                            graph.Invoke(new Action(() => graph.Image = UpdateGraph(ticksHistory.ToList<int>())));
-                        });
+                TickRateColor = Color.Red;
             }
-            if (settings_traffic_checkbox.Checked)
+            else if (meterState.OutputTickRate < 50)
             {
-                float formatedUpload = (float)uploadTraf / (1024 * 1024);
-                float formatedDownload = (float)downloadTraf / (1024 * 1024);
-                await Task.Run(
-                       () => {
-                           label10.Invoke(new Action(() => label10.Text = formatedUpload.ToString("N2")+" / "+ formatedDownload.ToString("N2")+" mb"));
-                       });
+                TickRateColor = Color.DarkOrange;
             }
 
-            if (settings_ip_checkbox.Checked)
+            await Task.Run(
+                    () => {
+                        tickRateLbl.Invoke(new Action(() => {
+                            tickRateLbl.Text = meterState.OutputTickRate.ToString();
+                            tickRateLbl.ForeColor = TickRateColor;
+                        }));
+                        //update tickrate chart
+                        if (settings_chart_checkbox.Checked)
+                        {
+                            graph.Invoke(new Action(() => graph.Image = UpdateGraph(meterState.TicksHistory)));
+                        }
+                        //update traffic
+                        if (settings_traffic_checkbox.Checked)
+                        {
+                            float formatedUpload = (float)meterState.UploadTraffic / (1024 * 1024);
+                            float formatedDownload = (float)meterState.DownloadTraffic / (1024 * 1024);
+                            trafficLbl.Invoke(new Action(() => trafficLbl.Text = formatedUpload.ToString("N2") + " / " + formatedDownload.ToString("N2") + " mb"));
+                        }
+                        //update IP
+                        if (settings_ip_checkbox.Checked)
+                        {
+                        serverLbl.Invoke(new Action(() => serverLbl.Text = meterState.Server.Ip));
+                        }
+                        //update PING
+                        if (settings_ping_checkbox.Checked)
+                        {
+                        countryLbl.Invoke(new Action(() => countryLbl.Text = meterState.Server.Country));
+                        pingLbl.Invoke(new Action(() => pingLbl.Text = meterState.Server.Ping.ToString() + " ms"));
+                        }
+                    });
+            if (!meterState.IsTracking)
             {
-                await Task.Run(
-                       () => {
-                       label6.Invoke(new Action(() => label6.Text = server));
-                       });
+                StopTracking();
             }
-            if(settings_rtss_output.Checked)
-            {
-                await Task.Run(
-                   () => {
-                       if (!RivaTuner.IsRivaRunning())
-                       {
-                           RivaTuner.RunRiva();
-                       }
-                       RivaTuner.print(buildRivaOutput());
-                   });
-               
-            }
+
         }
 
         public Bitmap UpdateGraph(List<int> ticks)
         {
             chartBckg = new Bitmap(graph.InitialImage);
+            if (ticks.Count < 2) return chartBckg;
             Graphics g = Graphics.FromImage(chartBckg);
             int w = graph.Image.Width;
             int h = graph.Image.Height;
             float scale =  (float)h / 61; //2.8
-            for (int i = 1; i < ticks.Count; i++)
+            int GraphMaxTicks = (w - chartLeftPadding) / chartXStep;
+            Pen pen = new Pen(Color.Red, 1);
+            int stepX = 0;
+            for (int i = ticks.Count-2; i >= 0 && ticks.Count - i - 1 < GraphMaxTicks; i--)
             {
-                g.DrawLine(new Pen(Color.Red, 1), new Point(chartLeftPadding + (i - 1) * chartXStep, h - (int)((float)ticks[i - 1]*scale)), new Point(chartLeftPadding + i * chartXStep, h - (int)((float)ticks[i]*scale)));
+                stepX++;
+                g.DrawLine(pen, new Point(chartLeftPadding + (stepX - 1) * chartXStep, h - (int)((float)ticks[i + 1]*scale)), new Point(chartLeftPadding + stepX * chartXStep, h - (int)((float)ticks[i]*scale)));
             }
             return chartBckg;
         }
 
-        public WebRequest request;
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+
+        private void PcapWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            if (!trackingFlag)
-            {
-                return;
-            }
+            if (!meterState.IsTracking) return;
             using (PacketCommunicator communicator = selectedAdapter.Open(65536, PacketDeviceOpenAttributes.Promiscuous, 1000))
             {
                 if (communicator.DataLink.Kind != DataLinkKind.Ethernet)
                 {
                     MessageBox.Show("Ethernet connections only!");
-
                     return;
                 }
 
@@ -385,114 +299,29 @@ namespace tickMeter
                     communicator.SetFilter(filter);
                 }
                 communicator.ReceivePackets(0, PacketHandler);
-
             }
-
         }
 
-
-        private async Task PingServer()
+        private void PcapWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            
-            if (!trackingFlag || !settings_ping_checkbox.Checked)
-            {
-                return;
-            }
-
-            
-            
-            if (server == "" || server == "0.0.0.0")
-            {
-                return;
-            }
-            
-
-            
-            if (lastPingedServer != server)
-            {
-                await Task.Run(
-                   () => {
-                       label7.Invoke(new Action(() => label7.Text = GetUserCountryByIp(server)));
-                   });
-                //label7.Text = "(" + GetUserCountryByIp(server) + ")";
-            }
-            await Task.Run(
-               () => {
-                   
-                   request = WebRequest.Create("http://" + server);
-                   Stopwatch sw = Stopwatch.StartNew();
-                   try
-                   {
-                       using (WebResponse response = request.GetResponse())
-                       {
-
-                       }
-
-                   }
-                   catch (Exception) { sw.Stop(); }
-                   sw.Stop();
-
-                   int pingInt = int.Parse(sw.Elapsed.ToString("fff"));
-                   if (pingInt > 200)
-                   {
-                       label2.Invoke(new Action(() => label2.ForeColor = Color.Red));
-                       //label2.ForeColor = Color.Red;
-                   }
-                   else if (pingInt > 100 && pingInt < 200)
-                   {
-                       label2.Invoke(new Action(() => label2.ForeColor = Color.DarkOrange));
-                       //label2.ForeColor = Color.DarkOrange;
-                   }
-                   else
-                   {
-                       label2.Invoke(new Action(() => label2.ForeColor = Color.ForestGreen));
-                       //label2.ForeColor = Color.ForestGreen;
-                   }
-                   ping = pingInt;
-                   label2.Invoke(new Action(() => label2.Text = pingInt.ToString() + " ms"));
-
-                   //label2.Text = pingInt.ToString() + " ms";
-
-               });
-            
-        }
-
-        
-        private async void timer3_Tick(object sender, EventArgs e)
-        {
-            if (!trackingFlag || !IsGameRunning())
-            {
-                return;
-            }
-           
-            await PingServer();
-        }
-
-        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            if (!trackingFlag)
-            {
-                return;
-            }
-            if(ticks == 0)
+            if (!meterState.IsTracking) return;
+            if(meterState.TickRate == 0)
             {
                 restarts++;
                 if (restarts > restartLimit)
                 {
-                    stopTracking();
+                    StopTracking();
                     return;
                 }
             } else
             {
                 restarts = 0;
             }
-            
-            backgroundWorker1.RunWorkerAsync();
+            pcapWorker.RunWorkerAsync();
         }
 
-        public void switchToEnglish()
+        public void SwitchToEnglish()
         {
-
             settings_lbl.Text = Resources.en.ResourceManager.GetString(settings_lbl.Name);
             settings_rtss_output.Text = Resources.en.ResourceManager.GetString(settings_rtss_output.Name);
             settings_log_checkobx.Text = Resources.en.ResourceManager.GetString(settings_log_checkobx.Name);
@@ -501,187 +330,93 @@ namespace tickMeter
             settings_traffic_checkbox.Text = Resources.en.ResourceManager.GetString(settings_traffic_checkbox.Name);
             settings_chart_checkbox.Text = Resources.en.ResourceManager.GetString(settings_chart_checkbox.Name);
             network_connection_lbl.Text = Resources.en.ResourceManager.GetString(network_connection_lbl.Name);
-
         }
 
-        public async Task startTracking()
+        public void StartTracking()
         {
-           
-            lineID = 0;
-            uploadTraf = 0;
-            downloadTraf = 0;
-            trackingFlag = true;
-            timer1.Enabled = true;
+            meterState.Reset();
+            meterState.IsTracking = true;
+            ticksLoop.Enabled = true;
             selectedAdapter = AdaptersList[adapters_list.SelectedIndex];
             lastSelectedAdapterID = adapters_list.SelectedIndex;
-            if (!backgroundWorker1.IsBusy)
+            if (!pcapWorker.IsBusy)
             {
-                backgroundWorker1.RunWorkerAsync();
+                pcapWorker.RunWorkerAsync();
             }
             adapters_list.Enabled = false;
             settings_log_checkobx.Enabled = false;
-            timer3.Enabled = true;
         }
 
-        public void stopTracking()
+        public void StopTracking()
         {
-            adapters_list.Enabled = true;
-            settings_log_checkobx.Enabled = true;
-            timer3.Enabled = false;
-            timer1.Enabled = false;
-            trackingFlag = false;
-            label7.Text = "";
-            label6.Text = "000.000.000.000";
-            label1.Text = "0";
-            label2.Text = "0 ms";
-            label1.ForeColor = Color.OrangeRed;
-            label2.ForeColor = Color.OrangeRed;
+            ticksLoop.Enabled = false;
+            meterState.IsTracking = false;
+
+            tickRateLbl.ForeColor = Color.OrangeRed;
+            pingLbl.ForeColor = Color.OrangeRed;
             graph.Image = graph.InitialImage;
-            ticksHistory.Clear();
-            if (backgroundWorker1.IsBusy)
+            if (pcapWorker.IsBusy)
             {
-                backgroundWorker1.CancelAsync();
+                pcapWorker.CancelAsync();
             }
             adapters_list.SelectedIndex = -1;
-            if (settings_log_checkobx.Checked && logData.Length > 1)
+            if (settings_log_checkobx.Checked)
             {
-                if( ! Directory.Exists("logs"))
+                if(meterState.Server.Ip != "" && meterState.TickRateLog != "")
                 {
-                    Directory.CreateDirectory("logs");
+                    if (!Directory.Exists("logs"))
+                    {
+                        Directory.CreateDirectory("logs");
+                    }
+                    try
+                    {
+                        File.AppendAllText(@"logs\" + meterState.Server.Ip + "_ticks.csv", "timestamp;tickrate" + Environment.NewLine + meterState.TickRateLog);
+                    }
+                    catch (IOException) { }
                 }
-                File.AppendAllText(@"logs\" + server + "_ticks.csv", logData);
             }
-            if (RivaTuner.IsRivaRunning())
-            {
-                RivaTuner.print("");
-            }
-            
 
+            RivaTuner.PrintData("");
+            meterState.Reset();
         }
 
-        private async void adapters_list_SelectedIndexChanged(object sender, EventArgs e)
+        private void Adapters_list_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(adapters_list.SelectedIndex >= 0)
+            if (adapters_list.SelectedIndex >= 0)
             {
-               await startTracking();
+               StartTracking();
             }
         }
 
         private void GUI_FormClosed(object sender, FormClosedEventArgs e)
         {
-            stopTracking();
+            StopTracking();
         }
 
-        private void label6_Click(object sender, EventArgs e)
+        private void ServerLbl_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(label6.Text);
+            Clipboard.SetText(serverLbl.Text);
         }
     
-        private bool IsGameRunning()
+        
+        private void RetryTimer_Tick(object sender, EventArgs e)
         {
-            Process[] pname = Process.GetProcessesByName("tslGame");
-            return pname.Length != 0;
-        }
-
-        private async void RetryTimer_Tick(object sender, EventArgs e)
-        {
-            
-            if (IsGameRunning())
+            if (!meterState.IsTracking && lastSelectedAdapterID != -1)
             {
-                if (!trackingFlag && lastSelectedAdapterID != -1)
-                {
-                    adapters_list.SelectedIndex = lastSelectedAdapterID;
-                    await startTracking();
-                }
+                adapters_list.SelectedIndex = lastSelectedAdapterID;
+                StartTracking();
             }
         }
 
-        private void label8_Click(object sender, EventArgs e)
+        private void Label8_Click(object sender, EventArgs e)
         {
             Process.Start("https://www.youtube.com/channel/UConzx4k6IVXSs9PsY9Snkbg");
         }
 
-        private string getTextFormat()
+        private async void Settings_rtss_output_CheckedChanged(object sender, EventArgs e)
         {
-            return "<C0=ff8300><C1=5CD689><C2=32b503><C3=CC0000><C4=FFD500><C5=999999><C6=666666><C7=4DA6FF><C8=b70707><S0=50><S1=70>";
-        }
 
-        public string FormatTickrate()
-        {
-            string tickRateStr = "<S><C>Tickrate: ";
-            if(tickRate < 30)
-            {
-                tickRateStr += "<C3>" + tickRate.ToString();
-            } else if(tickRate < 50)
-            {
-                tickRateStr += "<C0>" + tickRate.ToString();
-            } else
-            {
-                tickRateStr += "<C2>" + tickRate.ToString();
-            }
-            string output =  getTextFormat() + tickRateStr+Environment.NewLine;
-            return output;
-        }
-
-        public string FormatServer()
-        {
-            return "<C><S>IP: " + server+Environment.NewLine;
-        }
-
-        public string FormatTraffic()
-        {
-            float formatedUpload = (float)uploadTraf / (1024 * 1024);
-            float formatedDownload = (float)downloadTraf / (1024 * 1024);
-            return "<C><S>UP/DL: " + formatedUpload.ToString("N2")+" / " + formatedDownload.ToString("N2") + "<S1> Mb" + Environment.NewLine;
-        }
-
-        public string FormatPing()
-        {
-            string pingFont = "";
-            if(ping < 100)
-            {
-                pingFont = "<C2>";
-            } else if(ping < 150)
-            {
-                pingFont = "<C0>";
-            } else
-            {
-                pingFont = "<C3>";
-            }
-            return "<C>Ping: " + pingFont + ping.ToString() + "<S0>ms <S1><C>(" + country + ")"+Environment.NewLine;
-        }
-
-        public string buildRivaOutput()
-        {
-            string output = getTextFormat();
-            output += FormatTickrate();
-
-            if (settings_ip_checkbox.Checked)
-            {
-                output += FormatServer();
-            }
-            
-            if(settings_ping_checkbox.Checked)
-            {
-                output += FormatPing();
-
-            }
-            if(settings_traffic_checkbox.Checked)
-            {
-                output += FormatTraffic();
-            }
-            return output;
-        }
-
-        private void settings_rtss_output_CheckedChanged(object sender, EventArgs e)
-        {
-            if (RivaTuner.IsRivaRunning())
-            {
-                RivaTuner.print("");
-            } else
-            {
-                RivaTuner.RunRiva();
-            }
+            await Task.Run(() => { RivaTuner.PrintData(""); });
             if (settings_rtss_output.Checked)
             {
                 SetWindowPos(this.Handle, HWND_NOTOPMOST, 0, 0, 0, 0, TOPMOST_FLAGS);
@@ -693,19 +428,13 @@ namespace tickMeter
 
         private void GUI_Load(object sender, EventArgs e)
         {
-            appInitHeigh = this.Height;
-            appInitWidth = this.Width;
+            appInitHeigh = Height;
+            appInitWidth = Width;
             CultureInfo ci = CultureInfo.InstalledUICulture;
             if (ci.TwoLetterISOLanguageName == "en")
             {
-                switchToEnglish();
+                SwitchToEnglish();
             }
-        }
-
-        private void network_connection_lbl_Click(object sender, EventArgs e)
-        {
-            //just for tests
-            //List<Port> ports = GetNetStatPorts("TslGame","UDPv4");
         }
     }
 }

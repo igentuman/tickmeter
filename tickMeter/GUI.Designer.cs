@@ -33,17 +33,16 @@
             this.label3 = new System.Windows.Forms.Label();
             this.network_connection_lbl = new System.Windows.Forms.Label();
             this.adapters_list = new System.Windows.Forms.ComboBox();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.timer3 = new System.Windows.Forms.Timer(this.components);
+            this.ticksLoop = new System.Windows.Forms.Timer(this.components);
+            this.pcapWorker = new System.ComponentModel.BackgroundWorker();
+            this.tickRateLbl = new System.Windows.Forms.Label();
+            this.pingLbl = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
+            this.serverLbl = new System.Windows.Forms.Label();
+            this.countryLbl = new System.Windows.Forms.Label();
             this.settings_log_checkobx = new System.Windows.Forms.CheckBox();
-            this.RetryTimer = new System.Windows.Forms.Timer(this.components);
+            this.retryLoop = new System.Windows.Forms.Timer(this.components);
             this.label8 = new System.Windows.Forms.Label();
             this.settings_chart_checkbox = new System.Windows.Forms.CheckBox();
             this.settings_rtss_output = new System.Windows.Forms.CheckBox();
@@ -52,7 +51,7 @@
             this.settings_ping_checkbox = new System.Windows.Forms.CheckBox();
             this.settings_ip_checkbox = new System.Windows.Forms.CheckBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
+            this.trafficLbl = new System.Windows.Forms.Label();
             this.graph = new System.Windows.Forms.PictureBox();
             this.settings_lbl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.graph)).BeginInit();
@@ -84,7 +83,6 @@
             this.network_connection_lbl.Size = new System.Drawing.Size(238, 23);
             this.network_connection_lbl.TabIndex = 15;
             this.network_connection_lbl.Text = "Сетевое подключение:";
-            this.network_connection_lbl.Click += new System.EventHandler(this.network_connection_lbl_Click);
             // 
             // adapters_list
             // 
@@ -98,53 +96,48 @@
             this.adapters_list.Name = "adapters_list";
             this.adapters_list.Size = new System.Drawing.Size(241, 23);
             this.adapters_list.TabIndex = 12;
-            this.adapters_list.SelectedIndexChanged += new System.EventHandler(this.adapters_list_SelectedIndexChanged);
+            this.adapters_list.SelectedIndexChanged += new System.EventHandler(this.Adapters_list_SelectedIndexChanged);
             // 
-            // timer1
+            // ticksLoop
             // 
-            this.timer1.Interval = 1000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.ticksLoop.Interval = 1000;
+            this.ticksLoop.Tick += new System.EventHandler(this.TicksLoop_Tick);
             // 
-            // backgroundWorker1
+            // pcapWorker
             // 
-            this.backgroundWorker1.WorkerSupportsCancellation = true;
-            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
-            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
+            this.pcapWorker.WorkerSupportsCancellation = true;
+            this.pcapWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.PcapWorker_DoWork);
+            this.pcapWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.PcapWorker_RunWorkerCompleted);
             // 
-            // label1
+            // tickRateLbl
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label1.Font = new System.Drawing.Font("Unispace", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.OrangeRed;
-            this.label1.Location = new System.Drawing.Point(178, 6);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(36, 53);
-            this.label1.TabIndex = 24;
-            this.label1.Text = "0";
-            this.label1.UseCompatibleTextRendering = true;
-            this.label1.UseMnemonic = false;
+            this.tickRateLbl.AutoSize = true;
+            this.tickRateLbl.BackColor = System.Drawing.Color.Transparent;
+            this.tickRateLbl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.tickRateLbl.Font = new System.Drawing.Font("Unispace", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tickRateLbl.ForeColor = System.Drawing.Color.OrangeRed;
+            this.tickRateLbl.Location = new System.Drawing.Point(178, 6);
+            this.tickRateLbl.Name = "tickRateLbl";
+            this.tickRateLbl.Size = new System.Drawing.Size(36, 53);
+            this.tickRateLbl.TabIndex = 24;
+            this.tickRateLbl.Text = "0";
+            this.tickRateLbl.UseCompatibleTextRendering = true;
+            this.tickRateLbl.UseMnemonic = false;
             // 
-            // label2
+            // pingLbl
             // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label2.Font = new System.Drawing.Font("Unispace", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.OrangeRed;
-            this.label2.Location = new System.Drawing.Point(178, 94);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(77, 39);
-            this.label2.TabIndex = 25;
-            this.label2.Text = "0 ms";
-            this.label2.UseCompatibleTextRendering = true;
-            this.label2.UseMnemonic = false;
-            // 
-            // timer3
-            // 
-            this.timer3.Interval = 5000;
-            this.timer3.Tick += new System.EventHandler(this.timer3_Tick);
+            this.pingLbl.AutoSize = true;
+            this.pingLbl.BackColor = System.Drawing.Color.Transparent;
+            this.pingLbl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.pingLbl.Font = new System.Drawing.Font("Unispace", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pingLbl.ForeColor = System.Drawing.Color.OrangeRed;
+            this.pingLbl.Location = new System.Drawing.Point(178, 94);
+            this.pingLbl.Name = "pingLbl";
+            this.pingLbl.Size = new System.Drawing.Size(77, 39);
+            this.pingLbl.TabIndex = 25;
+            this.pingLbl.Text = "0 ms";
+            this.pingLbl.UseCompatibleTextRendering = true;
+            this.pingLbl.UseMnemonic = false;
             // 
             // label4
             // 
@@ -174,35 +167,35 @@
             this.label5.Text = "IP:";
             this.label5.UseCompatibleTextRendering = true;
             // 
-            // label6
+            // serverLbl
             // 
-            this.label6.AutoSize = true;
-            this.label6.BackColor = System.Drawing.Color.Transparent;
-            this.label6.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label6.Font = new System.Drawing.Font("Unispace", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.OrangeRed;
-            this.label6.Location = new System.Drawing.Point(178, 53);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(264, 39);
-            this.label6.TabIndex = 28;
-            this.label6.Text = "000.000.000.000";
-            this.label6.UseCompatibleTextRendering = true;
-            this.label6.UseMnemonic = false;
-            this.label6.Click += new System.EventHandler(this.label6_Click);
+            this.serverLbl.AutoSize = true;
+            this.serverLbl.BackColor = System.Drawing.Color.Transparent;
+            this.serverLbl.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.serverLbl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.serverLbl.Font = new System.Drawing.Font("Unispace", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.serverLbl.ForeColor = System.Drawing.Color.OrangeRed;
+            this.serverLbl.Location = new System.Drawing.Point(178, 53);
+            this.serverLbl.Name = "serverLbl";
+            this.serverLbl.Size = new System.Drawing.Size(264, 39);
+            this.serverLbl.TabIndex = 28;
+            this.serverLbl.Text = "000.000.000.000";
+            this.serverLbl.UseCompatibleTextRendering = true;
+            this.serverLbl.UseMnemonic = false;
+            this.serverLbl.Click += new System.EventHandler(this.ServerLbl_Click);
             // 
-            // label7
+            // countryLbl
             // 
-            this.label7.AutoSize = true;
-            this.label7.BackColor = System.Drawing.Color.Transparent;
-            this.label7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label7.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label7.ForeColor = System.Drawing.Color.OrangeRed;
-            this.label7.Location = new System.Drawing.Point(248, 20);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(0, 28);
-            this.label7.TabIndex = 29;
-            this.label7.UseCompatibleTextRendering = true;
+            this.countryLbl.AutoSize = true;
+            this.countryLbl.BackColor = System.Drawing.Color.Transparent;
+            this.countryLbl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.countryLbl.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.countryLbl.ForeColor = System.Drawing.Color.OrangeRed;
+            this.countryLbl.Location = new System.Drawing.Point(248, 20);
+            this.countryLbl.Name = "countryLbl";
+            this.countryLbl.Size = new System.Drawing.Size(0, 28);
+            this.countryLbl.TabIndex = 29;
+            this.countryLbl.UseCompatibleTextRendering = true;
             // 
             // settings_log_checkobx
             // 
@@ -216,11 +209,11 @@
             this.settings_log_checkobx.Text = "Логгировать тикрейт в CSV";
             this.settings_log_checkobx.UseVisualStyleBackColor = true;
             // 
-            // RetryTimer
+            // retryLoop
             // 
-            this.RetryTimer.Enabled = true;
-            this.RetryTimer.Interval = 5000;
-            this.RetryTimer.Tick += new System.EventHandler(this.RetryTimer_Tick);
+            this.retryLoop.Enabled = true;
+            this.retryLoop.Interval = 5000;
+            this.retryLoop.Tick += new System.EventHandler(this.RetryTimer_Tick);
             // 
             // label8
             // 
@@ -235,7 +228,7 @@
             this.label8.Size = new System.Drawing.Size(230, 23);
             this.label8.TabIndex = 31;
             this.label8.Text = "Беларуский Айтишник";
-            this.label8.Click += new System.EventHandler(this.label8_Click);
+            this.label8.Click += new System.EventHandler(this.Label8_Click);
             // 
             // settings_chart_checkbox
             // 
@@ -264,7 +257,7 @@
             this.settings_rtss_output.TabIndex = 35;
             this.settings_rtss_output.Text = "Вывод через RTSS";
             this.settings_rtss_output.UseVisualStyleBackColor = true;
-            this.settings_rtss_output.CheckedChanged += new System.EventHandler(this.settings_rtss_output_CheckedChanged);
+            this.settings_rtss_output.CheckedChanged += new System.EventHandler(this.Settings_rtss_output_CheckedChanged);
             // 
             // settings_lbl
             // 
@@ -341,20 +334,20 @@
             this.label9.Text = "UP/DL :";
             this.label9.UseCompatibleTextRendering = true;
             // 
-            // label10
+            // trafficLbl
             // 
-            this.label10.AutoSize = true;
-            this.label10.BackColor = System.Drawing.Color.Transparent;
-            this.label10.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label10.Font = new System.Drawing.Font("Unispace", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.ForeColor = System.Drawing.Color.OrangeRed;
-            this.label10.Location = new System.Drawing.Point(178, 133);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(145, 39);
-            this.label10.TabIndex = 37;
-            this.label10.Text = "0 / 0 Mb";
-            this.label10.UseCompatibleTextRendering = true;
-            this.label10.UseMnemonic = false;
+            this.trafficLbl.AutoSize = true;
+            this.trafficLbl.BackColor = System.Drawing.Color.Transparent;
+            this.trafficLbl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.trafficLbl.Font = new System.Drawing.Font("Unispace", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.trafficLbl.ForeColor = System.Drawing.Color.OrangeRed;
+            this.trafficLbl.Location = new System.Drawing.Point(178, 133);
+            this.trafficLbl.Name = "trafficLbl";
+            this.trafficLbl.Size = new System.Drawing.Size(145, 39);
+            this.trafficLbl.TabIndex = 37;
+            this.trafficLbl.Text = "0 / 0 Mb";
+            this.trafficLbl.UseCompatibleTextRendering = true;
+            this.trafficLbl.UseMnemonic = false;
             // 
             // graph
             // 
@@ -376,22 +369,22 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(739, 356);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.label10);
+            this.Controls.Add(this.trafficLbl);
             this.Controls.Add(this.settings_lbl);
             this.Controls.Add(this.graph);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
+            this.Controls.Add(this.countryLbl);
+            this.Controls.Add(this.serverLbl);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.pingLbl);
+            this.Controls.Add(this.tickRateLbl);
             this.Controls.Add(this.label3);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "GUI";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "tickMeter";
+            this.Text = "tickMeter 1.4";
             this.TransparencyKey = System.Drawing.SystemColors.Info;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.GUI_FormClosed);
             this.Load += new System.EventHandler(this.GUI_Load);
@@ -407,27 +400,26 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label network_connection_lbl;
         private System.Windows.Forms.ComboBox adapters_list;
-        private System.Windows.Forms.Timer timer1;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Timer timer3;
+        private System.Windows.Forms.Timer ticksLoop;
+        private System.ComponentModel.BackgroundWorker pcapWorker;
+        private System.Windows.Forms.Label tickRateLbl;
+        private System.Windows.Forms.Label pingLbl;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label serverLbl;
+        private System.Windows.Forms.Label countryLbl;
         private System.Windows.Forms.CheckBox settings_log_checkobx;
-        private System.Windows.Forms.Timer RetryTimer;
+        private System.Windows.Forms.Timer retryLoop;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.CheckBox settings_chart_checkbox;
         private System.Windows.Forms.PictureBox graph;
         private System.Windows.Forms.CheckBox settings_rtss_output;
         private System.Windows.Forms.GroupBox settings_lbl;
-        private System.Windows.Forms.CheckBox settings_traffic_checkbox;
-        private System.Windows.Forms.CheckBox settings_ping_checkbox;
-        private System.Windows.Forms.CheckBox settings_ip_checkbox;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label trafficLbl;
+        public System.Windows.Forms.CheckBox settings_traffic_checkbox;
+        public System.Windows.Forms.CheckBox settings_ping_checkbox;
+        public System.Windows.Forms.CheckBox settings_ip_checkbox;
     }
 }
 
