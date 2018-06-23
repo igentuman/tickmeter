@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -28,6 +26,7 @@ namespace tickMeter
         public Process[] ProcessInfoList;
 
         private System.Timers.Timer MngrTimer;
+        public TickMeterState meterState;
 
         private void SetConnectionsManagerTimer()
         {
@@ -45,6 +44,7 @@ namespace tickMeter
 
         private async void MngrTimerTick(Object source, System.Timers.ElapsedEventArgs e)
         {
+            if (!meterState.ConnectionsManagerFlag) return;
             await Task.Run(() =>
             {
                 ProcessInfoList = Process.GetProcesses();
@@ -88,7 +88,7 @@ namespace tickMeter
 
         public List<TcpProcessRecord> GetAllTcpConnections()
         {
-        int bufferSize = 0;
+            int bufferSize = 0;
             List<TcpProcessRecord> tcpTableRecords = new List<TcpProcessRecord>();
             
             uint result = GetExtendedTcpTable(IntPtr.Zero, ref bufferSize, true, AF_INET,
@@ -98,15 +98,12 @@ namespace tickMeter
 
             try
             {
-                 
                 result = GetExtendedTcpTable(tcpTableRecordsPtr, ref bufferSize, true,
                     AF_INET, TcpTableClass.TCP_TABLE_OWNER_PID_ALL);
-
 
                 if (result != 0)
                     return new List<TcpProcessRecord>();
 
-                
                 MIB_TCPTABLE_OWNER_PID tcpRecordsTable = (MIB_TCPTABLE_OWNER_PID)
                                         Marshal.PtrToStructure(tcpTableRecordsPtr,
                                         typeof(MIB_TCPTABLE_OWNER_PID));
@@ -161,7 +158,6 @@ namespace tickMeter
 
             try
             {
-
                 result = GetExtendedUdpTable(udpTableRecordPtr, ref bufferSize, true,
                     AF_INET, UdpTableClass.UDP_TABLE_OWNER_PID);
 
@@ -201,10 +197,6 @@ namespace tickMeter
             return udpTableRecords != null ? udpTableRecords.Distinct()
                 .ToList<UdpProcessRecord>() : new List<UdpProcessRecord>();
         }
-
-        public class ProccessFastInfo
-        {
-        }
     }
 
         public enum Protocol
@@ -213,7 +205,6 @@ namespace tickMeter
             UDP
         }
 
-     
         public enum TcpTableClass
         {
             TCP_TABLE_BASIC_LISTENER,
@@ -227,15 +218,13 @@ namespace tickMeter
             TCP_TABLE_OWNER_MODULE_ALL
         }
 
-
         public enum UdpTableClass
         {
             UDP_TABLE_BASIC,
             UDP_TABLE_OWNER_PID,
             UDP_TABLE_OWNER_MODULE
-    }
+        }
 
-     
         public enum MibTcpState
         {
             CLOSED = 1,
@@ -253,7 +242,6 @@ namespace tickMeter
             NONE = 0
         }
 
-  
         [StructLayout(LayoutKind.Sequential)]
         public struct MIB_TCPROW_OWNER_PID
         {
@@ -266,7 +254,6 @@ namespace tickMeter
             public byte[] remotePort;
             public int owningPid;
         }
-
 
         [StructLayout(LayoutKind.Sequential)]
         public struct MIB_TCPTABLE_OWNER_PID
@@ -306,17 +293,17 @@ namespace tickMeter
             }
         }
 
-    [StructLayout(LayoutKind.Sequential)]
-    public struct MIB_UDPROW_OWNER_PID
-    {
-        public uint localAddr;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-        public byte[] localPort;
-        public int owningPid;
-    }
+        [StructLayout(LayoutKind.Sequential)]
+        public struct MIB_UDPROW_OWNER_PID
+        {
+            public uint localAddr;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
+            public byte[] localPort;
+            public int owningPid;
+        }
 
 
-    [StructLayout(LayoutKind.Sequential)]
+        [StructLayout(LayoutKind.Sequential)]
         public struct MIB_UDPTABLE_OWNER_PID
         {
             public uint dwNumEntries;
@@ -341,7 +328,6 @@ namespace tickMeter
                 LocalAddress = localAddress;
                 LocalPort = localPort;
                 ProcessId = pId;
-                
             }
         }
     }

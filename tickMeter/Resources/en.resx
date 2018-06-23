@@ -120,6 +120,9 @@
   <data name="network_connection_lbl" xml:space="preserve">
     <value>Network connection:</value>
   </data>
+  <data name="possible_risks_lbl" xml:space="preserve">
+    <value>Possible Risks</value>
+  </data>
   <data name="settings_chart_checkbox" xml:space="preserve">
     <value>Tickrate graph</value>
   </data>
@@ -131,6 +134,10 @@
   </data>
   <data name="settings_log_checkobx" xml:space="preserve">
     <value>Log tickrate to CSV</value>
+  </data>
+  <data name="settings_netstats_checkbox" xml:space="preserve">
+    <value>Disable network analyze
+(if tickMeter crashes)</value>
   </data>
   <data name="settings_ping_checkbox" xml:space="preserve">
     <value>Display Ping and country</value>

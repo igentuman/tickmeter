@@ -23,6 +23,7 @@ namespace tickMeter
         private  IList<LivePacketDevice> AdaptersList;
         private PacketDevice selectedAdapter;
         public ConnectionsManager NetworkConnectionsMngr;
+        public NetworkStats networkStats;
 
         public TickMeterState meterState;
         public string udpscr = "";
@@ -107,11 +108,13 @@ namespace tickMeter
             {
                 ConnMngr = NetworkConnectionsMngr,
             };
+            NetworkConnectionsMngr.meterState = meterState;
             PubgMngr = new PubgStatsManager
             {
                 ConnMngr = NetworkConnectionsMngr,
                 meterState = meterState
             };
+            //networkStats = new NetworkStats();
         }
 
         protected void ShowAll()
@@ -328,7 +331,9 @@ namespace tickMeter
             settings_ip_checkbox.Text = Resources.en.ResourceManager.GetString(settings_ip_checkbox.Name);
             settings_ping_checkbox.Text = Resources.en.ResourceManager.GetString(settings_ping_checkbox.Name);
             settings_traffic_checkbox.Text = Resources.en.ResourceManager.GetString(settings_traffic_checkbox.Name);
+            settings_netstats_checkbox.Text = Resources.en.ResourceManager.GetString(settings_netstats_checkbox.Name);
             settings_chart_checkbox.Text = Resources.en.ResourceManager.GetString(settings_chart_checkbox.Name);
+            possible_risks_lbl.Text = Resources.en.ResourceManager.GetString(possible_risks_lbl.Name);
             network_connection_lbl.Text = Resources.en.ResourceManager.GetString(network_connection_lbl.Name);
         }
 
@@ -435,6 +440,16 @@ namespace tickMeter
             {
                 SwitchToEnglish();
             }
+        }
+
+        private void Possible_risks_lbl_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://bitbucket.org/dvman8bit/tickmeter/wiki/%D0%92%D0%BE%D0%B7%D0%BC%D0%BE%D0%B6%D0%BD%D1%8B%D0%B5%20%D1%80%D0%B8%D1%81%D0%BA%D0%B8%20%7C%20Possible%20risks");
+        }
+
+        private void settings_netstats_checkbox_CheckedChanged(object sender, EventArgs e)
+        {
+            meterState.ConnectionsManagerFlag = !settings_netstats_checkbox.Checked;
         }
     }
 }

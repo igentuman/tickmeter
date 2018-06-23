@@ -3,17 +3,58 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace tickMeter
 {
-    class NetworkStats
+    //initial source https://gist.github.com/cheynewallace/5971686
+    public class NetworkStats
     {
-        //source https://gist.github.com/cheynewallace/5971686
+        private System.Timers.Timer MngrTimer;
+        public Process[] ProcessInfoList;
+        public List<Port> ActivePorts = new List<Port>();
 
-        public static List<Port> GetNetStatPorts(string ProcessNameFilter = "", string ProtocolFilter = "")
+        public NetworkStats()
+        {
+            SetConnectionsManagerTimer();
+        }
+        
+
+        private void SetConnectionsManagerTimer()
+        {
+            if (MngrTimer == null)
+            {
+                MngrTimer = new System.Timers.Timer
+                {
+                    Interval = 5000
+                };
+                MngrTimer.Elapsed += MngrTimerTick;
+                MngrTimer.AutoReset = true;
+                MngrTimer.Enabled = true;
+            }
+        }
+
+        private async void MngrTimerTick(Object source, System.Timers.ElapsedEventArgs e)
+        {
+            await Task.Run(() =>
+            {
+                ActivePorts = GetNetStatPorts();
+                ProcessInfoList = Process.GetProcesses();
+                Process[] proccArray;
+                for (var i = 0; i < ActivePorts.Count; i++)
+                {
+                    proccArray = ProcessInfoList.Where(process => ActivePorts[i].ProcessId == process.Id).ToArray();
+                    if (proccArray.Length > 0)
+                    {
+                        ActivePorts[i].ProcessName = proccArray.First().ProcessName;
+                    }
+                }
+            });
+
+        }
+
+        public static List<Port> GetNetStatPorts(string ProtocolFilter = "")
         {
             var Ports = new List<Port>();
 
@@ -59,12 +100,7 @@ namespace tickMeter
                             string localAddress = Regex.Replace(tokens[2], @"\[(.*?)\]", "1.1.1.1");
                             string protocol = localAddress.Contains("1.1.1.1") ? String.Format("{0}v6", tokens[1]) : String.Format("{0}v4", tokens[1]);
                             string port_number = localAddress.Split(':')[1];
-                            string process_name = tokens[1] == "UDP" ? LookupProcess(Convert.ToInt16(tokens[4])) : LookupProcess(Convert.ToInt16(tokens[5]));
 
-                            if(ProcessNameFilter != "" && ProcessNameFilter != process_name)
-                            {
-                                continue;
-                            }
                             if (ProtocolFilter != "" && ProtocolFilter != protocol)
                             {
                                 continue;
@@ -73,7 +109,7 @@ namespace tickMeter
                             {
                                 Protocol = protocol,
                                 PortNumber = port_number,
-                                ProcessName = process_name,
+                                ProcessId = tokens[1] == "UDP" ? Convert.ToInt16(tokens[4]) : Convert.ToInt16(tokens[5]),
                                 RawData = row
                             });
                         }
@@ -87,14 +123,6 @@ namespace tickMeter
             return Ports;
         }
 
-        public static string LookupProcess(int pid)
-        {
-            string procName;
-            try { procName = Process.GetProcessById(pid).ProcessName; }
-            catch (Exception) { procName = "-"; }
-            return procName;
-        }
-
         public class Port
         {
             public string Name
@@ -105,6 +133,7 @@ namespace tickMeter
                 }
                 set { }
             }
+            public int ProcessId { get; set; }
             public string PortNumber { get; set; }
             public string ProcessName { get; set; }
             public string Protocol { get; set; }
