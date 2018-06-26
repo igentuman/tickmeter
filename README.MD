@@ -63,6 +63,10 @@ https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.4-installer.exe
 
 Более стабильная и точная работа
 
+v1.5
+
+в процессе
+
 Первый шаг к расширяемости
 
 
