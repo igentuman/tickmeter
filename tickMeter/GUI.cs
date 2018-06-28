@@ -24,6 +24,7 @@ namespace tickMeter
         private PacketDevice selectedAdapter;
         public ConnectionsManager NetworkConnectionsMngr;
         public NetworkStats networkStats;
+        public SettingsManager settings;
 
         public TickMeterState meterState;
         public string udpscr = "";
@@ -103,18 +104,59 @@ namespace tickMeter
                     adapters_list.Items.Add("Unknown");
                 }
             }
-            NetworkConnectionsMngr = new ConnectionsManager();
-            meterState = new TickMeterState
-            {
-                ConnMngr = NetworkConnectionsMngr,
-            };
-            NetworkConnectionsMngr.meterState = meterState;
+            meterState = new TickMeterState();
             PubgMngr = new PubgStatsManager
             {
-                ConnMngr = NetworkConnectionsMngr,
                 meterState = meterState
             };
+            settings = new SettingsManager();
+            ApplyFromConfig();
+            try
+            {
+                if(settings_netstats_checkbox.Checked)
+                {
+                    NetworkConnectionsMngr = new ConnectionsManager();
+                    meterState.ConnMngr = NetworkConnectionsMngr;
+                    meterState.ConnectionsManagerFlag = true;
+
+                    NetworkConnectionsMngr.meterState = meterState;
+                    PubgMngr.ConnMngr = NetworkConnectionsMngr;
+                }
+
+            } catch(Exception)
+            {
+                meterState.ConnectionsManagerFlag = false;
+                settings_netstats_checkbox.Checked = true;
+            }
+
+            
+            
             //networkStats = new NetworkStats();
+        }
+
+        public void ApplyFromConfig()
+        {
+            settings_chart_checkbox.Checked     = settings.GetOption("chart")       == "True";
+            settings_ip_checkbox.Checked        = settings.GetOption("ip")          == "True";
+            settings_ping_checkbox.Checked      = settings.GetOption("ping")        == "True";
+            settings_netstats_checkbox.Checked  = settings.GetOption("netstats")    == "True";
+            settings_traffic_checkbox.Checked   = settings.GetOption("traffic")     == "True";
+            settings_rtss_output.Checked        = settings.GetOption("rtss")        == "True";
+            
+            if(File.Exists(settings.GetOption("rtss_exe_path"))) {
+                RivaTuner.rtss_exe = settings.GetOption("rtss_exe_path");
+            }
+        }
+
+        public void SaveToConfig()
+        {
+            settings.SetOption("chart", settings_chart_checkbox.Checked.ToString());
+            settings.SetOption("ip", settings_ip_checkbox.Checked.ToString());
+            settings.SetOption("ping", settings_ping_checkbox.Checked.ToString());
+            settings.SetOption("netstats", settings_netstats_checkbox.Checked.ToString());
+            settings.SetOption("traffic", settings_traffic_checkbox.Checked.ToString());
+            settings.SetOption("rtss", settings_rtss_output.Checked.ToString());
+            settings.SaveConfig();
         }
 
         protected void ShowAll()
@@ -212,7 +254,9 @@ namespace tickMeter
 
             if (settings_rtss_output.Checked)
             {
-                await Task.Run(() => { RivaTuner.BuildRivaOutput(this); });
+                await Task.Run(() => {
+                    try { RivaTuner.BuildRivaOutput(this); } catch (Exception exc) { MessageBox.Show(exc.Message); }
+                });
             }
 
             //form overlay isn't visible, quit
@@ -380,8 +424,8 @@ namespace tickMeter
                     catch (IOException) { }
                 }
             }
-
-            RivaTuner.PrintData("");
+            try { RivaTuner.PrintData(""); } catch (Exception exc) { MessageBox.Show(exc.Message); }
+            
             meterState.Reset();
         }
 
@@ -396,6 +440,7 @@ namespace tickMeter
         private void GUI_FormClosed(object sender, FormClosedEventArgs e)
         {
             StopTracking();
+            SaveToConfig();
         }
 
         private void ServerLbl_Click(object sender, EventArgs e)
@@ -421,7 +466,7 @@ namespace tickMeter
         private async void Settings_rtss_output_CheckedChanged(object sender, EventArgs e)
         {
 
-            await Task.Run(() => { RivaTuner.PrintData(""); });
+            await Task.Run(() => { try { RivaTuner.PrintData(""); } catch (Exception exc) { MessageBox.Show(exc.Message); } });
             if (settings_rtss_output.Checked)
             {
                 SetWindowPos(this.Handle, HWND_NOTOPMOST, 0, 0, 0, 0, TOPMOST_FLAGS);
@@ -449,7 +494,25 @@ namespace tickMeter
 
         private void settings_netstats_checkbox_CheckedChanged(object sender, EventArgs e)
         {
-            meterState.ConnectionsManagerFlag = !settings_netstats_checkbox.Checked;
+            try
+            {
+                if (NetworkConnectionsMngr == null)
+                {
+                    NetworkConnectionsMngr = new ConnectionsManager();
+                    meterState.ConnMngr = NetworkConnectionsMngr;
+                    NetworkConnectionsMngr.meterState = meterState;
+                    PubgMngr.ConnMngr = NetworkConnectionsMngr;
+                }
+                meterState.ConnectionsManagerFlag = !settings_netstats_checkbox.Checked;
+
+            } catch (Exception)
+            {
+                settings_netstats_checkbox.Checked = true;
+                meterState.ConnectionsManagerFlag = false;
+                MessageBox.Show("Connections Manager internal error");
+            }
+            
+
         }
     }
 }

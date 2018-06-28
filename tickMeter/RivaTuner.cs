@@ -8,7 +8,7 @@ namespace tickMeter
 {
     public static class RivaTuner
     {
-        static string rtss_exe = @"C:\Program Files (x86)\RivaTuner Statistics Server\RTSS.exe";
+        public static string rtss_exe = @"C:\Program Files (x86)\RivaTuner Statistics Server\RTSS.exe";
         static TickMeterState meterState;
 
         [DllImport("kernel32")]
@@ -37,15 +37,13 @@ namespace tickMeter
 
         static RivaTuner()
         {
-            if (!VerifyRiva()) return;
             string path = "rivatuner.dll";
-
             unsafe
             {
                 void* handle = LoadLibrary(path);
 
                 if (handle == null)
-                    throw new DllNotFoundException("Unable to find the native rivatuner library: " + path);
+                    throw new FileNotFoundException("Unable to find the native rivatuner library: " + path);
 
                 unloader = new LibraryUnloader(handle);
             }
@@ -169,6 +167,8 @@ namespace tickMeter
         public static void PrintData(string text,bool RunRivaFlag = false)
         {
             if ((!IsRivaRunning() && !RunRivaFlag) || !VerifyRiva()) return;
+           
+            
             if (!IsRivaRunning() && RunRivaFlag)
             {
                 RunRiva();

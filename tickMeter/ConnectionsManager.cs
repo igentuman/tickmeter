@@ -18,6 +18,7 @@ namespace tickMeter
 
         // The version of IP used by the TCP/UDP endpoint. AF_INET is used for IPv4.
         private const int AF_INET = 2;
+        public const string dllFile = "iphlpapi.dll";
 
         public List<TcpProcessRecord> TcpActiveConnections = new List<TcpProcessRecord>();
 
@@ -76,12 +77,12 @@ namespace tickMeter
             SetConnectionsManagerTimer();
         }
 
-        [DllImport("iphlpapi.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        [DllImport(dllFile, CharSet = CharSet.Auto, SetLastError = true)]
         private static extern uint GetExtendedTcpTable(IntPtr pTcpTable, ref int pdwSize,
             bool bOrder, int ulAf, TcpTableClass tableClass, uint reserved = 0);
 
 
-        [DllImport("iphlpapi.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        [DllImport(dllFile, CharSet = CharSet.Auto, SetLastError = true)]
         private static extern uint GetExtendedUdpTable(IntPtr pUdpTable, ref int pdwSize,
             bool bOrder, int ulAf, UdpTableClass tableClass, uint reserved = 0);
         

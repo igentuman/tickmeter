@@ -49,7 +49,7 @@ namespace tickMeter
         public int DownloadTraffic { get; set; } = 0;
 
         public string TickRateLog { get; set; } = "";
-        public bool ConnectionsManagerFlag = true;
+        public bool ConnectionsManagerFlag = false;
 
         public void Reset()
         {
