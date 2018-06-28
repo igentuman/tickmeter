@@ -63,11 +63,15 @@ https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.4-installer.exe
 
 Более стабильная и точная работа
 
+v1.5
+
+в процессе
+
 Первый шаг к расширяемости
 
 
  - Подпишись на Youtube-канал: https://www.youtube.com/channel/UConzx4k6IVXSs9PsY9Snkbg
  - Вступай в группу: https://vk.com/some_itshneg
- - Discord: https://discord.gg/wdJmH6G
+ - Discord: https://discord.gg/ZuCn4UJ
  - Угостить меня пивком: https://it-man.website/donate/
 
