@@ -8,7 +8,7 @@ using System.Timers;
 
 namespace tickMeter.GameManagers
 {
-    class PubgStatsManager
+    public class PubgStatsManager
     {
         int StartPort = 6999;
         int EndPort = 7999;

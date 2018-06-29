@@ -61,6 +61,42 @@ namespace tickMeter.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Low data color.
+        /// </summary>
+        internal static string ColorBad {
+            get {
+                return ResourceManager.GetString("ColorBad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Good quality data color.
+        /// </summary>
+        internal static string ColorGood {
+            get {
+                return ResourceManager.GetString("ColorGood", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Overlay Labels Color.
+        /// </summary>
+        internal static string ColorLabel {
+            get {
+                return ResourceManager.GetString("ColorLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Hormal color.
+        /// </summary>
+        internal static string ColorMid {
+            get {
+                return ResourceManager.GetString("ColorMid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Network connection:.
         /// </summary>
         internal static string network_connection_lbl {
@@ -79,6 +115,15 @@ namespace tickMeter.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Settings.
+        /// </summary>
+        internal static string settings {
+            get {
+                return ResourceManager.GetString("settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Tickrate graph.
         /// </summary>
         internal static string settings_chart_checkbox {
@@ -93,15 +138,6 @@ namespace tickMeter.Resources {
         internal static string settings_ip_checkbox {
             get {
                 return ResourceManager.GetString("settings_ip_checkbox", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Settings.
-        /// </summary>
-        internal static string settings_lbl {
-            get {
-                return ResourceManager.GetString("settings_lbl", resourceCulture);
             }
         }
         

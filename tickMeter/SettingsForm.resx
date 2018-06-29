@@ -1,0 +1,628 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="possible_risks_lbl.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="possible_risks_lbl.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Verdana, 12pt, style=Underline</value>
+  </data>
+  <data name="possible_risks_lbl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>303, 9</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="possible_risks_lbl.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="possible_risks_lbl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>158, 18</value>
+  </data>
+  <data name="possible_risks_lbl.TabIndex" type="System.Int32, mscorlib">
+    <value>53</value>
+  </data>
+  <data name="possible_risks_lbl.Text" xml:space="preserve">
+    <value>Возможные риски</value>
+  </data>
+  <data name="&gt;&gt;possible_risks_lbl.Name" xml:space="preserve">
+    <value>possible_risks_lbl</value>
+  </data>
+  <data name="&gt;&gt;possible_risks_lbl.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;possible_risks_lbl.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;possible_risks_lbl.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="settings_netstats_checkbox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="settings_netstats_checkbox.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Tahoma, 11.25pt</value>
+  </data>
+  <data name="settings_netstats_checkbox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 151</value>
+  </data>
+  <data name="settings_netstats_checkbox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>449, 22</value>
+  </data>
+  <data name="settings_netstats_checkbox.TabIndex" type="System.Int32, mscorlib">
+    <value>52</value>
+  </data>
+  <data name="settings_netstats_checkbox.Text" xml:space="preserve">
+    <value>Не проверять сетевую активность (если тикметр вылетает)
+</value>
+  </data>
+  <data name="&gt;&gt;settings_netstats_checkbox.Name" xml:space="preserve">
+    <value>settings_netstats_checkbox</value>
+  </data>
+  <data name="&gt;&gt;settings_netstats_checkbox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;settings_netstats_checkbox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;settings_netstats_checkbox.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="label8.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label8.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Verdana, 12pt, style=Underline</value>
+  </data>
+  <data name="label8.Location" type="System.Drawing.Point, System.Drawing">
+    <value>269, 36</value>
+  </data>
+  <data name="label8.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="label8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>192, 18</value>
+  </data>
+  <data name="label8.TabIndex" type="System.Int32, mscorlib">
+    <value>46</value>
+  </data>
+  <data name="label8.Text" xml:space="preserve">
+    <value>Беларуский Айтишник</value>
+  </data>
+  <data name="&gt;&gt;label8.Name" xml:space="preserve">
+    <value>label8</value>
+  </data>
+  <data name="&gt;&gt;label8.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label8.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;label8.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="settings_traffic_checkbox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="settings_traffic_checkbox.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Tahoma, 11.25pt</value>
+  </data>
+  <data name="settings_traffic_checkbox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 96</value>
+  </data>
+  <data name="settings_traffic_checkbox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>170, 22</value>
+  </data>
+  <data name="settings_traffic_checkbox.TabIndex" type="System.Int32, mscorlib">
+    <value>51</value>
+  </data>
+  <data name="settings_traffic_checkbox.Text" xml:space="preserve">
+    <value>Отображать трафик</value>
+  </data>
+  <data name="&gt;&gt;settings_traffic_checkbox.Name" xml:space="preserve">
+    <value>settings_traffic_checkbox</value>
+  </data>
+  <data name="&gt;&gt;settings_traffic_checkbox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;settings_traffic_checkbox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;settings_traffic_checkbox.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="settings_ping_checkbox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="settings_ping_checkbox.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Tahoma, 11.25pt</value>
+  </data>
+  <data name="settings_ping_checkbox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 68</value>
+  </data>
+  <data name="settings_ping_checkbox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>210, 22</value>
+  </data>
+  <data name="settings_ping_checkbox.TabIndex" type="System.Int32, mscorlib">
+    <value>50</value>
+  </data>
+  <data name="settings_ping_checkbox.Text" xml:space="preserve">
+    <value>Отображать Ping и страну</value>
+  </data>
+  <data name="&gt;&gt;settings_ping_checkbox.Name" xml:space="preserve">
+    <value>settings_ping_checkbox</value>
+  </data>
+  <data name="&gt;&gt;settings_ping_checkbox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;settings_ping_checkbox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;settings_ping_checkbox.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="settings_ip_checkbox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="settings_ip_checkbox.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Tahoma, 11.25pt</value>
+  </data>
+  <data name="settings_ip_checkbox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 40</value>
+  </data>
+  <data name="settings_ip_checkbox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>133, 22</value>
+  </data>
+  <data name="settings_ip_checkbox.TabIndex" type="System.Int32, mscorlib">
+    <value>49</value>
+  </data>
+  <data name="settings_ip_checkbox.Text" xml:space="preserve">
+    <value>Отображать IP</value>
+  </data>
+  <data name="&gt;&gt;settings_ip_checkbox.Name" xml:space="preserve">
+    <value>settings_ip_checkbox</value>
+  </data>
+  <data name="&gt;&gt;settings_ip_checkbox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;settings_ip_checkbox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;settings_ip_checkbox.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="settings_chart_checkbox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="settings_chart_checkbox.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Tahoma, 11.25pt</value>
+  </data>
+  <data name="settings_chart_checkbox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 124</value>
+  </data>
+  <data name="settings_chart_checkbox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 22</value>
+  </data>
+  <data name="settings_chart_checkbox.TabIndex" type="System.Int32, mscorlib">
+    <value>47</value>
+  </data>
+  <data name="settings_chart_checkbox.Text" xml:space="preserve">
+    <value>График тикрейта</value>
+  </data>
+  <data name="&gt;&gt;settings_chart_checkbox.Name" xml:space="preserve">
+    <value>settings_chart_checkbox</value>
+  </data>
+  <data name="&gt;&gt;settings_chart_checkbox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;settings_chart_checkbox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;settings_chart_checkbox.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="settings_rtss_output.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="settings_rtss_output.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Tahoma, 11.25pt</value>
+  </data>
+  <data name="settings_rtss_output.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 12</value>
+  </data>
+  <data name="settings_rtss_output.Size" type="System.Drawing.Size, System.Drawing">
+    <value>154, 22</value>
+  </data>
+  <data name="settings_rtss_output.TabIndex" type="System.Int32, mscorlib">
+    <value>48</value>
+  </data>
+  <data name="settings_rtss_output.Text" xml:space="preserve">
+    <value>Вывод через RTSS</value>
+  </data>
+  <data name="&gt;&gt;settings_rtss_output.Name" xml:space="preserve">
+    <value>settings_rtss_output</value>
+  </data>
+  <data name="&gt;&gt;settings_rtss_output.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;settings_rtss_output.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;settings_rtss_output.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="settings_log_checkbox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="settings_log_checkbox.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Tahoma, 11.25pt</value>
+  </data>
+  <data name="settings_log_checkbox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 179</value>
+  </data>
+  <data name="settings_log_checkbox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>217, 22</value>
+  </data>
+  <data name="settings_log_checkbox.TabIndex" type="System.Int32, mscorlib">
+    <value>45</value>
+  </data>
+  <data name="settings_log_checkbox.Text" xml:space="preserve">
+    <value>Логгировать тикрейт в CSV</value>
+  </data>
+  <data name="&gt;&gt;settings_log_checkbox.Name" xml:space="preserve">
+    <value>settings_log_checkbox</value>
+  </data>
+  <data name="&gt;&gt;settings_log_checkbox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;settings_log_checkbox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;settings_log_checkbox.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="network_connection_lbl.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="network_connection_lbl.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Tahoma, 12pt, style=Bold</value>
+  </data>
+  <data name="network_connection_lbl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 444</value>
+  </data>
+  <data name="network_connection_lbl.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="network_connection_lbl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>206, 19</value>
+  </data>
+  <data name="network_connection_lbl.TabIndex" type="System.Int32, mscorlib">
+    <value>44</value>
+  </data>
+  <data name="network_connection_lbl.Text" xml:space="preserve">
+    <value>Сетевое подключение:</value>
+  </data>
+  <data name="&gt;&gt;network_connection_lbl.Name" xml:space="preserve">
+    <value>network_connection_lbl</value>
+  </data>
+  <data name="&gt;&gt;network_connection_lbl.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;network_connection_lbl.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;network_connection_lbl.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="adapters_list.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>System</value>
+  </data>
+  <data name="adapters_list.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9pt</value>
+  </data>
+  <data name="adapters_list.ItemHeight" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="adapters_list.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 471</value>
+  </data>
+  <data name="adapters_list.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="adapters_list.Size" type="System.Drawing.Size, System.Drawing">
+    <value>372, 23</value>
+  </data>
+  <data name="adapters_list.TabIndex" type="System.Int32, mscorlib">
+    <value>43</value>
+  </data>
+  <data name="&gt;&gt;adapters_list.Name" xml:space="preserve">
+    <value>adapters_list</value>
+  </data>
+  <data name="&gt;&gt;adapters_list.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;adapters_list.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;adapters_list.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <metadata name="colorDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="ColorLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="ColorLabel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Verdana, 15.75pt, style=Bold</value>
+  </data>
+  <data name="ColorLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 214</value>
+  </data>
+  <data name="ColorLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="ColorLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>285, 25</value>
+  </data>
+  <data name="ColorLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>54</value>
+  </data>
+  <data name="ColorLabel.Text" xml:space="preserve">
+    <value>Цвет лейблов оверлея</value>
+  </data>
+  <data name="&gt;&gt;ColorLabel.Name" xml:space="preserve">
+    <value>ColorLabel</value>
+  </data>
+  <data name="&gt;&gt;ColorLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ColorLabel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;ColorLabel.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="ColorBad.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="ColorBad.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Verdana, 15.75pt, style=Bold</value>
+  </data>
+  <data name="ColorBad.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 250</value>
+  </data>
+  <data name="ColorBad.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="ColorBad.Size" type="System.Drawing.Size, System.Drawing">
+    <value>284, 25</value>
+  </data>
+  <data name="ColorBad.TabIndex" type="System.Int32, mscorlib">
+    <value>55</value>
+  </data>
+  <data name="ColorBad.Text" xml:space="preserve">
+    <value>Цвет плохих значений</value>
+  </data>
+  <data name="&gt;&gt;ColorBad.Name" xml:space="preserve">
+    <value>ColorBad</value>
+  </data>
+  <data name="&gt;&gt;ColorBad.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ColorBad.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;ColorBad.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="ColorMid.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="ColorMid.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Verdana, 15.75pt, style=Bold</value>
+  </data>
+  <data name="ColorMid.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 285</value>
+  </data>
+  <data name="ColorMid.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="ColorMid.Size" type="System.Drawing.Size, System.Drawing">
+    <value>298, 25</value>
+  </data>
+  <data name="ColorMid.TabIndex" type="System.Int32, mscorlib">
+    <value>56</value>
+  </data>
+  <data name="ColorMid.Text" xml:space="preserve">
+    <value>Цвет средних значений</value>
+  </data>
+  <data name="&gt;&gt;ColorMid.Name" xml:space="preserve">
+    <value>ColorMid</value>
+  </data>
+  <data name="&gt;&gt;ColorMid.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ColorMid.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;ColorMid.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="ColorGood.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="ColorGood.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Verdana, 15.75pt, style=Bold</value>
+  </data>
+  <data name="ColorGood.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 319</value>
+  </data>
+  <data name="ColorGood.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="ColorGood.Size" type="System.Drawing.Size, System.Drawing">
+    <value>304, 25</value>
+  </data>
+  <data name="ColorGood.TabIndex" type="System.Int32, mscorlib">
+    <value>57</value>
+  </data>
+  <data name="ColorGood.Text" xml:space="preserve">
+    <value>Цвет хороших значений</value>
+  </data>
+  <data name="&gt;&gt;ColorGood.Name" xml:space="preserve">
+    <value>ColorGood</value>
+  </data>
+  <data name="&gt;&gt;ColorGood.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ColorGood.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;ColorGood.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>507, 507</value>
+  </data>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterScreen</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="&gt;&gt;colorDialog1.Name" xml:space="preserve">
+    <value>colorDialog1</value>
+  </data>
+  <data name="&gt;&gt;colorDialog1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColorDialog, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>SettingsForm</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+</root>

@@ -117,20 +117,32 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ColorBad" xml:space="preserve">
+    <value>Low data color</value>
+  </data>
+  <data name="ColorGood" xml:space="preserve">
+    <value>Good quality data color</value>
+  </data>
+  <data name="ColorLabel" xml:space="preserve">
+    <value>Overlay Labels Color</value>
+  </data>
+  <data name="ColorMid" xml:space="preserve">
+    <value>Hormal color</value>
+  </data>
   <data name="network_connection_lbl" xml:space="preserve">
     <value>Network connection:</value>
   </data>
   <data name="possible_risks_lbl" xml:space="preserve">
     <value>Possible Risks</value>
   </data>
+  <data name="settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
   <data name="settings_chart_checkbox" xml:space="preserve">
     <value>Tickrate graph</value>
   </data>
   <data name="settings_ip_checkbox" xml:space="preserve">
     <value>Display IP</value>
-  </data>
-  <data name="settings_lbl" xml:space="preserve">
-    <value>Settings</value>
   </data>
   <data name="settings_log_checkobx" xml:space="preserve">
     <value>Log tickrate to CSV</value>

@@ -160,6 +160,12 @@
       <DependentUpon>en.resx</DependentUpon>
     </Compile>
     <Compile Include="RivaTuner.cs" />
+    <Compile Include="SettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingsForm.Designer.cs">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SettingsManager.cs" />
     <Compile Include="TickMeterState.cs" />
     <EmbeddedResource Include="GUI.resx">
@@ -179,6 +185,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>en.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="SettingsForm.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -195,6 +204,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+    <None Include="Resources\gear.png" />
     <None Include="Resources\Icon1.ico" />
     <None Include="Resources\grid.png" />
   </ItemGroup>

@@ -9,7 +9,6 @@ using PcapDotNet.Analysis;
 using PcapDotNet.Core;
 using PcapDotNet.Packets;
 using System.Threading.Tasks;
-using System.Diagnostics;
 using System.Security.Permissions;
 using System.Runtime.InteropServices;
 using System.Globalization;
@@ -24,8 +23,8 @@ namespace tickMeter
         private PacketDevice selectedAdapter;
         public ConnectionsManager NetworkConnectionsMngr;
         public NetworkStats networkStats;
-        public SettingsManager settings;
 
+        public SettingsForm settingsForm;
         public TickMeterState meterState;
         public string udpscr = "";
         public string udpdes = "";
@@ -40,7 +39,7 @@ namespace tickMeter
         int appInitHeigh;
         int appInitWidth;
         bool OnScreen;
-        PubgStatsManager PubgMngr;
+        public PubgStatsManager PubgMngr;
 
         private const int WM_ACTIVATE = 0x0006;
         private const int WA_ACTIVE = 1;
@@ -68,6 +67,8 @@ namespace tickMeter
         public GUI()
         {
             InitializeComponent();
+            settingsForm = new SettingsForm();
+            settingsForm.gui = this;
             try
             {
                 AdaptersList = LivePacketDevice.AllLocalMachine.ToList();
@@ -97,11 +98,11 @@ namespace tickMeter
                         addr = Adapter.Addresses[1].ToString();
                         match = Regex.Match(addr, "(\\d)+\\.(\\d)+\\.(\\d)+\\.(\\d)+");
                     }
-                    adapters_list.Items.Add(match.Value + " " + Adapter.Description.Replace("Network adapter ","").Replace("'Microsoft' ",""));
+                    settingsForm.adapters_list.Items.Add(match.Value + " " + Adapter.Description.Replace("Network adapter ","").Replace("'Microsoft' ",""));
                 }
                 else
                 {
-                    adapters_list.Items.Add("Unknown");
+                    settingsForm.adapters_list.Items.Add("Unknown");
                 }
             }
             meterState = new TickMeterState();
@@ -109,11 +110,11 @@ namespace tickMeter
             {
                 meterState = meterState
             };
-            settings = new SettingsManager();
-            ApplyFromConfig();
+
+            settingsForm.ApplyFromConfig();
             try
             {
-                if(settings_netstats_checkbox.Checked)
+                if(settingsForm.settings_netstats_checkbox.Checked)
                 {
                     NetworkConnectionsMngr = new ConnectionsManager();
                     meterState.ConnMngr = NetworkConnectionsMngr;
@@ -125,49 +126,23 @@ namespace tickMeter
 
             } catch(Exception)
             {
-                meterState.ConnectionsManagerFlag = false;
-                settings_netstats_checkbox.Checked = true;
-            }
-
-            
-            
-            //networkStats = new NetworkStats();
-        }
-
-        public void ApplyFromConfig()
-        {
-            settings_chart_checkbox.Checked     = settings.GetOption("chart")       == "True";
-            settings_ip_checkbox.Checked        = settings.GetOption("ip")          == "True";
-            settings_ping_checkbox.Checked      = settings.GetOption("ping")        == "True";
-            settings_netstats_checkbox.Checked  = settings.GetOption("netstats")    == "True";
-            settings_traffic_checkbox.Checked   = settings.GetOption("traffic")     == "True";
-            settings_rtss_output.Checked        = settings.GetOption("rtss")        == "True";
-            
-            if(File.Exists(settings.GetOption("rtss_exe_path"))) {
-                RivaTuner.rtss_exe = settings.GetOption("rtss_exe_path");
+                meterState.ConnectionsManagerFlag = 
+                settingsForm.settings_netstats_checkbox.Checked = true;
             }
         }
 
-        public void SaveToConfig()
-        {
-            settings.SetOption("chart", settings_chart_checkbox.Checked.ToString());
-            settings.SetOption("ip", settings_ip_checkbox.Checked.ToString());
-            settings.SetOption("ping", settings_ping_checkbox.Checked.ToString());
-            settings.SetOption("netstats", settings_netstats_checkbox.Checked.ToString());
-            settings.SetOption("traffic", settings_traffic_checkbox.Checked.ToString());
-            settings.SetOption("rtss", settings_rtss_output.Checked.ToString());
-            settings.SaveConfig();
-        }
+        
 
         protected void ShowAll()
         {
-            serverLbl.Visible = true;
-            label5.Visible = true;
-            pingLbl.Visible = true;
-            label4.Visible = true;
-            countryLbl.Visible = true;
-            label9.Visible = true;
-            trafficLbl.Visible = true;
+            serverLbl.Visible = 
+            label5.Visible = 
+            pingLbl.Visible = 
+            label4.Visible = 
+            countryLbl.Visible = 
+            label9.Visible = 
+            trafficLbl.Visible = 
+            SettingsButton.Visible = true;
         }
 
         [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
@@ -199,29 +174,29 @@ namespace tickMeter
                 BackColor = SystemColors.WindowFrame;
                 TransparencyKey = SystemColors.WindowFrame;
                 FormBorderStyle = FormBorderStyle.None;
-                
-                if(settings_rtss_output.Checked)
+                SettingsButton.Visible = false;
+                if (settingsForm.settings_rtss_output.Checked)
                 {
                     OnScreen = false;
                 }
-                if ( ! settings_chart_checkbox.Checked)
+                if ( !settingsForm.settings_chart_checkbox.Checked)
                 {
                     Height = 160;
                 }
                 Width = 475;
 
-                if( ! settings_ip_checkbox.Checked)
+                if( !settingsForm.settings_ip_checkbox.Checked)
                 {
                     serverLbl.Visible = false;
                     label5.Visible = false;
                 }
-                if (!settings_ping_checkbox.Checked)
+                if (!settingsForm.settings_ping_checkbox.Checked)
                 {
                     pingLbl.Visible = false;
                     label4.Visible = false;
                     countryLbl.Visible = false;
                 }
-                if (!settings_traffic_checkbox.Checked)
+                if (!settingsForm.settings_traffic_checkbox.Checked)
                 {
                     label9.Visible = false;
                     trafficLbl.Visible = false;
@@ -250,9 +225,7 @@ namespace tickMeter
 
         private async void TicksLoop_Tick(object sender, EventArgs e)
         {
-            
-
-            if (settings_rtss_output.Checked)
+            if (settingsForm.settings_rtss_output.Checked)
             {
                 await Task.Run(() => {
                     try { RivaTuner.BuildRivaOutput(this); } catch (Exception exc) { MessageBox.Show(exc.Message); }
@@ -263,14 +236,14 @@ namespace tickMeter
             if (!OnScreen) return;
 
             //update tickrate
-            Color TickRateColor = Color.ForestGreen;
+            Color TickRateColor = settingsForm.ColorGood.ForeColor;
             if (meterState.OutputTickRate < 30)
             {
-                TickRateColor = Color.Red;
+                TickRateColor = settingsForm.ColorBad.ForeColor;
             }
             else if (meterState.OutputTickRate < 50)
             {
-                TickRateColor = Color.DarkOrange;
+                TickRateColor = settingsForm.ColorMid.ForeColor;
             }
 
             await Task.Run(
@@ -280,24 +253,24 @@ namespace tickMeter
                             tickRateLbl.ForeColor = TickRateColor;
                         }));
                         //update tickrate chart
-                        if (settings_chart_checkbox.Checked)
+                        if (settingsForm.settings_chart_checkbox.Checked)
                         {
                             graph.Invoke(new Action(() => graph.Image = UpdateGraph(meterState.TicksHistory)));
                         }
                         //update traffic
-                        if (settings_traffic_checkbox.Checked)
+                        if (settingsForm.settings_traffic_checkbox.Checked)
                         {
                             float formatedUpload = (float)meterState.UploadTraffic / (1024 * 1024);
                             float formatedDownload = (float)meterState.DownloadTraffic / (1024 * 1024);
                             trafficLbl.Invoke(new Action(() => trafficLbl.Text = formatedUpload.ToString("N2") + " / " + formatedDownload.ToString("N2") + " mb"));
                         }
                         //update IP
-                        if (settings_ip_checkbox.Checked)
+                        if (settingsForm.settings_ip_checkbox.Checked)
                         {
                         serverLbl.Invoke(new Action(() => serverLbl.Text = meterState.Server.Ip));
                         }
                         //update PING
-                        if (settings_ping_checkbox.Checked)
+                        if (settingsForm.settings_ping_checkbox.Checked)
                         {
                         countryLbl.Invoke(new Action(() => countryLbl.Text = meterState.Server.Country));
                         pingLbl.Invoke(new Action(() => pingLbl.Text = meterState.Server.Ping.ToString() + " ms"));
@@ -307,7 +280,6 @@ namespace tickMeter
             {
                 StopTracking();
             }
-
         }
 
         public Bitmap UpdateGraph(List<int> ticks)
@@ -367,33 +339,20 @@ namespace tickMeter
             pcapWorker.RunWorkerAsync();
         }
 
-        public void SwitchToEnglish()
-        {
-            settings_lbl.Text = Resources.en.ResourceManager.GetString(settings_lbl.Name);
-            settings_rtss_output.Text = Resources.en.ResourceManager.GetString(settings_rtss_output.Name);
-            settings_log_checkobx.Text = Resources.en.ResourceManager.GetString(settings_log_checkobx.Name);
-            settings_ip_checkbox.Text = Resources.en.ResourceManager.GetString(settings_ip_checkbox.Name);
-            settings_ping_checkbox.Text = Resources.en.ResourceManager.GetString(settings_ping_checkbox.Name);
-            settings_traffic_checkbox.Text = Resources.en.ResourceManager.GetString(settings_traffic_checkbox.Name);
-            settings_netstats_checkbox.Text = Resources.en.ResourceManager.GetString(settings_netstats_checkbox.Name);
-            settings_chart_checkbox.Text = Resources.en.ResourceManager.GetString(settings_chart_checkbox.Name);
-            possible_risks_lbl.Text = Resources.en.ResourceManager.GetString(possible_risks_lbl.Name);
-            network_connection_lbl.Text = Resources.en.ResourceManager.GetString(network_connection_lbl.Name);
-        }
-
+        
         public void StartTracking()
         {
             meterState.Reset();
             meterState.IsTracking = true;
             ticksLoop.Enabled = true;
-            selectedAdapter = AdaptersList[adapters_list.SelectedIndex];
-            lastSelectedAdapterID = adapters_list.SelectedIndex;
+            selectedAdapter = AdaptersList[settingsForm.adapters_list.SelectedIndex];
+            lastSelectedAdapterID = settingsForm.adapters_list.SelectedIndex;
             if (!pcapWorker.IsBusy)
             {
                 pcapWorker.RunWorkerAsync();
             }
-            adapters_list.Enabled = false;
-            settings_log_checkobx.Enabled = false;
+            settingsForm.adapters_list.Enabled = false;
+            settingsForm.settings_log_checkbox.Enabled = false;
         }
 
         public void StopTracking()
@@ -401,15 +360,15 @@ namespace tickMeter
             ticksLoop.Enabled = false;
             meterState.IsTracking = false;
 
-            tickRateLbl.ForeColor = Color.OrangeRed;
-            pingLbl.ForeColor = Color.OrangeRed;
+            tickRateLbl.ForeColor = settingsForm.ColorBad.ForeColor;
+            pingLbl.ForeColor = settingsForm.ColorMid.ForeColor;
             graph.Image = graph.InitialImage;
             if (pcapWorker.IsBusy)
             {
                 pcapWorker.CancelAsync();
             }
-            adapters_list.SelectedIndex = -1;
-            if (settings_log_checkobx.Checked)
+            settingsForm.adapters_list.SelectedIndex = -1;
+            if (settingsForm.settings_log_checkbox.Checked)
             {
                 if(meterState.Server.Ip != "" && meterState.TickRateLog != "")
                 {
@@ -429,18 +388,10 @@ namespace tickMeter
             meterState.Reset();
         }
 
-        private void Adapters_list_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (adapters_list.SelectedIndex >= 0)
-            {
-               StartTracking();
-            }
-        }
-
         private void GUI_FormClosed(object sender, FormClosedEventArgs e)
         {
             StopTracking();
-            SaveToConfig();
+            settingsForm.SaveToConfig();
         }
 
         private void ServerLbl_Click(object sender, EventArgs e)
@@ -453,24 +404,18 @@ namespace tickMeter
         {
             if (!meterState.IsTracking && lastSelectedAdapterID != -1)
             {
-                adapters_list.SelectedIndex = lastSelectedAdapterID;
+                settingsForm.adapters_list.SelectedIndex = lastSelectedAdapterID;
                 StartTracking();
             }
         }
 
-        private void Label8_Click(object sender, EventArgs e)
+        public void UpdateStyle(bool rtssFlag)
         {
-            Process.Start("https://www.youtube.com/channel/UConzx4k6IVXSs9PsY9Snkbg");
-        }
-
-        private async void Settings_rtss_output_CheckedChanged(object sender, EventArgs e)
-        {
-
-            await Task.Run(() => { try { RivaTuner.PrintData(""); } catch (Exception exc) { MessageBox.Show(exc.Message); } });
-            if (settings_rtss_output.Checked)
+            if (rtssFlag)
             {
                 SetWindowPos(this.Handle, HWND_NOTOPMOST, 0, 0, 0, 0, TOPMOST_FLAGS);
-            } else
+            }
+            else
             {
                 SetWindowPos(this.Handle, HWND_TOPMOST, 0, 0, 0, 0, TOPMOST_FLAGS);
             }
@@ -483,36 +428,13 @@ namespace tickMeter
             CultureInfo ci = CultureInfo.InstalledUICulture;
             if (ci.TwoLetterISOLanguageName == "en")
             {
-                SwitchToEnglish();
+                settingsForm.SwitchToEnglish();
             }
         }
 
-        private void Possible_risks_lbl_Click(object sender, EventArgs e)
+        private void SettingsButton_Click(object sender, EventArgs e)
         {
-            Process.Start("https://bitbucket.org/dvman8bit/tickmeter/wiki/%D0%92%D0%BE%D0%B7%D0%BC%D0%BE%D0%B6%D0%BD%D1%8B%D0%B5%20%D1%80%D0%B8%D1%81%D0%BA%D0%B8%20%7C%20Possible%20risks");
-        }
-
-        private void settings_netstats_checkbox_CheckedChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                if (NetworkConnectionsMngr == null)
-                {
-                    NetworkConnectionsMngr = new ConnectionsManager();
-                    meterState.ConnMngr = NetworkConnectionsMngr;
-                    NetworkConnectionsMngr.meterState = meterState;
-                    PubgMngr.ConnMngr = NetworkConnectionsMngr;
-                }
-                meterState.ConnectionsManagerFlag = !settings_netstats_checkbox.Checked;
-
-            } catch (Exception)
-            {
-                settings_netstats_checkbox.Checked = true;
-                meterState.ConnectionsManagerFlag = false;
-                MessageBox.Show("Connections Manager internal error");
-            }
-            
-
+            settingsForm.Show();
         }
     }
 }
