@@ -3,10 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 
 namespace tickMeter
@@ -69,7 +67,7 @@ namespace tickMeter
         public class GameServer
         {
             private string CurrentIP = "";
-
+            private int PingLimit = 1000;
             public int Ping { get; set; } = 0;
 
             public string Country { get; set; } = "";
@@ -160,22 +158,42 @@ namespace tickMeter
                 });
             }
 
+            public static IPEndPoint CreateIPEndPoint(string endPoint)
+            {
+                string[] ep = endPoint.Split(':');
+                if (ep.Length != 2) throw new FormatException("Invalid endpoint format");
+                IPAddress ip;
+                if (!IPAddress.TryParse(ep[0], out ip))
+                {
+                    throw new FormatException("Invalid ip-adress");
+                }
+                int port;
+                if (!int.TryParse(ep[1], NumberStyles.None, NumberFormatInfo.CurrentInfo, out port))
+                {
+                    throw new FormatException("Invalid port");
+                }
+                return new IPEndPoint(ip, port);
+            }
+
             private async void PingServer()
             {
                 if (Ip == "") return;
                 
                 await Task.Run(() =>
                 {
-                    WebRequest request;
-                    request = WebRequest.Create("http://" + Ip);
-                    Stopwatch sw = Stopwatch.StartNew();
-                    try { using (WebResponse response = request.GetResponse()) { } }
-                    catch (Exception) { }
-                    sw.Stop();
-                    Ping = int.Parse(sw.Elapsed.ToString("fff"));
+                    Socket sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                    sock.Blocking = true;
+                    sock.ReceiveTimeout = PingLimit;
+                    var stopwatch = new Stopwatch();
+                    EndPoint ep = CreateIPEndPoint(Ip + ":80");
+                    stopwatch.Start();
+                    try { sock.Connect(ep); } catch (Exception) { }
+                    stopwatch.Stop();
+                    sock.Close();
+                    int curPing = int.Parse(stopwatch.Elapsed.TotalMilliseconds.ToString());
+                    if(curPing < PingLimit) Ping = curPing;
                 });
             }
-
         }
     }
 }
