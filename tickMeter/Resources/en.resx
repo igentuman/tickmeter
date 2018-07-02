@@ -135,6 +135,9 @@
   <data name="possible_risks_lbl" xml:space="preserve">
     <value>Possible Risks</value>
   </data>
+  <data name="rememberAdapter" xml:space="preserve">
+    <value>Remember</value>
+  </data>
   <data name="settings" xml:space="preserve">
     <value>Settings</value>
   </data>

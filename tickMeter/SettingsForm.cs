@@ -31,6 +31,11 @@ namespace tickMeter
             settings_netstats_checkbox.Checked = settings.GetOption("netstats") == "True";
             settings_traffic_checkbox.Checked = settings.GetOption("traffic") == "True";
             settings_rtss_output.Checked = settings.GetOption("rtss") == "True";
+            rememberAdapter.Checked = settings.GetOption("remember_adapter") == "True";
+            if(rememberAdapter.Checked)
+            {
+                adapters_list.SelectedIndex = int.Parse(settings.GetOption("last_selected_adapter_id"));
+            }
             ColorLabel.ForeColor = ColorTranslator.FromHtml("#"+ settings.GetOption("color_label"));
             ColorBad.ForeColor = ColorTranslator.FromHtml("#"+ settings.GetOption("color_bad"));
             ColorMid.ForeColor = ColorTranslator.FromHtml("#"+ settings.GetOption("color_mid"));
@@ -63,6 +68,8 @@ namespace tickMeter
             settings.SetOption("color_mid", HexConverter(ColorMid.ForeColor));
             settings.SetOption("color_good", HexConverter(ColorGood.ForeColor));
             settings.SetOption("rtss", settings_rtss_output.Checked.ToString());
+            settings.SetOption("remember_adapter", rememberAdapter.Checked.ToString());
+            settings.SetOption("last_selected_adapter_id", adapters_list.SelectedIndex.ToString());
             settings.SaveConfig();
         }
 
@@ -82,6 +89,7 @@ namespace tickMeter
             ColorBad.Text = Resources.en.ResourceManager.GetString(ColorBad.Name);
             ColorMid.Text = Resources.en.ResourceManager.GetString(ColorMid.Name);
             ColorGood.Text = Resources.en.ResourceManager.GetString(ColorGood.Name);
+            rememberAdapter.Text = Resources.en.ResourceManager.GetString(rememberAdapter.Name);
         }
 
         private void LabelsColor_Click(object sender, EventArgs e)
@@ -93,24 +101,32 @@ namespace tickMeter
                 gui.label5.ForeColor =
                 gui.label9.ForeColor =
                 ColorLabel.ForeColor;
+            SaveToConfig();
+            ApplyFromConfig();
         }
 
         private void ColorBad_Click(object sender, EventArgs e)
         {
             colorDialog1.ShowDialog();
             ColorBad.ForeColor = colorDialog1.Color;
+            SaveToConfig();
+            ApplyFromConfig();
         }
 
         private void ColorMid_Click(object sender, EventArgs e)
         {
             colorDialog1.ShowDialog();
             ColorMid.ForeColor = colorDialog1.Color;
+            SaveToConfig();
+            ApplyFromConfig();
         }
 
         private void ColorGood_Click(object sender, EventArgs e)
         {
             colorDialog1.ShowDialog();
             ColorGood.ForeColor = colorDialog1.Color;
+            SaveToConfig();
+            ApplyFromConfig();
         }
 
         private void SettingsForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -161,8 +177,15 @@ namespace tickMeter
         {
             if (adapters_list.SelectedIndex >= 0)
             {
+                gui.StopTracking();
                 gui.StartTracking();
             }
+        }
+
+        private void netInfo_Click(object sender, EventArgs e)
+        {
+
+            MessageBox.Show("Отключить если вылетает PUBG или tickMeter. Отключение ухудшит качество данных.", "Help",MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

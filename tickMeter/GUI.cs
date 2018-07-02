@@ -75,7 +75,7 @@ namespace tickMeter
             }
             catch(Exception)
             {
-                MessageBox.Show("Install WinPCAP. Try to run as admin");
+                MessageBox.Show("Install WinPCAP. Try to run as Admin");
             }
 
             PcapDotNetAnalysis.OptIn = true;
@@ -114,7 +114,7 @@ namespace tickMeter
             settingsForm.ApplyFromConfig();
             try
             {
-                if(settingsForm.settings_netstats_checkbox.Checked)
+                if( ! settingsForm.settings_netstats_checkbox.Checked)
                 {
                     NetworkConnectionsMngr = new ConnectionsManager();
                     meterState.ConnMngr = NetworkConnectionsMngr;
@@ -351,7 +351,6 @@ namespace tickMeter
             {
                 pcapWorker.RunWorkerAsync();
             }
-            settingsForm.adapters_list.Enabled = false;
             settingsForm.settings_log_checkbox.Enabled = false;
         }
 
@@ -367,7 +366,7 @@ namespace tickMeter
             {
                 pcapWorker.CancelAsync();
             }
-            settingsForm.adapters_list.SelectedIndex = -1;
+           
             if (settingsForm.settings_log_checkbox.Checked)
             {
                 if(meterState.Server.Ip != "" && meterState.TickRateLog != "")
@@ -392,6 +391,7 @@ namespace tickMeter
         {
             StopTracking();
             settingsForm.SaveToConfig();
+            RivaTuner.KillRtss();
         }
 
         private void ServerLbl_Click(object sender, EventArgs e)

@@ -81,10 +81,9 @@ namespace tickMeter
                     CurrentIP = value;
                     if (oldIP != CurrentIP)
                     {
-                        PingServer();
-                        DetectCountry();
                         PingTimer = null;
                         SetPingTimer();
+                        DetectCountry();
                     }
                 }
             }
@@ -190,7 +189,7 @@ namespace tickMeter
                     try { sock.Connect(ep); } catch (Exception) { }
                     stopwatch.Stop();
                     sock.Close();
-                    int curPing = int.Parse(stopwatch.Elapsed.TotalMilliseconds.ToString());
+                    int curPing = int.Parse(stopwatch.Elapsed.ToString("fff"));
                     if(curPing < PingLimit) Ping = curPing;
                 });
             }

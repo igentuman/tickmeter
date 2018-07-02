@@ -83,8 +83,9 @@ namespace tickMeter.GameManagers
 
         public void ProcessPacket(Packet packet, GUI gui)
         {
-            if (!GameRunningFlag || openPorts.Count < 2) return;
+            if (!GameRunningFlag) return;
             
+
             //search within port range and destination (local) port we fetched from connections manager
             if (packet.Ethernet.IpV4.Udp.SourcePort > StartPort && packet.Ethernet.IpV4.Udp.SourcePort < EndPort)
             {

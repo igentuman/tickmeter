@@ -118,44 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="possible_risks_lbl.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="possible_risks_lbl.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Verdana, 12pt, style=Underline</value>
-  </data>
-  <data name="possible_risks_lbl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>303, 9</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="possible_risks_lbl.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 0, 4, 0</value>
-  </data>
-  <data name="possible_risks_lbl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>158, 18</value>
-  </data>
-  <data name="possible_risks_lbl.TabIndex" type="System.Int32, mscorlib">
-    <value>53</value>
-  </data>
-  <data name="possible_risks_lbl.Text" xml:space="preserve">
-    <value>Возможные риски</value>
-  </data>
-  <data name="&gt;&gt;possible_risks_lbl.Name" xml:space="preserve">
-    <value>possible_risks_lbl</value>
-  </data>
-  <data name="&gt;&gt;possible_risks_lbl.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;possible_risks_lbl.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;possible_risks_lbl.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
   <data name="settings_netstats_checkbox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="settings_netstats_checkbox.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 11.25pt</value>
   </data>
@@ -163,14 +129,13 @@
     <value>12, 151</value>
   </data>
   <data name="settings_netstats_checkbox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>449, 22</value>
+    <value>268, 22</value>
   </data>
   <data name="settings_netstats_checkbox.TabIndex" type="System.Int32, mscorlib">
     <value>52</value>
   </data>
   <data name="settings_netstats_checkbox.Text" xml:space="preserve">
-    <value>Не проверять сетевую активность (если тикметр вылетает)
-</value>
+    <value>Не проверять сетевую активность</value>
   </data>
   <data name="&gt;&gt;settings_netstats_checkbox.Name" xml:space="preserve">
     <value>settings_netstats_checkbox</value>
@@ -182,40 +147,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;settings_netstats_checkbox.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="label8.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label8.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Verdana, 12pt, style=Underline</value>
-  </data>
-  <data name="label8.Location" type="System.Drawing.Point, System.Drawing">
-    <value>269, 36</value>
-  </data>
-  <data name="label8.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 0, 4, 0</value>
-  </data>
-  <data name="label8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>192, 18</value>
-  </data>
-  <data name="label8.TabIndex" type="System.Int32, mscorlib">
-    <value>46</value>
-  </data>
-  <data name="label8.Text" xml:space="preserve">
-    <value>Беларуский Айтишник</value>
-  </data>
-  <data name="&gt;&gt;label8.Name" xml:space="preserve">
-    <value>label8</value>
-  </data>
-  <data name="&gt;&gt;label8.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label8.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;label8.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="settings_traffic_checkbox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -245,7 +177,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;settings_traffic_checkbox.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>9</value>
   </data>
   <data name="settings_ping_checkbox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -275,7 +207,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;settings_ping_checkbox.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>10</value>
   </data>
   <data name="settings_ip_checkbox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -305,7 +237,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;settings_ip_checkbox.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>11</value>
   </data>
   <data name="settings_chart_checkbox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -335,7 +267,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;settings_chart_checkbox.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>12</value>
   </data>
   <data name="settings_rtss_output.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -365,7 +297,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;settings_rtss_output.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>13</value>
   </data>
   <data name="settings_log_checkbox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -395,7 +327,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;settings_log_checkbox.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>14</value>
   </data>
   <data name="network_connection_lbl.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -406,6 +338,7 @@
   <data name="network_connection_lbl.Location" type="System.Drawing.Point, System.Drawing">
     <value>8, 444</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="network_connection_lbl.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 0, 4, 0</value>
   </data>
@@ -428,7 +361,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;network_connection_lbl.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>15</value>
   </data>
   <data name="adapters_list.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>System</value>
@@ -461,7 +394,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;adapters_list.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>16</value>
   </data>
   <metadata name="colorDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
@@ -497,7 +430,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;ColorLabel.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>5</value>
   </data>
   <data name="ColorBad.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -530,7 +463,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;ColorBad.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="ColorMid.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -563,7 +496,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;ColorMid.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>3</value>
   </data>
   <data name="ColorGood.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -596,6 +529,141 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;ColorGood.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="label8.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label8.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Verdana, 11pt, style=Underline</value>
+  </data>
+  <data name="label8.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label8.Location" type="System.Drawing.Point, System.Drawing">
+    <value>203, 40</value>
+  </data>
+  <data name="label8.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="label8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 18</value>
+  </data>
+  <data name="label8.TabIndex" type="System.Int32, mscorlib">
+    <value>46</value>
+  </data>
+  <data name="label8.Text" xml:space="preserve">
+    <value>Беларуский Айтишник</value>
+  </data>
+  <data name="&gt;&gt;label8.Name" xml:space="preserve">
+    <value>label8</value>
+  </data>
+  <data name="&gt;&gt;label8.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label8.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;label8.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="possible_risks_lbl.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="possible_risks_lbl.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Verdana, 11pt, style=Underline</value>
+  </data>
+  <data name="possible_risks_lbl.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="possible_risks_lbl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>233, 9</value>
+  </data>
+  <data name="possible_risks_lbl.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="possible_risks_lbl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>148, 18</value>
+  </data>
+  <data name="possible_risks_lbl.TabIndex" type="System.Int32, mscorlib">
+    <value>53</value>
+  </data>
+  <data name="possible_risks_lbl.Text" xml:space="preserve">
+    <value>Возможные риски</value>
+  </data>
+  <data name="&gt;&gt;possible_risks_lbl.Name" xml:space="preserve">
+    <value>possible_risks_lbl</value>
+  </data>
+  <data name="&gt;&gt;possible_risks_lbl.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;possible_risks_lbl.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;possible_risks_lbl.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="netInfo.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="netInfo.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 15.75pt, style=Bold</value>
+  </data>
+  <data name="netInfo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>280, 147</value>
+  </data>
+  <data name="netInfo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>27, 27</value>
+  </data>
+  <data name="netInfo.TabIndex" type="System.Int32, mscorlib">
+    <value>58</value>
+  </data>
+  <data name="netInfo.Text" xml:space="preserve">
+    <value>?</value>
+  </data>
+  <data name="&gt;&gt;netInfo.Name" xml:space="preserve">
+    <value>netInfo</value>
+  </data>
+  <data name="&gt;&gt;netInfo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;netInfo.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;netInfo.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="rememberAdapter.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="rememberAdapter.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Tahoma, 11.25pt</value>
+  </data>
+  <data name="rememberAdapter.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="rememberAdapter.Location" type="System.Drawing.Point, System.Drawing">
+    <value>280, 442</value>
+  </data>
+  <data name="rememberAdapter.Size" type="System.Drawing.Size, System.Drawing">
+    <value>101, 22</value>
+  </data>
+  <data name="rememberAdapter.TabIndex" type="System.Int32, mscorlib">
+    <value>59</value>
+  </data>
+  <data name="rememberAdapter.Text" xml:space="preserve">
+    <value>Запомнить</value>
+  </data>
+  <data name="&gt;&gt;rememberAdapter.Name" xml:space="preserve">
+    <value>rememberAdapter</value>
+  </data>
+  <data name="&gt;&gt;rememberAdapter.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rememberAdapter.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;rememberAdapter.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -605,7 +673,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>507, 507</value>
+    <value>389, 507</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterScreen</value>

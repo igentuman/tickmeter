@@ -14,6 +14,7 @@ namespace tickMeter
         public static string ColorBad;
         public static string ColorMid;
         public static string ColorGood;
+        public static Process RtssInstance;
 
         [DllImport("kernel32")]
         private unsafe static extern void* LoadLibrary(string dllname);
@@ -76,7 +77,7 @@ namespace tickMeter
             {
                 try
                 {
-                    Process.Start(f.FullName);
+                    RtssInstance = Process.Start(f.FullName);
                     Thread.Sleep(2000);
                 }
                 catch (Exception)
@@ -85,6 +86,12 @@ namespace tickMeter
                     throw;
                 }
             }
+        }
+
+        public static void KillRtss()
+        {
+            if (RtssInstance == null) return;
+            RtssInstance.Kill();
         }
 
         public static string TextFormat()

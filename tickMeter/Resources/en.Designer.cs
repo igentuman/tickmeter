@@ -115,6 +115,15 @@ namespace tickMeter.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Remember.
+        /// </summary>
+        internal static string rememberAdapter {
+            get {
+                return ResourceManager.GetString("rememberAdapter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Settings.
         /// </summary>
         internal static string settings {

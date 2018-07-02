@@ -29,9 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
-            this.possible_risks_lbl = new System.Windows.Forms.Label();
             this.settings_netstats_checkbox = new System.Windows.Forms.CheckBox();
-            this.label8 = new System.Windows.Forms.Label();
             this.settings_traffic_checkbox = new System.Windows.Forms.CheckBox();
             this.settings_ping_checkbox = new System.Windows.Forms.CheckBox();
             this.settings_ip_checkbox = new System.Windows.Forms.CheckBox();
@@ -45,16 +43,11 @@
             this.ColorBad = new System.Windows.Forms.Label();
             this.ColorMid = new System.Windows.Forms.Label();
             this.ColorGood = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.possible_risks_lbl = new System.Windows.Forms.Label();
+            this.netInfo = new System.Windows.Forms.Label();
+            this.rememberAdapter = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
-            // 
-            // possible_risks_lbl
-            // 
-            resources.ApplyResources(this.possible_risks_lbl, "possible_risks_lbl");
-            this.possible_risks_lbl.BackColor = System.Drawing.Color.Transparent;
-            this.possible_risks_lbl.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.possible_risks_lbl.ForeColor = System.Drawing.Color.DarkRed;
-            this.possible_risks_lbl.Name = "possible_risks_lbl";
-            this.possible_risks_lbl.Click += new System.EventHandler(this.possible_risks_lbl_Click);
             // 
             // settings_netstats_checkbox
             // 
@@ -63,15 +56,6 @@
             this.settings_netstats_checkbox.Name = "settings_netstats_checkbox";
             this.settings_netstats_checkbox.UseVisualStyleBackColor = true;
             this.settings_netstats_checkbox.CheckedChanged += new System.EventHandler(this.settings_netstats_checkbox_CheckedChanged);
-            // 
-            // label8
-            // 
-            resources.ApplyResources(this.label8, "label8");
-            this.label8.BackColor = System.Drawing.Color.Transparent;
-            this.label8.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label8.ForeColor = System.Drawing.Color.Blue;
-            this.label8.Name = "label8";
-            this.label8.Click += new System.EventHandler(this.label8_Click);
             // 
             // settings_traffic_checkbox
             // 
@@ -177,10 +161,45 @@
             this.ColorGood.Name = "ColorGood";
             this.ColorGood.Click += new System.EventHandler(this.ColorGood_Click);
             // 
+            // label8
+            // 
+            resources.ApplyResources(this.label8, "label8");
+            this.label8.BackColor = System.Drawing.Color.Transparent;
+            this.label8.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.label8.ForeColor = System.Drawing.Color.Blue;
+            this.label8.Name = "label8";
+            this.label8.Click += new System.EventHandler(this.label8_Click);
+            // 
+            // possible_risks_lbl
+            // 
+            resources.ApplyResources(this.possible_risks_lbl, "possible_risks_lbl");
+            this.possible_risks_lbl.BackColor = System.Drawing.Color.Transparent;
+            this.possible_risks_lbl.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.possible_risks_lbl.ForeColor = System.Drawing.Color.DarkRed;
+            this.possible_risks_lbl.Name = "possible_risks_lbl";
+            this.possible_risks_lbl.Click += new System.EventHandler(this.possible_risks_lbl_Click);
+            // 
+            // netInfo
+            // 
+            resources.ApplyResources(this.netInfo, "netInfo");
+            this.netInfo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.netInfo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.netInfo.Name = "netInfo";
+            this.netInfo.Click += new System.EventHandler(this.netInfo_Click);
+            // 
+            // rememberAdapter
+            // 
+            resources.ApplyResources(this.rememberAdapter, "rememberAdapter");
+            this.rememberAdapter.ForeColor = System.Drawing.Color.Black;
+            this.rememberAdapter.Name = "rememberAdapter";
+            this.rememberAdapter.UseVisualStyleBackColor = true;
+            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.rememberAdapter);
+            this.Controls.Add(this.netInfo);
             this.Controls.Add(this.ColorGood);
             this.Controls.Add(this.ColorMid);
             this.Controls.Add(this.ColorBad);
@@ -216,12 +235,14 @@
         public System.Windows.Forms.CheckBox settings_rtss_output;
         public System.Windows.Forms.CheckBox settings_chart_checkbox;
         public System.Windows.Forms.CheckBox settings_log_checkbox;
-        public System.Windows.Forms.Label possible_risks_lbl;
-        public System.Windows.Forms.Label label8;
         public System.Windows.Forms.Label network_connection_lbl;
         public System.Windows.Forms.Label ColorLabel;
         public System.Windows.Forms.Label ColorBad;
         public System.Windows.Forms.Label ColorMid;
         public System.Windows.Forms.Label ColorGood;
+        public System.Windows.Forms.Label label8;
+        public System.Windows.Forms.Label possible_risks_lbl;
+        private System.Windows.Forms.Label netInfo;
+        public System.Windows.Forms.CheckBox rememberAdapter;
     }
 }
