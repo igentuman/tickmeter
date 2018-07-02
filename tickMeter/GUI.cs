@@ -5,7 +5,6 @@ using System.Drawing;
 using System.Linq;
 using System.IO;
 using System.Windows.Forms;
-using PcapDotNet.Analysis;
 using PcapDotNet.Core;
 using PcapDotNet.Packets;
 using System.Threading.Tasks;
@@ -14,6 +13,7 @@ using System.Runtime.InteropServices;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using tickMeter.GameManagers;
+using System.Diagnostics;
 
 namespace tickMeter
 {
@@ -76,9 +76,13 @@ namespace tickMeter
             catch(Exception)
             {
                 MessageBox.Show("Install WinPCAP. Try to run as Admin");
+                if (MessageBox.Show("Download WinPCAP?", "WinPCAP", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    Process.Start("https://bitbucket.org/dvman8bit/tickmeter/downloads/WinPcap_4_1_3.exe");
+                    Close();
+                }
             }
 
-            PcapDotNetAnalysis.OptIn = true;
             if (AdaptersList.Count == 0)
             {
                 MessageBox.Show("No network connections found");
@@ -105,34 +109,8 @@ namespace tickMeter
                     settingsForm.adapters_list.Items.Add("Unknown");
                 }
             }
-            meterState = new TickMeterState();
-            PubgMngr = new PubgStatsManager
-            {
-                meterState = meterState
-            };
-
-            settingsForm.ApplyFromConfig();
-            settingsForm.CheckNewVersion();
-            try
-            {
-                if( ! settingsForm.settings_netstats_checkbox.Checked)
-                {
-                    NetworkConnectionsMngr = new ConnectionsManager();
-                    meterState.ConnMngr = NetworkConnectionsMngr;
-                    meterState.ConnectionsManagerFlag = true;
-
-                    NetworkConnectionsMngr.meterState = meterState;
-                    PubgMngr.ConnMngr = NetworkConnectionsMngr;
-                }
-
-            } catch(Exception)
-            {
-                meterState.ConnectionsManagerFlag = 
-                settingsForm.settings_netstats_checkbox.Checked = true;
-            }
+            
         }
-
-        
 
         protected void ShowAll()
         {
@@ -426,11 +404,39 @@ namespace tickMeter
         {
             appInitHeigh = Height;
             appInitWidth = Width;
+            meterState = new TickMeterState();
+            PubgMngr = new PubgStatsManager
+            {
+                meterState = meterState
+            };
+
+            settingsForm.ApplyFromConfig();
+            settingsForm.CheckNewVersion();
+            try
+            {
+                if (!settingsForm.settings_netstats_checkbox.Checked)
+                {
+                    NetworkConnectionsMngr = new ConnectionsManager();
+                    meterState.ConnMngr = NetworkConnectionsMngr;
+                    meterState.ConnectionsManagerFlag = true;
+
+                    NetworkConnectionsMngr.meterState = meterState;
+                    PubgMngr.ConnMngr = NetworkConnectionsMngr;
+                }
+
+            }
+            catch (Exception)
+            {
+                meterState.ConnectionsManagerFlag =
+                settingsForm.settings_netstats_checkbox.Checked = true;
+            }
+
             CultureInfo ci = CultureInfo.InstalledUICulture;
             if (ci.TwoLetterISOLanguageName == "en")
             {
                 settingsForm.SwitchToEnglish();
             }
+
         }
 
         private void SettingsButton_Click(object sender, EventArgs e)

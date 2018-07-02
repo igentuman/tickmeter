@@ -1,3 +1,5 @@
 .vs/
 tickMeter/bin/
 tickMeter/obj/
+tickMeter/publish/
+tickMeter/tickMeterTest.pfx

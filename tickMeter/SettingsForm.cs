@@ -1,10 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Win32;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -67,6 +69,42 @@ namespace tickMeter
             return c.R.ToString("X2") + c.G.ToString("X2") + c.B.ToString("X2");
         }
 
+        public void InitRtss(bool last = false)
+        {
+
+            if (File.Exists(settings.GetOption("rtss_exe_path")))
+            {
+                RivaTuner.rtss_exe = settings.GetOption("rtss_exe_path");
+                return;
+            }
+
+            Object uninstallVal = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\RTSS", "UninstallString", null);
+            string RtssPath = "";
+            if (uninstallVal != null)
+            {
+                RtssPath = Path.GetDirectoryName(uninstallVal.ToString().Replace("\"", ""));
+                settings.SetOption("rtss_exe_path", RtssPath + "/RTSS.exe");
+            }
+            if (RtssPath == "" && MessageBox.Show("RTSS not found. Download?", "RTSS", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                Process.Start("https://bitbucket.org/dvman8bit/tickmeter/downloads/RTSSSetup710.exe");
+                Close();
+            }
+
+            if (!File.Exists(RtssPath) && MessageBox.Show("Find RTSS.exe location?", "RTSS", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                rtss_dialog.InitialDirectory = RtssPath;
+                rtss_dialog.ShowDialog();
+                if (File.Exists(rtss_dialog.FileName))
+                {
+                    settings.SetOption("rtss_exe_path", rtss_dialog.FileName);
+                    RivaTuner.rtss_exe = rtss_dialog.FileName;
+                    return;
+                }
+            }
+            settings_rtss_output.Checked = settings_rtss_output.Enabled = false;
+        }
+
         public void ApplyFromConfig()
         {
             settings_chart_checkbox.Checked = settings.GetOption("chart") == "True";
@@ -93,11 +131,7 @@ namespace tickMeter
                 gui.label5.ForeColor =
                 gui.label9.ForeColor =
                 ColorLabel.ForeColor;
-
-            if (File.Exists(settings.GetOption("rtss_exe_path")))
-            {
-                RivaTuner.rtss_exe = settings.GetOption("rtss_exe_path");
-            }
+            InitRtss();
         }
 
         public void SaveToConfig()

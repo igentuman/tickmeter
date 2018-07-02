@@ -48,6 +48,7 @@
             this.netInfo = new System.Windows.Forms.Label();
             this.rememberAdapter = new System.Windows.Forms.CheckBox();
             this.updateLbl = new System.Windows.Forms.Label();
+            this.rtss_dialog = new System.Windows.Forms.OpenFileDialog();
             this.SuspendLayout();
             // 
             // settings_netstats_checkbox
@@ -204,6 +205,13 @@
             this.updateLbl.Name = "updateLbl";
             this.updateLbl.Click += new System.EventHandler(this.updateLbl_Click);
             // 
+            // rtss_dialog
+            // 
+            this.rtss_dialog.DefaultExt = "exe";
+            this.rtss_dialog.FileName = "RTSS.exe";
+            resources.ApplyResources(this.rtss_dialog, "rtss_dialog");
+            this.rtss_dialog.InitialDirectory = "C:\\";
+            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
@@ -256,5 +264,6 @@
         private System.Windows.Forms.Label netInfo;
         public System.Windows.Forms.CheckBox rememberAdapter;
         public System.Windows.Forms.Label updateLbl;
+        private System.Windows.Forms.OpenFileDialog rtss_dialog;
     }
 }
