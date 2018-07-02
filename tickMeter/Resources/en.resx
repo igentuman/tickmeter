@@ -163,4 +163,7 @@
   <data name="settings_traffic_checkbox" xml:space="preserve">
     <value>Display traffic</value>
   </data>
+  <data name="updateLbl" xml:space="preserve">
+    <value>Update Available </value>
+  </data>
 </root>

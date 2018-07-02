@@ -195,5 +195,14 @@ namespace tickMeter.Resources {
                 return ResourceManager.GetString("settings_traffic_checkbox", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Update Available .
+        /// </summary>
+        internal static string updateLbl {
+            get {
+                return ResourceManager.GetString("updateLbl", resourceCulture);
+            }
+        }
     }
 }

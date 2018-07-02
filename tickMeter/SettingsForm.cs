@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -9,13 +12,54 @@ namespace tickMeter
 {
     public partial class SettingsForm : Form
     {
+        public const string CURRENT_VERSION = "1.5";
+
         public SettingsManager settings;
         public GUI gui;
-
+        public string verInfo;
+        TagCollection TagsInfo;
         public SettingsForm()
         {
             InitializeComponent();
             settings = new SettingsManager();
+            
+            
+        }
+        private class TagInfo
+        {
+            [JsonProperty("name")]
+            public string Version { get; set; }
+        }
+
+        private class TagCollection
+        {
+            [JsonProperty("values")]
+            public List<TagInfo> Tags { get; set; }
+        }
+
+        public async void CheckNewVersion()
+        {
+            await Task.Run(() =>
+            {
+                try
+                {
+                    verInfo = new WebClient().DownloadString("https://api.bitbucket.org/2.0/repositories/dvman8bit/tickmeter/refs/tags");
+                    TagsInfo = JsonConvert.DeserializeObject<TagCollection>(verInfo);
+                    if(CURRENT_VERSION != TagsInfo.Tags[TagsInfo.Tags.Count - 1].Version)
+                    {
+                        updateLbl.Text += TagsInfo.Tags[TagsInfo.Tags.Count - 1].Version;
+                        updateLbl.Visible = true;
+                        if(settings.GetOption("last_checked_version") != TagsInfo.Tags[TagsInfo.Tags.Count - 1].Version)
+                        {
+                            MessageBox.Show(updateLbl.Text, "Update", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            Process.Start("https://bitbucket.org/dvman8bit/tickmeter/downloads/");
+                        }
+                        settings.SetOption("last_checked_version", TagsInfo.Tags[TagsInfo.Tags.Count - 1].Version);
+                    }
+                }
+                catch (Exception) { }
+                
+            });
         }
 
         private static String HexConverter(Color c)
@@ -90,6 +134,7 @@ namespace tickMeter
             ColorMid.Text = Resources.en.ResourceManager.GetString(ColorMid.Name);
             ColorGood.Text = Resources.en.ResourceManager.GetString(ColorGood.Name);
             rememberAdapter.Text = Resources.en.ResourceManager.GetString(rememberAdapter.Name);
+            updateLbl.Text = Resources.en.ResourceManager.GetString(updateLbl.Name);
         }
 
         private void LabelsColor_Click(object sender, EventArgs e)
@@ -186,6 +231,11 @@ namespace tickMeter
         {
 
             MessageBox.Show("Отключить если вылетает PUBG или tickMeter. Отключение ухудшит качество данных.", "Help",MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void updateLbl_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://bitbucket.org/dvman8bit/tickmeter/downloads/");
         }
     }
 }

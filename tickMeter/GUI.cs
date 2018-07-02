@@ -112,6 +112,7 @@ namespace tickMeter
             };
 
             settingsForm.ApplyFromConfig();
+            settingsForm.CheckNewVersion();
             try
             {
                 if( ! settingsForm.settings_netstats_checkbox.Checked)

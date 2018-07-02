@@ -47,6 +47,7 @@
             this.possible_risks_lbl = new System.Windows.Forms.Label();
             this.netInfo = new System.Windows.Forms.Label();
             this.rememberAdapter = new System.Windows.Forms.CheckBox();
+            this.updateLbl = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // settings_netstats_checkbox
@@ -194,10 +195,20 @@
             this.rememberAdapter.Name = "rememberAdapter";
             this.rememberAdapter.UseVisualStyleBackColor = true;
             // 
+            // updateLbl
+            // 
+            resources.ApplyResources(this.updateLbl, "updateLbl");
+            this.updateLbl.BackColor = System.Drawing.Color.Transparent;
+            this.updateLbl.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.updateLbl.ForeColor = System.Drawing.Color.Blue;
+            this.updateLbl.Name = "updateLbl";
+            this.updateLbl.Click += new System.EventHandler(this.updateLbl_Click);
+            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.updateLbl);
             this.Controls.Add(this.rememberAdapter);
             this.Controls.Add(this.netInfo);
             this.Controls.Add(this.ColorGood);
@@ -244,5 +255,6 @@
         public System.Windows.Forms.Label possible_risks_lbl;
         private System.Windows.Forms.Label netInfo;
         public System.Windows.Forms.CheckBox rememberAdapter;
+        public System.Windows.Forms.Label updateLbl;
     }
 }
