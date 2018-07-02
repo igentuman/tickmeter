@@ -91,7 +91,14 @@ namespace tickMeter
         public static void KillRtss()
         {
             if (RtssInstance == null) return;
-            RtssInstance.Kill();
+            try
+            {
+                RtssInstance.Kill();
+                Process[] proc = Process.GetProcessesByName("RTSSHooksLoader64");
+                proc[0].Kill();
+            }
+            catch (Exception) { }
+            
         }
 
         public static string TextFormat()
