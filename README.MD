@@ -28,7 +28,7 @@ tickMeter - это программа для измерения тикрейта
 
 # CHANGELOG
 
-v1.1 
+### v1.1 
 
 https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.1.zip
 
@@ -37,14 +37,14 @@ https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.1.zip
 учет трафика
 
 
-v1.2 
+### v1.2 
 
 https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.2.zip
 
 вывод графика тикрейта
 
 
-v1.3
+### v1.3
 
 https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.3.zip
 
@@ -53,7 +53,7 @@ English translation
 Список подключений с IP
 
 
-v1.4
+### v1.4
 
 https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.4.zip
 
@@ -63,9 +63,26 @@ https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.4-installer.exe
 
 Более стабильная и точная работа
 
-v1.5
 
-в процессе
+### v1.5
+
+https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.5.zip
+
+https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.5-installer.exe
+
+Чтение/сохранение настроек
+
+Отдельное окно настроек
+
+Настройки цвета оверлея
+
+Помощник для RTSS и WinPCAP
+
+Автоматическая проверка обновлений
+
+Исправлена куча ошибок
+
+
 
 Первый шаг к расширяемости
 
