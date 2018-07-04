@@ -20,11 +20,12 @@ namespace tickMeter
     public partial class GUI : Form
     {
         private  IList<LivePacketDevice> AdaptersList;
-        private PacketDevice selectedAdapter;
+        public PacketDevice selectedAdapter;
         public ConnectionsManager NetworkConnectionsMngr;
         public NetworkStats networkStats;
 
         public SettingsForm settingsForm;
+        public PacketStats packetStats;
         public TickMeterState meterState;
         public string udpscr = "";
         public string udpdes = "";
@@ -68,6 +69,8 @@ namespace tickMeter
         {
             InitializeComponent();
             settingsForm = new SettingsForm();
+            packetStats = new PacketStats();
+            packetStats.gui = this;
             settingsForm.gui = this;
             try
             {
