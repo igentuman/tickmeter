@@ -48,7 +48,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>icon.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>tickMeter.Program</StartupObject>
@@ -116,7 +116,8 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>tickMeter_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <TargetZone>Internet</TargetZone>
@@ -190,41 +191,42 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConnectionsManager.cs" />
-    <Compile Include="GameManagers\PubgStatsManager.cs" />
-    <Compile Include="GUI.cs">
+    <Compile Include="Classes\ConnectionsManager.cs" />
+    <Compile Include="Classes\PacketFilter.cs" />
+    <Compile Include="Classes\PubgStatsManager.cs" />
+    <Compile Include="Forms\GUI.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI.Designer.cs">
+    <Compile Include="Forms\GUI.Designer.cs">
       <DependentUpon>GUI.cs</DependentUpon>
     </Compile>
-    <Compile Include="NetworkStats.cs" />
-    <Compile Include="PacketStats.cs">
+    <Compile Include="Classes\NetworkStats.cs" />
+    <Compile Include="Forms\PacketStats.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PacketStats.Designer.cs">
+    <Compile Include="Forms\PacketStats.Designer.cs">
       <DependentUpon>PacketStats.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="Classes\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\en.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>en.resx</DependentUpon>
     </Compile>
-    <Compile Include="RivaTuner.cs" />
-    <Compile Include="SettingsForm.cs">
+    <Compile Include="Classes\RivaTuner.cs" />
+    <Compile Include="Forms\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SettingsForm.Designer.cs">
+    <Compile Include="Forms\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="SettingsManager.cs" />
-    <Compile Include="TickMeterState.cs" />
-    <EmbeddedResource Include="GUI.resx">
+    <Compile Include="Classes\SettingsManager.cs" />
+    <Compile Include="Classes\TickMeterState.cs" />
+    <EmbeddedResource Include="Forms\GUI.resx">
       <DependentUpon>GUI.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PacketStats.resx">
+    <EmbeddedResource Include="Forms\PacketStats.resx">
       <DependentUpon>PacketStats.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -241,7 +243,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>en.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="SettingsForm.resx">
+    <EmbeddedResource Include="Forms\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
@@ -255,16 +257,13 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="tickMeterTest.pfx" />
-    <None Include="tickMeter_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="icon.ico" />
+    <Content Include="Resources\icon.ico" />
     <None Include="Resources\gear.png" />
-    <None Include="Resources\Icon1.ico" />
     <None Include="Resources\grid.png" />
   </ItemGroup>
   <ItemGroup />

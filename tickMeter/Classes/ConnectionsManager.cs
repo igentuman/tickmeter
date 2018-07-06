@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -25,6 +26,7 @@ namespace tickMeter
         public List<UdpProcessRecord> UdpActiveConnections = new List<UdpProcessRecord>();
 
         public Process[] ProcessInfoList;
+        public Thread ConnManagerTimer;
 
         private System.Timers.Timer MngrTimer;
         public TickMeterState meterState;

@@ -12,7 +12,6 @@ using System.Security.Permissions;
 using System.Runtime.InteropServices;
 using System.Globalization;
 using System.Text.RegularExpressions;
-using tickMeter.GameManagers;
 using System.Diagnostics;
 
 namespace tickMeter
@@ -98,14 +97,7 @@ namespace tickMeter
 
                 if (Adapter.Description != null)
                 {
-                    string addr = Adapter.Addresses.First().ToString();
-                    var match = Regex.Match(addr, "(\\d)+\\.(\\d)+\\.(\\d)+\\.(\\d)+");
-                    if(match.Value == "")
-                    {
-                        addr = Adapter.Addresses[1].ToString();
-                        match = Regex.Match(addr, "(\\d)+\\.(\\d)+\\.(\\d)+\\.(\\d)+");
-                    }
-                    settingsForm.adapters_list.Items.Add(match.Value + " " + Adapter.Description.Replace("Network adapter ","").Replace("'Microsoft' ",""));
+                    settingsForm.adapters_list.Items.Add(GetAdapterAddress(Adapter) + " " + Adapter.Description.Replace("Network adapter ","").Replace("'Microsoft' ",""));
                 }
                 else
                 {
@@ -321,13 +313,29 @@ namespace tickMeter
             pcapWorker.RunWorkerAsync();
         }
 
-        
+        public string GetAdapterAddress(LivePacketDevice Adapter)
+        {
+            if (Adapter.Description != null)
+            {
+                string addr = Adapter.Addresses.First().ToString();
+                var match = Regex.Match(addr, "(\\d)+\\.(\\d)+\\.(\\d)+\\.(\\d)+");
+                if (match.Value == "")
+                {
+                    addr = Adapter.Addresses[1].ToString();
+                    match = Regex.Match(addr, "(\\d)+\\.(\\d)+\\.(\\d)+\\.(\\d)+");
+                }
+                return match.Value;
+            }
+            return "";
+        }
+
         public void StartTracking()
         {
             meterState.Reset();
             meterState.IsTracking = true;
             ticksLoop.Enabled = true;
             selectedAdapter = AdaptersList[settingsForm.adapters_list.SelectedIndex];
+            meterState.LocalIP = GetAdapterAddress(AdaptersList[settingsForm.adapters_list.SelectedIndex]);
             lastSelectedAdapterID = settingsForm.adapters_list.SelectedIndex;
             if (!pcapWorker.IsBusy)
             {

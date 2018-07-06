@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
 
-namespace tickMeter.GameManagers
+namespace tickMeter
 {
     public class PubgStatsManager
     {
@@ -87,7 +87,7 @@ namespace tickMeter.GameManagers
             
 
             //search within port range and destination (local) port we fetched from connections manager
-            if (packet.Ethernet.IpV4.Udp.SourcePort > StartPort && packet.Ethernet.IpV4.Udp.SourcePort < EndPort)
+            if (packet.Ethernet.IpV4.Udp.SourcePort > StartPort && packet.Ethernet.IpV4.Udp.SourcePort < EndPort && packet.Ethernet.IpV4.Destination.ToString() == meterState.LocalIP)
             {
                 if (meterState.ConnectionsManagerFlag && !openPorts.Contains(packet.Ethernet.IpV4.Udp.DestinationPort)) return;
                 meterState.CurrentTimestamp = packet.Timestamp.ToString();
@@ -97,7 +97,7 @@ namespace tickMeter.GameManagers
                 meterState.TickRate++;
                 NetworkActivityFlag = true;
             }
-            if (packet.Ethernet.IpV4.Udp.DestinationPort > StartPort && packet.Ethernet.IpV4.Udp.DestinationPort < EndPort)
+            if (packet.Ethernet.IpV4.Udp.DestinationPort > StartPort && packet.Ethernet.IpV4.Udp.DestinationPort < EndPort && packet.Ethernet.IpV4.Source.ToString() == meterState.LocalIP)
             {
                 if (meterState.ConnectionsManagerFlag && !openPorts.Contains(packet.Ethernet.IpV4.Udp.SourcePort)) return;
                 NetworkActivityFlag = true;
