@@ -76,7 +76,10 @@ namespace tickMeter.Forms
 
         public void SaveConfig()
         {
-            parser.WriteFile("profiles/" + profile_name.Text+".ini", data);
+            try
+            {
+                parser.WriteFile("profiles/" + profile_name.Text + ".ini", data);
+            } catch(Exception) { MessageBox.Show("Не могу сохранить профиль. Не хватает прав на запись."); }
         }
     }
 }

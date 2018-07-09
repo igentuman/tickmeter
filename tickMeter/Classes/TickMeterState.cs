@@ -31,6 +31,7 @@ namespace tickMeter
         public string CurrentTimestamp { get { return timeStamp; }
         set
             {
+                if (!IsTracking) return;
                 if(value != timeStamp)
                 {
                     OutputTickRate = TickRate;
@@ -60,6 +61,8 @@ namespace tickMeter
             TickRate = 0;
             OutputTickRate = 0;
             TickRateLog = "";
+            timeStamp = "";
+            CurrentTimestamp = "";
         }
 
         

@@ -8,12 +8,13 @@ using System.Timers;
 
 namespace tickMeter
 {
-    public class PubgStatsManager
+    public class DbdStatsManager
     {
-        int StartPort = 6999;
-        int EndPort = 7999;
-        string ProcessName = "tslGame";
-        public const string GameCode = "PUBG";
+        int StartPort = 49000;
+        int EndPort = 65000;
+        string ProcessName = "Steam";
+        string GameName = "DeadByDaylight-Win64-Shipping";
+        public const string GameCode = "DBD";
         Timer GameInfoTimer;
         public bool GameRunningFlag = false;
         public ConnectionsManager ConnMngr;
@@ -25,7 +26,7 @@ namespace tickMeter
 
         public bool IsGameRunning()
         {
-            Process[] pname = Process.GetProcessesByName(ProcessName);
+            Process[] pname = Process.GetProcessesByName(GameName);
             return pname.Length != 0;
         }
 
@@ -43,7 +44,7 @@ namespace tickMeter
             }
         }
 
-        public PubgStatsManager()
+        public DbdStatsManager()
         {
             SetGameInfoTimer();
         }
@@ -62,11 +63,11 @@ namespace tickMeter
             if (!GameRunningFlag) return;
             if(meterState.ConnectionsManagerFlag)
             {
-                int ProcessId = Process.GetProcessesByName(ProcessName).First().Id;
+                int[] ProcessIds = Process.GetProcessesByName(ProcessName).Select(e => e.Id).ToArray();
                 List<UdpProcessRecord> gamePorts = ConnMngr.UdpActiveConnections;
                 foreach (UdpProcessRecord gamePort in gamePorts)
                 {
-                    if (gamePort.ProcessId == ProcessId)
+                    if (ProcessIds.Contains(gamePort.ProcessId))
                     {
                         openPorts.Add((int)gamePort.LocalPort);
                     }

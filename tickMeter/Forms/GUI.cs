@@ -24,17 +24,17 @@ namespace tickMeter
         public PacketDevice selectedAdapter;
         public ConnectionsManager NetworkConnectionsMngr;
         public NetworkStats networkStats;
-
+        public Thread PcapThread;
         public SettingsForm settingsForm;
         public PacketStats packetStats;
         public TickMeterState meterState;
         public string udpscr = "";
         public string udpdes = "";
-        
+        public BackgroundWorker pcapWorker;
         int restarts = 0;
         int restartLimit = 1;
         int lastSelectedAdapterID = -1;
-        
+        public string threadID = ""; 
         Bitmap chartBckg;
         int chartLeftPadding = 25;
         int chartXStep = 4;
@@ -42,6 +42,7 @@ namespace tickMeter
         int appInitWidth;
         bool OnScreen;
         public PubgStatsManager PubgMngr;
+        public DbdStatsManager DbdMngr;
 
         private const int WM_ACTIVATE = 0x0006;
         private const int WA_ACTIVE = 1;
@@ -185,19 +186,12 @@ namespace tickMeter
 
       
 
-        private async void PacketHandler(Packet packet)
+        private void PacketHandler(Packet packet)
         {
+
             if (!meterState.IsTracking) return;
-            //using async game managers to track network stats
-            switch (meterState.Game)
-            {
-                case PubgStatsManager.GameCode:
-                    await Task.Run(() => { PubgMngr.ProcessPacket(packet, this); });
-                    break;
-                default://run all managers to detect game
-                    await Task.Run(() => { PubgMngr.ProcessPacket(packet, this); });
-                    break;
-            }
+            DbdMngr.ProcessPacket(packet, this);
+            PubgMngr.ProcessPacket(packet, this);
         }
 
 
@@ -279,44 +273,6 @@ namespace tickMeter
             return chartBckg;
         }
 
-
-        private void PcapWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            if (!meterState.IsTracking) return;
-            using (PacketCommunicator communicator = selectedAdapter.Open(65536, PacketDeviceOpenAttributes.Promiscuous, 2000))
-            {
-                if (communicator.DataLink.Kind != DataLinkKind.Ethernet)
-                {
-                    MessageBox.Show("Ethernet connections only!");
-                    return;
-                }
-
-                using (BerkeleyPacketFilter filter = communicator.CreateFilter("udp"))
-                {
-                    communicator.SetFilter(filter);
-                }
-                communicator.ReceivePackets(0, PacketHandler);
-            }
-        }
-
-        private void PcapWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            if (!meterState.IsTracking) return;
-            if(meterState.TickRate == 0)
-            {
-                restarts++;
-                if (restarts > restartLimit)
-                {
-                    StopTracking();
-                    return;
-                }
-            } else
-            {
-                restarts = 0;
-            }
-            pcapWorker.RunWorkerAsync();
-        }
-
         public string GetAdapterAddress(LivePacketDevice Adapter)
         {
             if (Adapter.Description != null)
@@ -333,6 +289,7 @@ namespace tickMeter
             return "";
         }
 
+        [SecurityPermissionAttribute(SecurityAction.Demand, ControlThread = true)]
         public void StartTracking()
         {
             meterState.Reset();
@@ -341,13 +298,70 @@ namespace tickMeter
             selectedAdapter = AdaptersList[settingsForm.adapters_list.SelectedIndex];
             meterState.LocalIP = GetAdapterAddress(AdaptersList[settingsForm.adapters_list.SelectedIndex]);
             lastSelectedAdapterID = settingsForm.adapters_list.SelectedIndex;
-            if (!pcapWorker.IsBusy)
+            try
+            {
+                if (PcapThread == null || !PcapThread.IsAlive)
+                {
+                   
+                    PcapThread = new Thread(InitPcapWorker);
+                    PcapThread.Start();
+                    Debug.Print("Starting thread " + PcapThread.ManagedThreadId.ToString());
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("PCAP Thread init error");
+            }
+            
+        }
+        private void PcapWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (!meterState.IsTracking) return;
+            if (meterState.TickRate == 0)
+            {
+                restarts++;
+                if (restarts > restartLimit)
+                {
+                    StopTracking();
+                    return;
+                }
+            }
+            else
+            {
+                restarts = 0;
+            }
+
+            try
             {
                 pcapWorker.RunWorkerAsync();
+
             }
-            settingsForm.settings_log_checkbox.Enabled = false;
+            catch (Exception) { }
+
         }
 
+        private void PcapWorkerDoWork(object sender, DoWorkEventArgs e)
+        {
+            if (!meterState.IsTracking) return;
+            using (PacketCommunicator communicator = selectedAdapter.Open(65536, PacketDeviceOpenAttributes.Promiscuous, 500))
+            {
+                if (communicator.DataLink.Kind != DataLinkKind.Ethernet)
+                {
+                    MessageBox.Show("This program works only on Ethernet networks!");
+                    return;
+                }
+
+                communicator.ReceivePackets(0, PacketHandler);
+            }
+        }
+        public void InitPcapWorker()
+        {
+            pcapWorker = new BackgroundWorker();
+            pcapWorker.DoWork += PcapWorkerDoWork;
+            pcapWorker.RunWorkerCompleted += PcapWorkerCompleted;
+            pcapWorker.RunWorkerAsync();
+        }
+        [SecurityPermissionAttribute(SecurityAction.Demand, ControlThread = true)]
         public void StopTracking()
         {
             ticksLoop.Enabled = false;
@@ -356,13 +370,10 @@ namespace tickMeter
             tickRateLbl.ForeColor = settingsForm.ColorBad.ForeColor;
             pingLbl.ForeColor = settingsForm.ColorMid.ForeColor;
             graph.Image = graph.InitialImage;
-            if (pcapWorker.IsBusy)
-            {
-                pcapWorker.CancelAsync();
-            }
-           
+
+            
             if (settingsForm.settings_log_checkbox.Checked)
-            {
+            { 
                 if(meterState.Server.Ip != "" && meterState.TickRateLog != "")
                 {
                     if (!Directory.Exists("logs"))
@@ -424,6 +435,10 @@ namespace tickMeter
             {
                 meterState = meterState
             };
+            DbdMngr = new DbdStatsManager
+            {
+                meterState = meterState
+            };
 
             settingsForm.ApplyFromConfig();
             settingsForm.CheckNewVersion();
@@ -437,6 +452,7 @@ namespace tickMeter
 
                     NetworkConnectionsMngr.meterState = meterState;
                     PubgMngr.ConnMngr = NetworkConnectionsMngr;
+                    DbdMngr.ConnMngr = NetworkConnectionsMngr;
                 }
 
             }

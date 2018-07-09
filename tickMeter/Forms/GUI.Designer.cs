@@ -32,7 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GUI));
             this.label3 = new System.Windows.Forms.Label();
             this.ticksLoop = new System.Windows.Forms.Timer(this.components);
-            this.pcapWorker = new System.ComponentModel.BackgroundWorker();
             this.tickRateLbl = new System.Windows.Forms.Label();
             this.pingLbl = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -68,12 +67,6 @@
             // 
             this.ticksLoop.Interval = 1000;
             this.ticksLoop.Tick += new System.EventHandler(this.TicksLoop_Tick);
-            // 
-            // pcapWorker
-            // 
-            this.pcapWorker.WorkerSupportsCancellation = true;
-            this.pcapWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.PcapWorker_DoWork);
-            this.pcapWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.PcapWorker_RunWorkerCompleted);
             // 
             // tickRateLbl
             // 
@@ -272,7 +265,6 @@
 
         #endregion
         private System.Windows.Forms.Timer ticksLoop;
-        private System.ComponentModel.BackgroundWorker pcapWorker;
         private System.Windows.Forms.Label tickRateLbl;
         private System.Windows.Forms.Label pingLbl;
         private System.Windows.Forms.Label serverLbl;
