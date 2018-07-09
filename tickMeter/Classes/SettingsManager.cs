@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using IniParser;
 using IniParser.Model;
 
@@ -44,7 +45,9 @@ namespace tickMeter
 
         public void SaveConfig()
         {
-            parser.WriteFile("settings.ini", data);
-        }
+            try { 
+                parser.WriteFile("settings.ini", data);
+            } catch(Exception) { MessageBox.Show("Не могу сохранить настройки. Не хватает прав на запись."); }
+}
     }
 }
