@@ -14,7 +14,7 @@ namespace tickMeter
         public bool IsTracking { get; set; } = false;
 
         public GameServer Server { get; set; }
-
+        public string LocalIP { get; set; }
         public string Game { get; set; } = "";
 
         public List<int> TicksHistory { get; set; }
@@ -94,7 +94,7 @@ namespace tickMeter
                 {
                     PingTimer = new System.Timers.Timer
                     {
-                        Interval = 5000
+                        Interval = 2000
                     };
                     PingTimer.Elapsed += PingServerTimer;
                     PingTimer.AutoReset = true;
@@ -153,7 +153,7 @@ namespace tickMeter
                     {
                         ipInfo.Country = "";
                     }
-                    Country = ipInfo.Country;
+                    Country = ipInfo.Country +", "+ ipInfo.City;
                 });
             }
 

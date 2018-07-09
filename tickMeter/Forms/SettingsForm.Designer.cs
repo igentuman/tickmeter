@@ -1,4 +1,6 @@
-﻿namespace tickMeter
+﻿using System.Windows.Forms;
+
+namespace tickMeter
 {
     partial class SettingsForm
     {

@@ -116,7 +116,12 @@ namespace tickMeter
             rememberAdapter.Checked = settings.GetOption("remember_adapter") == "True";
             if(rememberAdapter.Checked)
             {
-                adapters_list.SelectedIndex = int.Parse(settings.GetOption("last_selected_adapter_id"));
+                try
+                {
+                    adapters_list.SelectedIndex = int.Parse(settings.GetOption("last_selected_adapter_id"));
+                }
+                catch (Exception) { }
+                
             }
             ColorLabel.ForeColor = ColorTranslator.FromHtml("#"+ settings.GetOption("color_label"));
             ColorBad.ForeColor = ColorTranslator.FromHtml("#"+ settings.GetOption("color_bad"));
@@ -271,5 +276,6 @@ namespace tickMeter
         {
             Process.Start("https://bitbucket.org/dvman8bit/tickmeter/downloads/");
         }
+
     }
 }

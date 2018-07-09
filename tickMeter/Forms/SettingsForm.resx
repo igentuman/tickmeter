@@ -406,7 +406,7 @@
     <value>Verdana, 15.75pt, style=Bold</value>
   </data>
   <data name="ColorLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 214</value>
+    <value>7, 246</value>
   </data>
   <data name="ColorLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 0, 4, 0</value>
@@ -439,7 +439,7 @@
     <value>Verdana, 15.75pt, style=Bold</value>
   </data>
   <data name="ColorBad.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 250</value>
+    <value>7, 282</value>
   </data>
   <data name="ColorBad.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 0, 4, 0</value>
@@ -472,7 +472,7 @@
     <value>Verdana, 15.75pt, style=Bold</value>
   </data>
   <data name="ColorMid.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 285</value>
+    <value>7, 317</value>
   </data>
   <data name="ColorMid.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 0, 4, 0</value>
@@ -505,7 +505,7 @@
     <value>Verdana, 15.75pt, style=Bold</value>
   </data>
   <data name="ColorGood.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 319</value>
+    <value>7, 351</value>
   </data>
   <data name="ColorGood.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 0, 4, 0</value>
@@ -676,7 +676,7 @@
     <value>NoControl</value>
   </data>
   <data name="updateLbl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 364</value>
+    <value>9, 396</value>
   </data>
   <data name="updateLbl.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 0, 4, 0</value>
@@ -689,6 +689,9 @@
   </data>
   <data name="updateLbl.Text" xml:space="preserve">
     <value>Доступно обновление </value>
+  </data>
+  <data name="updateLbl.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="&gt;&gt;updateLbl.Name" xml:space="preserve">
     <value>updateLbl</value>

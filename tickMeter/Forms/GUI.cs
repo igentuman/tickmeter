@@ -12,19 +12,21 @@ using System.Security.Permissions;
 using System.Runtime.InteropServices;
 using System.Globalization;
 using System.Text.RegularExpressions;
-using tickMeter.GameManagers;
 using System.Diagnostics;
+using tickMeter.Classes;
+using System.Threading;
 
 namespace tickMeter
 {
     public partial class GUI : Form
     {
         private  IList<LivePacketDevice> AdaptersList;
-        private PacketDevice selectedAdapter;
+        public PacketDevice selectedAdapter;
         public ConnectionsManager NetworkConnectionsMngr;
         public NetworkStats networkStats;
 
         public SettingsForm settingsForm;
+        public PacketStats packetStats;
         public TickMeterState meterState;
         public string udpscr = "";
         public string udpdes = "";
@@ -68,6 +70,8 @@ namespace tickMeter
         {
             InitializeComponent();
             settingsForm = new SettingsForm();
+            packetStats = new PacketStats();
+            packetStats.gui = this;
             settingsForm.gui = this;
             try
             {
@@ -95,14 +99,7 @@ namespace tickMeter
 
                 if (Adapter.Description != null)
                 {
-                    string addr = Adapter.Addresses.First().ToString();
-                    var match = Regex.Match(addr, "(\\d)+\\.(\\d)+\\.(\\d)+\\.(\\d)+");
-                    if(match.Value == "")
-                    {
-                        addr = Adapter.Addresses[1].ToString();
-                        match = Regex.Match(addr, "(\\d)+\\.(\\d)+\\.(\\d)+\\.(\\d)+");
-                    }
-                    settingsForm.adapters_list.Items.Add(match.Value + " " + Adapter.Description.Replace("Network adapter ","").Replace("'Microsoft' ",""));
+                    settingsForm.adapters_list.Items.Add(GetAdapterAddress(Adapter) + " " + Adapter.Description.Replace("Network adapter ","").Replace("'Microsoft' ",""));
                 }
                 else
                 {
@@ -121,7 +118,8 @@ namespace tickMeter
             countryLbl.Visible = 
             label9.Visible = 
             trafficLbl.Visible = 
-            SettingsButton.Visible = true;
+            SettingsButton.Visible =
+            packetStatsBtn.Visible = true;
         }
 
         [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
@@ -154,6 +152,7 @@ namespace tickMeter
                 TransparencyKey = SystemColors.WindowFrame;
                 FormBorderStyle = FormBorderStyle.None;
                 SettingsButton.Visible = false;
+                packetStatsBtn.Visible = false;
                 if (settingsForm.settings_rtss_output.Checked)
                 {
                     OnScreen = false;
@@ -284,7 +283,7 @@ namespace tickMeter
         private void PcapWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             if (!meterState.IsTracking) return;
-            using (PacketCommunicator communicator = selectedAdapter.Open(65536, PacketDeviceOpenAttributes.Promiscuous, 1000))
+            using (PacketCommunicator communicator = selectedAdapter.Open(65536, PacketDeviceOpenAttributes.Promiscuous, 2000))
             {
                 if (communicator.DataLink.Kind != DataLinkKind.Ethernet)
                 {
@@ -318,13 +317,29 @@ namespace tickMeter
             pcapWorker.RunWorkerAsync();
         }
 
-        
+        public string GetAdapterAddress(LivePacketDevice Adapter)
+        {
+            if (Adapter.Description != null)
+            {
+                string addr = Adapter.Addresses.First().ToString();
+                var match = Regex.Match(addr, "(\\d)+\\.(\\d)+\\.(\\d)+\\.(\\d)+");
+                if (match.Value == "")
+                {
+                    addr = Adapter.Addresses[1].ToString();
+                    match = Regex.Match(addr, "(\\d)+\\.(\\d)+\\.(\\d)+\\.(\\d)+");
+                }
+                return match.Value;
+            }
+            return "";
+        }
+
         public void StartTracking()
         {
             meterState.Reset();
             meterState.IsTracking = true;
             ticksLoop.Enabled = true;
             selectedAdapter = AdaptersList[settingsForm.adapters_list.SelectedIndex];
+            meterState.LocalIP = GetAdapterAddress(AdaptersList[settingsForm.adapters_list.SelectedIndex]);
             lastSelectedAdapterID = settingsForm.adapters_list.SelectedIndex;
             if (!pcapWorker.IsBusy)
             {
@@ -443,5 +458,14 @@ namespace tickMeter
         {
             settingsForm.Show();
         }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            packetStats.meterState = meterState;
+            packetStats.Show();
+
+        }
+
+
     }
 }
