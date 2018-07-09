@@ -42,8 +42,10 @@
             this.retryLoop = new System.Windows.Forms.Timer(this.components);
             this.label9 = new System.Windows.Forms.Label();
             this.trafficLbl = new System.Windows.Forms.Label();
+            this.packetStatsBtn = new System.Windows.Forms.PictureBox();
             this.SettingsButton = new System.Windows.Forms.PictureBox();
             this.graph = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.packetStatsBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SettingsButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.graph)).BeginInit();
             this.SuspendLayout();
@@ -196,10 +198,22 @@
             this.trafficLbl.UseCompatibleTextRendering = true;
             this.trafficLbl.UseMnemonic = false;
             // 
+            // packetStatsBtn
+            // 
+            this.packetStatsBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.packetStatsBtn.Image = global::tickMeter.Properties.Resources._switch;
+            this.packetStatsBtn.Location = new System.Drawing.Point(325, 2);
+            this.packetStatsBtn.Name = "packetStatsBtn";
+            this.packetStatsBtn.Size = new System.Drawing.Size(48, 48);
+            this.packetStatsBtn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.packetStatsBtn.TabIndex = 40;
+            this.packetStatsBtn.TabStop = false;
+            this.packetStatsBtn.Click += new System.EventHandler(this.pictureBox1_Click);
+            // 
             // SettingsButton
             // 
             this.SettingsButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.SettingsButton.Image = global::tickMeter.Properties.Resources.gear;
+            this.SettingsButton.Image = global::tickMeter.Properties.Resources.circle_cog_customize_gear_preferences_settings_icon_48;
             this.SettingsButton.Location = new System.Drawing.Point(379, 2);
             this.SettingsButton.Name = "SettingsButton";
             this.SettingsButton.Size = new System.Drawing.Size(48, 48);
@@ -227,6 +241,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(434, 356);
+            this.Controls.Add(this.packetStatsBtn);
             this.Controls.Add(this.SettingsButton);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.trafficLbl);
@@ -247,6 +262,7 @@
             this.TransparencyKey = System.Drawing.SystemColors.Info;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.GUI_FormClosed);
             this.Load += new System.EventHandler(this.GUI_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.packetStatsBtn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SettingsButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.graph)).EndInit();
             this.ResumeLayout(false);
@@ -269,6 +285,7 @@
         public System.Windows.Forms.Label label4;
         public System.Windows.Forms.Label label5;
         public System.Windows.Forms.Label label9;
+        private System.Windows.Forms.PictureBox packetStatsBtn;
     }
 }
 

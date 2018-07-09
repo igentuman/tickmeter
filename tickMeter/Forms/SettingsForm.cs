@@ -277,9 +277,5 @@ namespace tickMeter
             Process.Start("https://bitbucket.org/dvman8bit/tickmeter/downloads/");
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-            gui.packetStats.Show();
-        }
     }
 }

@@ -161,6 +161,10 @@
     <Reference Include="System.Core">
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\WindowsPowerShell\3.0\System.Management.Automation.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms.DataVisualization">
       <Private>True</Private>
@@ -201,6 +205,12 @@
       <DependentUpon>GUI.cs</DependentUpon>
     </Compile>
     <Compile Include="Classes\NetworkStats.cs" />
+    <Compile Include="Forms\PacketFilterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PacketFilterForm.Designer.cs">
+      <DependentUpon>PacketFilterForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\PacketStats.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -208,6 +218,12 @@
       <DependentUpon>PacketStats.cs</DependentUpon>
     </Compile>
     <Compile Include="Classes\Program.cs" />
+    <Compile Include="Forms\ProfileEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ProfileEditForm.Designer.cs">
+      <DependentUpon>ProfileEditForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\en.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -226,8 +242,14 @@
     <EmbeddedResource Include="Forms\GUI.resx">
       <DependentUpon>GUI.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PacketFilterForm.resx">
+      <DependentUpon>PacketFilterForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\PacketStats.resx">
       <DependentUpon>PacketStats.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ProfileEditForm.resx">
+      <DependentUpon>ProfileEditForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -262,6 +284,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\tools-icon.png" />
+    <None Include="Resources\movie.png" />
+    <None Include="Resources\multimedia.png" />
+    <None Include="Resources\multimedia %281%29.png" />
+    <None Include="Resources\switch.png" />
+    <None Include="Resources\circle_cog_customize_gear_preferences_settings_icon_48.png" />
+    <None Include="Resources\circle_compose_draw_edit_write_icon_48.png" />
+    <None Include="Resources\check.png" />
+    <None Include="Resources\cleanmaster.png" />
+    <None Include="Resources\add-1-icon.png" />
     <Content Include="Resources\icon.ico" />
     <None Include="Resources\gear.png" />
     <None Include="Resources\grid.png" />

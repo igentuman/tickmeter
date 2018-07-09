@@ -51,7 +51,6 @@ namespace tickMeter
             this.rememberAdapter = new System.Windows.Forms.CheckBox();
             this.updateLbl = new System.Windows.Forms.Label();
             this.rtss_dialog = new System.Windows.Forms.OpenFileDialog();
-            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // settings_netstats_checkbox
@@ -215,19 +214,10 @@ namespace tickMeter
             resources.ApplyResources(this.rtss_dialog, "rtss_dialog");
             this.rtss_dialog.InitialDirectory = "C:\\";
             // 
-            // label1
-            // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label1.Name = "label1";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
-            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.updateLbl);
             this.Controls.Add(this.rememberAdapter);
             this.Controls.Add(this.netInfo);
@@ -277,6 +267,5 @@ namespace tickMeter
         public System.Windows.Forms.CheckBox rememberAdapter;
         public System.Windows.Forms.Label updateLbl;
         private System.Windows.Forms.OpenFileDialog rtss_dialog;
-        private System.Windows.Forms.Label label1;
     }
 }

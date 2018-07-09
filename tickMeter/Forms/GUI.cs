@@ -13,6 +13,8 @@ using System.Runtime.InteropServices;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
+using tickMeter.Classes;
+using System.Threading;
 
 namespace tickMeter
 {
@@ -116,7 +118,8 @@ namespace tickMeter
             countryLbl.Visible = 
             label9.Visible = 
             trafficLbl.Visible = 
-            SettingsButton.Visible = true;
+            SettingsButton.Visible =
+            packetStatsBtn.Visible = true;
         }
 
         [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
@@ -149,6 +152,7 @@ namespace tickMeter
                 TransparencyKey = SystemColors.WindowFrame;
                 FormBorderStyle = FormBorderStyle.None;
                 SettingsButton.Visible = false;
+                packetStatsBtn.Visible = false;
                 if (settingsForm.settings_rtss_output.Checked)
                 {
                     OnScreen = false;
@@ -279,7 +283,7 @@ namespace tickMeter
         private void PcapWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             if (!meterState.IsTracking) return;
-            using (PacketCommunicator communicator = selectedAdapter.Open(65536, PacketDeviceOpenAttributes.Promiscuous, 1000))
+            using (PacketCommunicator communicator = selectedAdapter.Open(65536, PacketDeviceOpenAttributes.Promiscuous, 2000))
             {
                 if (communicator.DataLink.Kind != DataLinkKind.Ethernet)
                 {
@@ -454,5 +458,14 @@ namespace tickMeter
         {
             settingsForm.Show();
         }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            packetStats.meterState = meterState;
+            packetStats.Show();
+
+        }
+
+
     }
 }

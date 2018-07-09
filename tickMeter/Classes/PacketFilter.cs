@@ -14,8 +14,37 @@ namespace tickMeter.Classes
         public string ProtocolFilter { get; set; } = "";
 
         public string PacketSizeFilter { get; set; } = "";
+        public string ProcessFilter { get; set; } = "";
 
         public IpV4Datagram ip;
+
+        protected bool EqCheck(string filterPart, string packetValue)
+        {
+            if(filterPart.Contains("!"))
+            {
+                return filterPart != packetValue;
+            }
+            return filterPart == packetValue;
+        }
+
+        protected bool RangeCheck(string[] portParts,int portToCheck)
+        {
+            bool negative = false;
+            if (portParts[0].Contains("!"))
+            {
+                negative = true;
+                portParts[0] = portParts[0].Replace("!", "");
+            }
+            int fromPort = int.Parse(portParts[0]);
+            int toPort = int.Parse(portParts[1]);
+            if(negative)
+            {
+                return portToCheck > toPort && portToCheck < fromPort;
+            } else
+            {
+                return portToCheck <= toPort && portToCheck >= fromPort;
+            }
+        }
 
         protected bool ValidateProtocol()
         {
@@ -43,27 +72,23 @@ namespace tickMeter.Classes
             string[] portParts = port.Split('-');
             if (portParts.Length == 2)
             {
-                int fromPort = int.Parse(portParts[0]);
-                int toPort = int.Parse(portParts[1]);
-                if (portToCheck <= toPort && portToCheck >= fromPort)
-                {
-                    return true;
-                }
-                return false;
+                return RangeCheck(portParts, portToCheck);
             }
             portParts = port.Split(',');
+            bool validFlag = false;
             foreach (string checkPort in portParts)
             {
-                if (checkPort == portToCheck.ToString())
-                    return true;
+                validFlag = EqCheck(checkPort, portToCheck.ToString()) || validFlag;
+                    
             }
-            return false;
+            return validFlag;
         }
 
         private bool ValidateIP(string ipFilter, string ip)
         {
             if (ipFilter == "") return true;
             if (ipFilter == ip) return true;
+            if (ipFilter.Contains("!")) return ipFilter != ip;
             string[] ipFilterParts = ipFilter.Split('.');
             string[] ipParts = ip.Split('.');
             for (int i = 0; i < ipFilterParts.Length; i++)
@@ -80,34 +105,33 @@ namespace tickMeter.Classes
 
         public bool ValidatePacketSize()
         {
-            int packetSize = ip.Length;
+            int packetSize = ip.TotalLength;
             if (PacketSizeFilter == "") return true;
             string[] sizes = PacketSizeFilter.Split(',');
-            if(sizes.Length > 1)
+            bool validFlag = false;
+            if (sizes.Length > 1)
             {
                 foreach(string sizeP in sizes)
                 {
-                    if(int.Parse(sizeP) == packetSize)
-                    {
-                        return true;
-                    }
+                    validFlag = EqCheck(sizeP, packetSize.ToString()) || validFlag;
                 }
-                return false;
+                return validFlag;
             }
 
             sizes = PacketSizeFilter.Split('-');
             if (sizes.Length == 2)
             {
-                if(int.Parse(sizes[0]) <= packetSize && int.Parse(sizes[1]) >= packetSize)
-                {
-                    return true;
-                }
-                return false;
+                return RangeCheck(sizes, packetSize);
             }
+            if (PacketSizeFilter.Contains("!")) return int.Parse(PacketSizeFilter) != packetSize;
+            return int.Parse(PacketSizeFilter) == packetSize;
+        }
 
-            if (int.Parse(PacketSizeFilter) == packetSize) return true;
-
-            return false;
+        public bool ValidateProcess(string ProcessToCheck)
+        {
+            if (ProcessFilter == "") return true;
+            if (ProcessFilter.Contains("!")) return ProcessToCheck.ToLower() != ProcessFilter.ToLower();
+            return ProcessToCheck.ToLower() == ProcessFilter.ToLower();
         }
 
         public bool Validate()
@@ -116,7 +140,7 @@ namespace tickMeter.Classes
 
             string SourcePort = "";
             string DestPort = "";
-
+            
             if (ip.Protocol == IpV4Protocol.Udp)
             {
                 SourcePort = ip.Udp.SourcePort.ToString();
@@ -127,6 +151,7 @@ namespace tickMeter.Classes
                 SourcePort = ip.Tcp.SourcePort.ToString();
                 DestPort = ip.Tcp.DestinationPort.ToString();
             }
+            
             if (!ValidatePort(SourcePortFilter, int.Parse(SourcePort))) return false;
 
             if (!ValidatePort(DestPortFilter, int.Parse(DestPort))) return false;
@@ -141,5 +166,6 @@ namespace tickMeter.Classes
 
             return true;
         }
+
     }
 }

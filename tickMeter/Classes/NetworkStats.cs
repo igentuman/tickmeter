@@ -41,13 +41,13 @@ namespace tickMeter
             {
                 ActivePorts = GetNetStatPorts();
                 ProcessInfoList = Process.GetProcesses();
-                Process[] proccArray;
+                Process procc;
                 for (var i = 0; i < ActivePorts.Count; i++)
                 {
-                    proccArray = ProcessInfoList.Where(process => ActivePorts[i].ProcessId == process.Id).ToArray();
-                    if (proccArray.Length > 0)
+                    procc = ProcessInfoList.Where(process => ActivePorts[i].ProcessId == process.Id).First();
+                    if (procc != null)
                     {
-                        ActivePorts[i].ProcessName = proccArray.First().ProcessName;
+                        ActivePorts[i].ProcessName = procc.ProcessName;
                     }
                 }
             });
@@ -71,7 +71,8 @@ namespace tickMeter
                         WindowStyle = ProcessWindowStyle.Hidden,
                         RedirectStandardInput = true,
                         RedirectStandardOutput = true,
-                        RedirectStandardError = true
+                        RedirectStandardError = true,
+                        CreateNoWindow = true
                     };
 
                     p.StartInfo = ps;
