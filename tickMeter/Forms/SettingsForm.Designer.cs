@@ -51,6 +51,7 @@ namespace tickMeter
             this.rememberAdapter = new System.Windows.Forms.CheckBox();
             this.updateLbl = new System.Windows.Forms.Label();
             this.rtss_dialog = new System.Windows.Forms.OpenFileDialog();
+            this.settings_session_time_checkbox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // settings_netstats_checkbox
@@ -214,10 +215,20 @@ namespace tickMeter
             resources.ApplyResources(this.rtss_dialog, "rtss_dialog");
             this.rtss_dialog.InitialDirectory = "C:\\";
             // 
+            // settings_session_time_checkbox
+            // 
+            resources.ApplyResources(this.settings_session_time_checkbox, "settings_session_time_checkbox");
+            this.settings_session_time_checkbox.Checked = true;
+            this.settings_session_time_checkbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.settings_session_time_checkbox.ForeColor = System.Drawing.Color.Black;
+            this.settings_session_time_checkbox.Name = "settings_session_time_checkbox";
+            this.settings_session_time_checkbox.UseVisualStyleBackColor = true;
+            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.settings_session_time_checkbox);
             this.Controls.Add(this.updateLbl);
             this.Controls.Add(this.rememberAdapter);
             this.Controls.Add(this.netInfo);
@@ -267,5 +278,6 @@ namespace tickMeter
         public System.Windows.Forms.CheckBox rememberAdapter;
         public System.Windows.Forms.Label updateLbl;
         private System.Windows.Forms.OpenFileDialog rtss_dialog;
+        public CheckBox settings_session_time_checkbox;
     }
 }

@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Net;
+using System.Resources;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -114,7 +115,8 @@ namespace tickMeter
             settings_traffic_checkbox.Checked = settings.GetOption("traffic") == "True";
             settings_rtss_output.Checked = settings.GetOption("rtss") == "True";
             rememberAdapter.Checked = settings.GetOption("remember_adapter") == "True";
-            if(rememberAdapter.Checked)
+            settings_session_time_checkbox.Checked = settings.GetOption("session_time") == "True";
+            if (rememberAdapter.Checked)
             {
                 try
                 {
@@ -131,10 +133,10 @@ namespace tickMeter
             RivaTuner.ColorBad = settings.GetOption("color_bad");
             RivaTuner.ColorMid = settings.GetOption("color_mid");
             RivaTuner.ColorGood = settings.GetOption("color_good");
-            gui.label3.ForeColor =
-                gui.label4.ForeColor =
-                gui.label5.ForeColor =
-                gui.label9.ForeColor =
+            gui.tickrate_lbl.ForeColor =
+                gui.ping_lbl.ForeColor =
+                gui.ip_lbl.ForeColor =
+                gui.traffic_lbl.ForeColor =
                 ColorLabel.ForeColor;
             InitRtss();
         }
@@ -152,38 +154,41 @@ namespace tickMeter
             settings.SetOption("color_good", HexConverter(ColorGood.ForeColor));
             settings.SetOption("rtss", settings_rtss_output.Checked.ToString());
             settings.SetOption("remember_adapter", rememberAdapter.Checked.ToString());
+            settings.SetOption("session_time", settings_session_time_checkbox.Checked.ToString());
             settings.SetOption("last_selected_adapter_id", adapters_list.SelectedIndex.ToString());
             settings.SaveConfig();
         }
 
         public void SwitchToEnglish()
         {
-            Text = Resources.en.ResourceManager.GetString("settings");
-            settings_rtss_output.Text = Resources.en.ResourceManager.GetString(settings_rtss_output.Name);
-            settings_log_checkbox.Text = Resources.en.ResourceManager.GetString(settings_log_checkbox.Name);
-            settings_ip_checkbox.Text = Resources.en.ResourceManager.GetString(settings_ip_checkbox.Name);
-            settings_ping_checkbox.Text = Resources.en.ResourceManager.GetString(settings_ping_checkbox.Name);
-            settings_traffic_checkbox.Text = Resources.en.ResourceManager.GetString(settings_traffic_checkbox.Name);
-            settings_netstats_checkbox.Text = Resources.en.ResourceManager.GetString(settings_netstats_checkbox.Name);
-            settings_chart_checkbox.Text = Resources.en.ResourceManager.GetString(settings_chart_checkbox.Name);
-            possible_risks_lbl.Text = Resources.en.ResourceManager.GetString(possible_risks_lbl.Name);
-            network_connection_lbl.Text = Resources.en.ResourceManager.GetString(network_connection_lbl.Name);
-            ColorLabel.Text = Resources.en.ResourceManager.GetString(ColorLabel.Name);
-            ColorBad.Text = Resources.en.ResourceManager.GetString(ColorBad.Name);
-            ColorMid.Text = Resources.en.ResourceManager.GetString(ColorMid.Name);
-            ColorGood.Text = Resources.en.ResourceManager.GetString(ColorGood.Name);
-            rememberAdapter.Text = Resources.en.ResourceManager.GetString(rememberAdapter.Name);
-            updateLbl.Text = Resources.en.ResourceManager.GetString(updateLbl.Name);
+            ResourceManager eng = Resources.en.ResourceManager;
+            Text = eng.GetString("settings");
+            settings_rtss_output.Text = eng.GetString(settings_rtss_output.Name);
+            settings_log_checkbox.Text = eng.GetString(settings_log_checkbox.Name);
+            settings_ip_checkbox.Text = eng.GetString(settings_ip_checkbox.Name);
+            settings_ping_checkbox.Text = eng.GetString(settings_ping_checkbox.Name);
+            settings_traffic_checkbox.Text = eng.GetString(settings_traffic_checkbox.Name);
+            settings_netstats_checkbox.Text = eng.GetString(settings_netstats_checkbox.Name);
+            settings_chart_checkbox.Text = eng.GetString(settings_chart_checkbox.Name);
+            settings_session_time_checkbox.Text = eng.GetString(settings_session_time_checkbox.Name);
+            possible_risks_lbl.Text = eng.GetString(possible_risks_lbl.Name);
+            network_connection_lbl.Text = eng.GetString(network_connection_lbl.Name);
+            ColorLabel.Text = eng.GetString(ColorLabel.Name);
+            ColorBad.Text = eng.GetString(ColorBad.Name);
+            ColorMid.Text = eng.GetString(ColorMid.Name);
+            ColorGood.Text = eng.GetString(ColorGood.Name);
+            rememberAdapter.Text = eng.GetString(rememberAdapter.Name);
+            updateLbl.Text = eng.GetString(updateLbl.Name);
         }
 
         private void LabelsColor_Click(object sender, EventArgs e)
         {
             colorDialog1.ShowDialog();
             ColorLabel.ForeColor = colorDialog1.Color;
-            gui.label3.ForeColor =
-                gui.label4.ForeColor =
-                gui.label5.ForeColor =
-                gui.label9.ForeColor =
+            gui.tickrate_lbl.ForeColor =
+                gui.ping_lbl.ForeColor =
+                gui.ip_lbl.ForeColor =
+                gui.traffic_lbl.ForeColor =
                 ColorLabel.ForeColor;
             SaveToConfig();
             ApplyFromConfig();

@@ -103,7 +103,7 @@ namespace tickMeter
 
         public static string TextFormat()
         {
-            return "<C0=" + LabelColor + "><C1=" + ColorBad+ "><C2=" + ColorMid + "><C3=" + ColorGood + "><S0=45><S1=70>";
+            return "<C0=" + LabelColor + "><C1=" + ColorBad+ "><C2=" + ColorMid + "><C3=" + ColorGood + "><S0=47><S1=70>";
         }
 
         public static string FormatTickrate()
@@ -135,6 +135,13 @@ namespace tickMeter
             float formatedUpload = (float)meterState.UploadTraffic / (1024 * 1024);
             float formatedDownload = (float)meterState.DownloadTraffic / (1024 * 1024);
             return "<S><C0>UP/DL: <C>" + formatedUpload.ToString("N2") + " / " + formatedDownload.ToString("N2") + "<S1> Mb" + Environment.NewLine;
+        }
+
+        public static string FormatTime()
+        {
+            TimeSpan result = TimeSpan.FromSeconds(meterState.SessionTime);
+            string Duration = result.ToString("mm':'ss");
+            return "<S><C0>Time: <C>" + Duration + Environment.NewLine;
         }
 
         public static string FormatPing()
@@ -178,6 +185,10 @@ namespace tickMeter
             if (gui.settingsForm.settings_traffic_checkbox.Checked)
             {
                 output += FormatTraffic();
+            }
+            if (gui.settingsForm.settings_session_time_checkbox.Checked)
+            {
+                output += FormatTime();
             }
             PrintData(output, true);
         }

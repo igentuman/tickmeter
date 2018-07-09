@@ -201,7 +201,7 @@
             // 
             // button2
             // 
-            this.button2.Image = global::tickMeter.Properties.Resources.add_1_icon;
+            this.button2.Image = global::tickMeter.Properties.Resources.add;
             this.button2.Location = new System.Drawing.Point(174, 415);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 68);

@@ -12,7 +12,7 @@ namespace tickMeter
     public class TickMeterState
     {
         public bool IsTracking { get; set; } = false;
-
+        public int SessionTime { get; set; } = 0;
         public GameServer Server { get; set; }
         public string LocalIP { get; set; }
         public string Game { get; set; } = "";

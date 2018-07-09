@@ -188,6 +188,15 @@ namespace tickMeter.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Display connection time.
+        /// </summary>
+        internal static string settings_session_time_checkbox {
+            get {
+                return ResourceManager.GetString("settings_session_time_checkbox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Display traffic.
         /// </summary>
         internal static string settings_traffic_checkbox {

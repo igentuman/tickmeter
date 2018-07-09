@@ -73,9 +73,9 @@ namespace tickMeter.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap add_1_icon {
+        internal static System.Drawing.Bitmap add {
             get {
-                object obj = ResourceManager.GetObject("add-1-icon", resourceCulture);
+                object obj = ResourceManager.GetObject("add", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,26 +93,6 @@ namespace tickMeter.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap circle_cog_customize_gear_preferences_settings_icon_48 {
-            get {
-                object obj = ResourceManager.GetObject("circle_cog_customize_gear_preferences_settings_icon_48", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap circle_compose_draw_edit_write_icon_48 {
-            get {
-                object obj = ResourceManager.GetObject("circle_compose_draw_edit_write_icon_48", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap cleanmaster {
             get {
                 object obj = ResourceManager.GetObject("cleanmaster", resourceCulture);
@@ -123,9 +103,9 @@ namespace tickMeter.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap gear {
+        internal static System.Drawing.Bitmap create {
             get {
-                object obj = ResourceManager.GetObject("gear", resourceCulture);
+                object obj = ResourceManager.GetObject("create", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -163,9 +143,19 @@ namespace tickMeter.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap multimedia__1_ {
+        internal static System.Drawing.Bitmap reload {
             get {
-                object obj = ResourceManager.GetObject("multimedia (1)", resourceCulture);
+                object obj = ResourceManager.GetObject("reload", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap settings {
+            get {
+                object obj = ResourceManager.GetObject("settings", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

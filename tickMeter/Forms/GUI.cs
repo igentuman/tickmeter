@@ -145,13 +145,15 @@ namespace tickMeter
 
         protected void ShowAll()
         {
-            serverLbl.Visible = 
-            label5.Visible = 
-            pingLbl.Visible = 
-            label4.Visible = 
+            ip_val.Visible = 
+            ip_lbl.Visible = 
+            ping_val.Visible = 
+            ping_lbl.Visible = 
             countryLbl.Visible = 
-            label9.Visible = 
-            trafficLbl.Visible = 
+            traffic_lbl.Visible = 
+            traffic_val.Visible = 
+            time_lbl.Visible = 
+            time_val.Visible = 
             SettingsButton.Visible =
             packetStatsBtn.Visible = true;
         }
@@ -199,19 +201,25 @@ namespace tickMeter
 
                 if( !settingsForm.settings_ip_checkbox.Checked)
                 {
-                    serverLbl.Visible = false;
-                    label5.Visible = false;
+                    ip_val.Visible = false;
+                    ip_lbl.Visible = false;
                 }
                 if (!settingsForm.settings_ping_checkbox.Checked)
                 {
-                    pingLbl.Visible = false;
-                    label4.Visible = false;
+                    ping_val.Visible = false;
+                    ping_lbl.Visible = false;
                     countryLbl.Visible = false;
                 }
                 if (!settingsForm.settings_traffic_checkbox.Checked)
                 {
-                    label9.Visible = false;
-                    trafficLbl.Visible = false;
+                    traffic_lbl.Visible = false;
+                    traffic_val.Visible = false;
+                }
+
+                if (!settingsForm.settings_session_time_checkbox.Checked)
+                {
+                    time_lbl.Visible = false;
+                    time_val.Visible = false;
                 }
             }
             base.WndProc(ref m);
@@ -227,9 +235,11 @@ namespace tickMeter
             PubgMngr.ProcessPacket(packet, this);
         }
 
-
+        
         private async void TicksLoop_Tick(object sender, EventArgs e)
         {
+            if(meterState.IsTracking && meterState.Server.Ip != "")
+            meterState.SessionTime++;
             if (settingsForm.settings_rtss_output.Checked)
             {
                 await Task.Run(() => {
@@ -253,9 +263,9 @@ namespace tickMeter
 
             await Task.Run(
                     () => {
-                        tickRateLbl.Invoke(new Action(() => {
-                            tickRateLbl.Text = meterState.OutputTickRate.ToString();
-                            tickRateLbl.ForeColor = TickRateColor;
+                        tickrate_val.Invoke(new Action(() => {
+                            tickrate_val.Text = meterState.OutputTickRate.ToString();
+                            tickrate_val.ForeColor = TickRateColor;
                         }));
                         //update tickrate chart
                         if (settingsForm.settings_chart_checkbox.Checked)
@@ -267,18 +277,25 @@ namespace tickMeter
                         {
                             float formatedUpload = (float)meterState.UploadTraffic / (1024 * 1024);
                             float formatedDownload = (float)meterState.DownloadTraffic / (1024 * 1024);
-                            trafficLbl.Invoke(new Action(() => trafficLbl.Text = formatedUpload.ToString("N2") + " / " + formatedDownload.ToString("N2") + " mb"));
+                            traffic_val.Invoke(new Action(() => traffic_val.Text = formatedUpload.ToString("N2") + " / " + formatedDownload.ToString("N2") + " mb"));
                         }
                         //update IP
                         if (settingsForm.settings_ip_checkbox.Checked)
                         {
-                        serverLbl.Invoke(new Action(() => serverLbl.Text = meterState.Server.Ip));
+                        ip_val.Invoke(new Action(() => ip_val.Text = meterState.Server.Ip));
                         }
                         //update PING
                         if (settingsForm.settings_ping_checkbox.Checked)
                         {
                         countryLbl.Invoke(new Action(() => countryLbl.Text = meterState.Server.Country));
-                        pingLbl.Invoke(new Action(() => pingLbl.Text = meterState.Server.Ping.ToString() + " ms"));
+                        ping_val.Invoke(new Action(() => ping_val.Text = meterState.Server.Ping.ToString() + " ms"));
+                        }
+                        //update time
+                        if (settingsForm.settings_session_time_checkbox.Checked)
+                        {
+                            TimeSpan result = TimeSpan.FromSeconds(meterState.SessionTime);
+                            string Duration = result.ToString("mm':'ss");
+                            ip_val.Invoke(new Action(() => time_val.Text = Duration));
                         }
                     });
             if (!meterState.IsTracking)
@@ -400,8 +417,8 @@ namespace tickMeter
             ticksLoop.Enabled = false;
             if (meterState == null) return;
 
-            tickRateLbl.ForeColor = settingsForm.ColorBad.ForeColor;
-            pingLbl.ForeColor = settingsForm.ColorMid.ForeColor;
+            tickrate_val.ForeColor = settingsForm.ColorBad.ForeColor;
+            ping_val.ForeColor = settingsForm.ColorMid.ForeColor;
             graph.Image = graph.InitialImage;
             
             
@@ -434,7 +451,7 @@ namespace tickMeter
 
         private void ServerLbl_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(serverLbl.Text);
+            Clipboard.SetText(ip_val.Text);
         }
     
         

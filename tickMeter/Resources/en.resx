@@ -160,6 +160,9 @@
   <data name="settings_rtss_output" xml:space="preserve">
     <value>Use RTSS output overlay</value>
   </data>
+  <data name="settings_session_time_checkbox" xml:space="preserve">
+    <value>Display connection time</value>
+  </data>
   <data name="settings_traffic_checkbox" xml:space="preserve">
     <value>Display traffic</value>
   </data>

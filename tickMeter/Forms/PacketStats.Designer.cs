@@ -210,7 +210,7 @@ namespace tickMeter
             // 
             // clear
             // 
-            this.clear.Image = global::tickMeter.Properties.Resources.multimedia__1_;
+            this.clear.Image = global::tickMeter.Properties.Resources.reload;
             this.clear.Location = new System.Drawing.Point(149, 14);
             this.clear.Name = "clear";
             this.clear.Size = new System.Drawing.Size(64, 60);

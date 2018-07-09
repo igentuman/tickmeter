@@ -30,17 +30,19 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GUI));
-            this.label3 = new System.Windows.Forms.Label();
+            this.tickrate_lbl = new System.Windows.Forms.Label();
             this.ticksLoop = new System.Windows.Forms.Timer(this.components);
-            this.tickRateLbl = new System.Windows.Forms.Label();
-            this.pingLbl = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.serverLbl = new System.Windows.Forms.Label();
+            this.tickrate_val = new System.Windows.Forms.Label();
+            this.ping_val = new System.Windows.Forms.Label();
+            this.ping_lbl = new System.Windows.Forms.Label();
+            this.ip_lbl = new System.Windows.Forms.Label();
+            this.ip_val = new System.Windows.Forms.Label();
             this.countryLbl = new System.Windows.Forms.Label();
             this.retryLoop = new System.Windows.Forms.Timer(this.components);
-            this.label9 = new System.Windows.Forms.Label();
-            this.trafficLbl = new System.Windows.Forms.Label();
+            this.traffic_lbl = new System.Windows.Forms.Label();
+            this.traffic_val = new System.Windows.Forms.Label();
+            this.time_lbl = new System.Windows.Forms.Label();
+            this.time_val = new System.Windows.Forms.Label();
             this.packetStatsBtn = new System.Windows.Forms.PictureBox();
             this.SettingsButton = new System.Windows.Forms.PictureBox();
             this.graph = new System.Windows.Forms.PictureBox();
@@ -49,99 +51,99 @@
             ((System.ComponentModel.ISupportInitialize)(this.graph)).BeginInit();
             this.SuspendLayout();
             // 
-            // label3
+            // tickrate_lbl
             // 
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label3.Font = new System.Drawing.Font("Unispace", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.OrangeRed;
-            this.label3.Location = new System.Drawing.Point(12, 9);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(162, 39);
-            this.label3.TabIndex = 18;
-            this.label3.Text = "Tickrate:";
-            this.label3.UseCompatibleTextRendering = true;
+            this.tickrate_lbl.AutoSize = true;
+            this.tickrate_lbl.BackColor = System.Drawing.Color.Transparent;
+            this.tickrate_lbl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.tickrate_lbl.Font = new System.Drawing.Font("Unispace", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tickrate_lbl.ForeColor = System.Drawing.Color.OrangeRed;
+            this.tickrate_lbl.Location = new System.Drawing.Point(12, 9);
+            this.tickrate_lbl.Name = "tickrate_lbl";
+            this.tickrate_lbl.Size = new System.Drawing.Size(162, 39);
+            this.tickrate_lbl.TabIndex = 18;
+            this.tickrate_lbl.Text = "Tickrate:";
+            this.tickrate_lbl.UseCompatibleTextRendering = true;
             // 
             // ticksLoop
             // 
             this.ticksLoop.Interval = 1000;
             this.ticksLoop.Tick += new System.EventHandler(this.TicksLoop_Tick);
             // 
-            // tickRateLbl
+            // tickrate_val
             // 
-            this.tickRateLbl.AutoSize = true;
-            this.tickRateLbl.BackColor = System.Drawing.Color.Transparent;
-            this.tickRateLbl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tickRateLbl.Font = new System.Drawing.Font("Unispace", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tickRateLbl.ForeColor = System.Drawing.Color.OrangeRed;
-            this.tickRateLbl.Location = new System.Drawing.Point(178, 6);
-            this.tickRateLbl.Name = "tickRateLbl";
-            this.tickRateLbl.Size = new System.Drawing.Size(36, 53);
-            this.tickRateLbl.TabIndex = 24;
-            this.tickRateLbl.Text = "0";
-            this.tickRateLbl.UseCompatibleTextRendering = true;
-            this.tickRateLbl.UseMnemonic = false;
+            this.tickrate_val.AutoSize = true;
+            this.tickrate_val.BackColor = System.Drawing.Color.Transparent;
+            this.tickrate_val.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.tickrate_val.Font = new System.Drawing.Font("Unispace", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tickrate_val.ForeColor = System.Drawing.Color.OrangeRed;
+            this.tickrate_val.Location = new System.Drawing.Point(178, 6);
+            this.tickrate_val.Name = "tickrate_val";
+            this.tickrate_val.Size = new System.Drawing.Size(36, 53);
+            this.tickrate_val.TabIndex = 24;
+            this.tickrate_val.Text = "0";
+            this.tickrate_val.UseCompatibleTextRendering = true;
+            this.tickrate_val.UseMnemonic = false;
             // 
-            // pingLbl
+            // ping_val
             // 
-            this.pingLbl.AutoSize = true;
-            this.pingLbl.BackColor = System.Drawing.Color.Transparent;
-            this.pingLbl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.pingLbl.Font = new System.Drawing.Font("Unispace", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pingLbl.ForeColor = System.Drawing.Color.OrangeRed;
-            this.pingLbl.Location = new System.Drawing.Point(178, 94);
-            this.pingLbl.Name = "pingLbl";
-            this.pingLbl.Size = new System.Drawing.Size(77, 39);
-            this.pingLbl.TabIndex = 25;
-            this.pingLbl.Text = "0 ms";
-            this.pingLbl.UseCompatibleTextRendering = true;
-            this.pingLbl.UseMnemonic = false;
+            this.ping_val.AutoSize = true;
+            this.ping_val.BackColor = System.Drawing.Color.Transparent;
+            this.ping_val.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ping_val.Font = new System.Drawing.Font("Unispace", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ping_val.ForeColor = System.Drawing.Color.OrangeRed;
+            this.ping_val.Location = new System.Drawing.Point(178, 92);
+            this.ping_val.Name = "ping_val";
+            this.ping_val.Size = new System.Drawing.Size(77, 39);
+            this.ping_val.TabIndex = 25;
+            this.ping_val.Text = "0 ms";
+            this.ping_val.UseCompatibleTextRendering = true;
+            this.ping_val.UseMnemonic = false;
             // 
-            // label4
+            // ping_lbl
             // 
-            this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label4.Font = new System.Drawing.Font("Unispace", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.OrangeRed;
-            this.label4.Location = new System.Drawing.Point(12, 94);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(111, 39);
-            this.label4.TabIndex = 26;
-            this.label4.Text = "Ping :";
-            this.label4.UseCompatibleTextRendering = true;
+            this.ping_lbl.AutoSize = true;
+            this.ping_lbl.BackColor = System.Drawing.Color.Transparent;
+            this.ping_lbl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ping_lbl.Font = new System.Drawing.Font("Unispace", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ping_lbl.ForeColor = System.Drawing.Color.OrangeRed;
+            this.ping_lbl.Location = new System.Drawing.Point(12, 92);
+            this.ping_lbl.Name = "ping_lbl";
+            this.ping_lbl.Size = new System.Drawing.Size(111, 39);
+            this.ping_lbl.TabIndex = 26;
+            this.ping_lbl.Text = "Ping :";
+            this.ping_lbl.UseCompatibleTextRendering = true;
             // 
-            // label5
+            // ip_lbl
             // 
-            this.label5.AutoSize = true;
-            this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label5.Font = new System.Drawing.Font("Unispace", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.OrangeRed;
-            this.label5.Location = new System.Drawing.Point(12, 53);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(60, 39);
-            this.label5.TabIndex = 27;
-            this.label5.Text = "IP:";
-            this.label5.UseCompatibleTextRendering = true;
+            this.ip_lbl.AutoSize = true;
+            this.ip_lbl.BackColor = System.Drawing.Color.Transparent;
+            this.ip_lbl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ip_lbl.Font = new System.Drawing.Font("Unispace", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ip_lbl.ForeColor = System.Drawing.Color.OrangeRed;
+            this.ip_lbl.Location = new System.Drawing.Point(12, 53);
+            this.ip_lbl.Name = "ip_lbl";
+            this.ip_lbl.Size = new System.Drawing.Size(60, 39);
+            this.ip_lbl.TabIndex = 27;
+            this.ip_lbl.Text = "IP:";
+            this.ip_lbl.UseCompatibleTextRendering = true;
             // 
-            // serverLbl
+            // ip_val
             // 
-            this.serverLbl.AutoSize = true;
-            this.serverLbl.BackColor = System.Drawing.Color.Transparent;
-            this.serverLbl.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.serverLbl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.serverLbl.Font = new System.Drawing.Font("Unispace", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.serverLbl.ForeColor = System.Drawing.Color.OrangeRed;
-            this.serverLbl.Location = new System.Drawing.Point(178, 53);
-            this.serverLbl.Name = "serverLbl";
-            this.serverLbl.Size = new System.Drawing.Size(264, 39);
-            this.serverLbl.TabIndex = 28;
-            this.serverLbl.Text = "000.000.000.000";
-            this.serverLbl.UseCompatibleTextRendering = true;
-            this.serverLbl.UseMnemonic = false;
-            this.serverLbl.Click += new System.EventHandler(this.ServerLbl_Click);
+            this.ip_val.AutoSize = true;
+            this.ip_val.BackColor = System.Drawing.Color.Transparent;
+            this.ip_val.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ip_val.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ip_val.Font = new System.Drawing.Font("Unispace", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ip_val.ForeColor = System.Drawing.Color.OrangeRed;
+            this.ip_val.Location = new System.Drawing.Point(178, 53);
+            this.ip_val.Name = "ip_val";
+            this.ip_val.Size = new System.Drawing.Size(264, 39);
+            this.ip_val.TabIndex = 28;
+            this.ip_val.Text = "000.000.000.000";
+            this.ip_val.UseCompatibleTextRendering = true;
+            this.ip_val.UseMnemonic = false;
+            this.ip_val.Click += new System.EventHandler(this.ServerLbl_Click);
             // 
             // countryLbl
             // 
@@ -162,34 +164,63 @@
             this.retryLoop.Interval = 5000;
             this.retryLoop.Tick += new System.EventHandler(this.RetryTimer_Tick);
             // 
-            // label9
+            // traffic_lbl
             // 
-            this.label9.AutoSize = true;
-            this.label9.BackColor = System.Drawing.Color.Transparent;
-            this.label9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.label9.Font = new System.Drawing.Font("Unispace", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.ForeColor = System.Drawing.Color.OrangeRed;
-            this.label9.Location = new System.Drawing.Point(12, 133);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(128, 39);
-            this.label9.TabIndex = 38;
-            this.label9.Text = "UP/DL :";
-            this.label9.UseCompatibleTextRendering = true;
+            this.traffic_lbl.AutoSize = true;
+            this.traffic_lbl.BackColor = System.Drawing.Color.Transparent;
+            this.traffic_lbl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.traffic_lbl.Font = new System.Drawing.Font("Unispace", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.traffic_lbl.ForeColor = System.Drawing.Color.OrangeRed;
+            this.traffic_lbl.Location = new System.Drawing.Point(11, 131);
+            this.traffic_lbl.Name = "traffic_lbl";
+            this.traffic_lbl.Size = new System.Drawing.Size(128, 39);
+            this.traffic_lbl.TabIndex = 38;
+            this.traffic_lbl.Text = "UP/DL :";
+            this.traffic_lbl.UseCompatibleTextRendering = true;
             // 
-            // trafficLbl
+            // traffic_val
             // 
-            this.trafficLbl.AutoSize = true;
-            this.trafficLbl.BackColor = System.Drawing.Color.Transparent;
-            this.trafficLbl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.trafficLbl.Font = new System.Drawing.Font("Unispace", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.trafficLbl.ForeColor = System.Drawing.Color.OrangeRed;
-            this.trafficLbl.Location = new System.Drawing.Point(178, 133);
-            this.trafficLbl.Name = "trafficLbl";
-            this.trafficLbl.Size = new System.Drawing.Size(145, 39);
-            this.trafficLbl.TabIndex = 37;
-            this.trafficLbl.Text = "0 / 0 Mb";
-            this.trafficLbl.UseCompatibleTextRendering = true;
-            this.trafficLbl.UseMnemonic = false;
+            this.traffic_val.AutoSize = true;
+            this.traffic_val.BackColor = System.Drawing.Color.Transparent;
+            this.traffic_val.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.traffic_val.Font = new System.Drawing.Font("Unispace", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.traffic_val.ForeColor = System.Drawing.Color.OrangeRed;
+            this.traffic_val.Location = new System.Drawing.Point(177, 131);
+            this.traffic_val.Name = "traffic_val";
+            this.traffic_val.Size = new System.Drawing.Size(145, 39);
+            this.traffic_val.TabIndex = 37;
+            this.traffic_val.Text = "0 / 0 Mb";
+            this.traffic_val.UseCompatibleTextRendering = true;
+            this.traffic_val.UseMnemonic = false;
+            // 
+            // time_lbl
+            // 
+            this.time_lbl.AutoSize = true;
+            this.time_lbl.BackColor = System.Drawing.Color.Transparent;
+            this.time_lbl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.time_lbl.Font = new System.Drawing.Font("Unispace", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.time_lbl.ForeColor = System.Drawing.Color.OrangeRed;
+            this.time_lbl.Location = new System.Drawing.Point(12, 172);
+            this.time_lbl.Name = "time_lbl";
+            this.time_lbl.Size = new System.Drawing.Size(111, 39);
+            this.time_lbl.TabIndex = 42;
+            this.time_lbl.Text = "Time :";
+            this.time_lbl.UseCompatibleTextRendering = true;
+            // 
+            // time_val
+            // 
+            this.time_val.AutoSize = true;
+            this.time_val.BackColor = System.Drawing.Color.Transparent;
+            this.time_val.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.time_val.Font = new System.Drawing.Font("Unispace", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.time_val.ForeColor = System.Drawing.Color.OrangeRed;
+            this.time_val.Location = new System.Drawing.Point(178, 172);
+            this.time_val.Name = "time_val";
+            this.time_val.Size = new System.Drawing.Size(94, 39);
+            this.time_val.TabIndex = 41;
+            this.time_val.Text = "00:00";
+            this.time_val.UseCompatibleTextRendering = true;
+            this.time_val.UseMnemonic = false;
             // 
             // packetStatsBtn
             // 
@@ -206,7 +237,7 @@
             // SettingsButton
             // 
             this.SettingsButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.SettingsButton.Image = global::tickMeter.Properties.Resources.circle_cog_customize_gear_preferences_settings_icon_48;
+            this.SettingsButton.Image = global::tickMeter.Properties.Resources.settings;
             this.SettingsButton.Location = new System.Drawing.Point(379, 2);
             this.SettingsButton.Name = "SettingsButton";
             this.SettingsButton.Size = new System.Drawing.Size(48, 48);
@@ -221,7 +252,7 @@
             this.graph.Enabled = false;
             this.graph.Image = global::tickMeter.Properties.Resources.grid;
             this.graph.InitialImage = global::tickMeter.Properties.Resources.grid;
-            this.graph.Location = new System.Drawing.Point(11, 175);
+            this.graph.Location = new System.Drawing.Point(11, 214);
             this.graph.Name = "graph";
             this.graph.Size = new System.Drawing.Size(416, 175);
             this.graph.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -233,25 +264,27 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(434, 356);
+            this.ClientSize = new System.Drawing.Size(434, 395);
+            this.Controls.Add(this.time_lbl);
+            this.Controls.Add(this.time_val);
             this.Controls.Add(this.packetStatsBtn);
             this.Controls.Add(this.SettingsButton);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.trafficLbl);
+            this.Controls.Add(this.traffic_lbl);
+            this.Controls.Add(this.traffic_val);
             this.Controls.Add(this.graph);
             this.Controls.Add(this.countryLbl);
-            this.Controls.Add(this.serverLbl);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.pingLbl);
-            this.Controls.Add(this.tickRateLbl);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.ip_val);
+            this.Controls.Add(this.ip_lbl);
+            this.Controls.Add(this.ping_lbl);
+            this.Controls.Add(this.ping_val);
+            this.Controls.Add(this.tickrate_val);
+            this.Controls.Add(this.tickrate_lbl);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "GUI";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "tickMeter 1.5";
+            this.Text = "tickMeter 1.6";
             this.TransparencyKey = System.Drawing.SystemColors.Info;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.GUI_FormClosed);
             this.Load += new System.EventHandler(this.GUI_Load);
@@ -265,19 +298,21 @@
 
         #endregion
         private System.Windows.Forms.Timer ticksLoop;
-        private System.Windows.Forms.Label tickRateLbl;
-        private System.Windows.Forms.Label pingLbl;
-        private System.Windows.Forms.Label serverLbl;
+        private System.Windows.Forms.Label tickrate_val;
+        private System.Windows.Forms.Label ping_val;
+        private System.Windows.Forms.Label ip_val;
         private System.Windows.Forms.Label countryLbl;
         private System.Windows.Forms.Timer retryLoop;
         private System.Windows.Forms.PictureBox graph;
-        private System.Windows.Forms.Label trafficLbl;
+        private System.Windows.Forms.Label traffic_val;
         private System.Windows.Forms.PictureBox SettingsButton;
-        public System.Windows.Forms.Label label3;
-        public System.Windows.Forms.Label label4;
-        public System.Windows.Forms.Label label5;
-        public System.Windows.Forms.Label label9;
+        public System.Windows.Forms.Label tickrate_lbl;
+        public System.Windows.Forms.Label ping_lbl;
+        public System.Windows.Forms.Label ip_lbl;
+        public System.Windows.Forms.Label traffic_lbl;
         private System.Windows.Forms.PictureBox packetStatsBtn;
+        public System.Windows.Forms.Label time_lbl;
+        private System.Windows.Forms.Label time_val;
     }
 }
 
