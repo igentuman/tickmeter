@@ -63,13 +63,13 @@ namespace tickMeter
             };
             try
             {
-                if (PcapThread != null)
+                if (PcapThread == null)
                 {
-                    PcapThread.Abort();
+                    PcapThread = new Thread(InitWorker);
+                    PcapThread.Start();
                 }
                 
-                PcapThread = new Thread(InitWorker);
-                PcapThread.Start();
+                
             } catch (Exception)
             {
                 MessageBox.Show("PCAP Thread init error");
@@ -274,16 +274,6 @@ namespace tickMeter
         public void Stop()
         {
 
-            try
-            {
-                
-                if (PcapThread != null)
-                {
-                    PcapThread.Abort();
-                    PcapThread = null;
-                }
-            }
-            catch (Exception) { }
             tracking = false;
             RefreshTimer.Enabled = false;
         }

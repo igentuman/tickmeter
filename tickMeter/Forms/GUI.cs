@@ -110,6 +110,39 @@ namespace tickMeter
             
         }
 
+        public void InitManagers()
+        {
+            Debug.Print("InitManagers");
+            meterState = new TickMeterState();
+            PubgMngr = new PubgStatsManager
+            {
+                meterState = meterState
+            };
+            DbdMngr = new DbdStatsManager
+            {
+                meterState = meterState
+            };
+            try
+            {
+                if (!settingsForm.settings_netstats_checkbox.Checked)
+                {
+                    NetworkConnectionsMngr = new ConnectionsManager();
+                    meterState.ConnMngr = NetworkConnectionsMngr;
+                    meterState.ConnectionsManagerFlag = true;
+
+                    NetworkConnectionsMngr.meterState = meterState;
+                    PubgMngr.ConnMngr = NetworkConnectionsMngr;
+                    DbdMngr.ConnMngr = NetworkConnectionsMngr;
+                }
+
+            }
+            catch (Exception)
+            {
+                meterState.ConnectionsManagerFlag =
+                settingsForm.settings_netstats_checkbox.Checked = true;
+            }
+        }
+
         protected void ShowAll()
         {
             serverLbl.Visible = 
@@ -289,10 +322,10 @@ namespace tickMeter
             return "";
         }
 
-        [SecurityPermissionAttribute(SecurityAction.Demand, ControlThread = true)]
         public void StartTracking()
         {
-            meterState.Reset();
+            Debug.Print("StartTracking");
+            InitManagers();
             meterState.IsTracking = true;
             ticksLoop.Enabled = true;
             selectedAdapter = AdaptersList[settingsForm.adapters_list.SelectedIndex];
@@ -300,9 +333,9 @@ namespace tickMeter
             lastSelectedAdapterID = settingsForm.adapters_list.SelectedIndex;
             try
             {
-                if (PcapThread == null || !PcapThread.IsAlive)
+                if (PcapThread == null)
                 {
-                   
+                    
                     PcapThread = new Thread(InitPcapWorker);
                     PcapThread.Start();
                     Debug.Print("Starting thread " + PcapThread.ManagedThreadId.ToString());
@@ -361,16 +394,16 @@ namespace tickMeter
             pcapWorker.RunWorkerCompleted += PcapWorkerCompleted;
             pcapWorker.RunWorkerAsync();
         }
-        [SecurityPermissionAttribute(SecurityAction.Demand, ControlThread = true)]
+
         public void StopTracking()
         {
             ticksLoop.Enabled = false;
-            meterState.IsTracking = false;
+            if (meterState == null) return;
 
             tickRateLbl.ForeColor = settingsForm.ColorBad.ForeColor;
             pingLbl.ForeColor = settingsForm.ColorMid.ForeColor;
             graph.Image = graph.InitialImage;
-
+            
             
             if (settingsForm.settings_log_checkbox.Checked)
             { 
@@ -407,7 +440,7 @@ namespace tickMeter
         
         private void RetryTimer_Tick(object sender, EventArgs e)
         {
-            if (!meterState.IsTracking && lastSelectedAdapterID != -1)
+            if ((meterState == null || !meterState.IsTracking) && lastSelectedAdapterID != -1)
             {
                 settingsForm.adapters_list.SelectedIndex = lastSelectedAdapterID;
                 StartTracking();
@@ -430,37 +463,11 @@ namespace tickMeter
         {
             appInitHeigh = Height;
             appInitWidth = Width;
-            meterState = new TickMeterState();
-            PubgMngr = new PubgStatsManager
-            {
-                meterState = meterState
-            };
-            DbdMngr = new DbdStatsManager
-            {
-                meterState = meterState
-            };
+            
 
             settingsForm.ApplyFromConfig();
             settingsForm.CheckNewVersion();
-            try
-            {
-                if (!settingsForm.settings_netstats_checkbox.Checked)
-                {
-                    NetworkConnectionsMngr = new ConnectionsManager();
-                    meterState.ConnMngr = NetworkConnectionsMngr;
-                    meterState.ConnectionsManagerFlag = true;
-
-                    NetworkConnectionsMngr.meterState = meterState;
-                    PubgMngr.ConnMngr = NetworkConnectionsMngr;
-                    DbdMngr.ConnMngr = NetworkConnectionsMngr;
-                }
-
-            }
-            catch (Exception)
-            {
-                meterState.ConnectionsManagerFlag =
-                settingsForm.settings_netstats_checkbox.Checked = true;
-            }
+            
 
             CultureInfo ci = CultureInfo.InstalledUICulture;
             if (ci.TwoLetterISOLanguageName == "en")

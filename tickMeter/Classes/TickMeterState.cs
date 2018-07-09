@@ -156,7 +156,11 @@ namespace tickMeter
                     {
                         ipInfo.Country = "";
                     }
-                    Country = ipInfo.Country +", "+ ipInfo.City;
+                    Country = ipInfo.Country;
+                    if (ipInfo.City != "")
+                    {
+                        Country += ", " + ipInfo.City;
+                    }
                 });
             }
 
@@ -177,23 +181,50 @@ namespace tickMeter
                 return new IPEndPoint(ip, port);
             }
 
+            public int PingICMP()
+            {
+                System.Net.NetworkInformation.Ping ping = new System.Net.NetworkInformation.Ping();
+                System.Net.NetworkInformation.PingReply pingReply;
+                try
+                {
+                    pingReply = ping.Send(Ip, 1000);
+                } catch(Exception) { return 0; }
+                return (int)pingReply.RoundtripTime;
+            }
+
+            public int PingSocket()
+            {
+                Socket sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)
+                {
+                    Blocking = true,
+                    ReceiveTimeout = PingLimit
+                };
+                EndPoint ep = CreateIPEndPoint(Ip + ":80");
+                Stopwatch stopwatch = new Stopwatch();
+                stopwatch.Start();
+
+                try { sock.Connect(ep); } catch (Exception) { return 0; }
+                stopwatch.Stop();
+                sock.Close();
+                return (int)stopwatch.ElapsedMilliseconds;
+            }
+
             private async void PingServer()
             {
                 if (Ip == "") return;
                 
                 await Task.Run(() =>
                 {
-                    Socket sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                    sock.Blocking = true;
-                    sock.ReceiveTimeout = PingLimit;
-                    var stopwatch = new Stopwatch();
-                    EndPoint ep = CreateIPEndPoint(Ip + ":80");
-                    stopwatch.Start();
-                    try { sock.Connect(ep); } catch (Exception) { }
-                    stopwatch.Stop();
-                    sock.Close();
-                    int curPing = int.Parse(stopwatch.Elapsed.ToString("fff"));
-                    if(curPing < PingLimit) Ping = curPing;
+                    int pingTime = PingICMP();
+                    
+                    Debug.Print("icmp " + pingTime.ToString());
+                    
+                    if (pingTime == 0 || pingTime == 1000) {
+                        pingTime = PingSocket();
+                        Debug.Print("socket " + pingTime.ToString());
+                    }
+
+                    if(pingTime < PingLimit) Ping = pingTime;
                 });
             }
         }

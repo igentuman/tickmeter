@@ -10,7 +10,7 @@ namespace tickMeter
 {
     public class DbdStatsManager
     {
-        int StartPort = 49000;
+        int StartPort = 20000;
         int EndPort = 65000;
         string ProcessName = "Steam";
         string GameName = "DeadByDaylight-Win64-Shipping";
@@ -23,6 +23,8 @@ namespace tickMeter
         public int lastGamePing = 0;
         public TickMeterState meterState;
         bool NetworkActivityFlag;
+        public int ignorePortFrom = 27000;
+        public int ignorePortTo = 27030;
 
         public bool IsGameRunning()
         {
@@ -84,9 +86,11 @@ namespace tickMeter
 
         public void ProcessPacket(Packet packet, GUI gui)
         {
+
             if (!GameRunningFlag) return;
             if (packet.Ethernet.IpV4.Protocol != PcapDotNet.Packets.IpV4.IpV4Protocol.Udp) return;
-
+            if (packet.Ethernet.IpV4.Udp.SourcePort < ignorePortTo && packet.Ethernet.IpV4.Udp.SourcePort > ignorePortFrom) return;
+            if (packet.Ethernet.IpV4.Udp.DestinationPort < ignorePortTo && packet.Ethernet.IpV4.Udp.DestinationPort > ignorePortFrom) return;
             //search within port range and destination (local) port we fetched from connections manager
             if (packet.Ethernet.IpV4.Udp.SourcePort > StartPort && packet.Ethernet.IpV4.Udp.SourcePort < EndPort && packet.Ethernet.IpV4.Destination.ToString() == meterState.LocalIP)
             {

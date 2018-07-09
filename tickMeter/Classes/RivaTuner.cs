@@ -103,7 +103,7 @@ namespace tickMeter
 
         public static string TextFormat()
         {
-            return "<C0=" + LabelColor + "><C1=" + ColorBad+ "><C2=" + ColorMid + "><C3=" + ColorGood + "><S0=50><S1=70>";
+            return "<C0=" + LabelColor + "><C1=" + ColorBad+ "><C2=" + ColorMid + "><C3=" + ColorGood + "><S0=45><S1=70>";
         }
 
         public static string FormatTickrate()
@@ -152,7 +152,7 @@ namespace tickMeter
             {
                 pingFont = "<C1>";
             }
-            return "<S><C0>Ping: " + pingFont + meterState.Server.Ping.ToString() + "<S0>ms <S1><C>(" + meterState.Server.Country + ")" + Environment.NewLine;
+            return "<S><C0>Ping: " + pingFont + meterState.Server.Ping.ToString() + "<S0>ms <S0><C>(" + meterState.Server.Country + ")" + Environment.NewLine;
         }
 
         public static void BuildRivaOutput(GUI gui)
