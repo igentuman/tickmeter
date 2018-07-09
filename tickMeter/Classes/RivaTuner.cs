@@ -159,7 +159,7 @@ namespace tickMeter
             {
                 pingFont = "<C1>";
             }
-            return "<S><C0>Ping: " + pingFont + meterState.Server.Ping.ToString() + "<S0>ms <S0><C>(" + meterState.Server.Country + ")" + Environment.NewLine;
+            return "<S><C0>Ping: " + pingFont + meterState.Server.Ping.ToString() + "<S0>ms <S0><C>(" + meterState.Server.Location + ")" + Environment.NewLine;
         }
 
         public static void BuildRivaOutput(GUI gui)

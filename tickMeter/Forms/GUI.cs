@@ -287,7 +287,7 @@ namespace tickMeter
                         //update PING
                         if (settingsForm.settings_ping_checkbox.Checked)
                         {
-                        countryLbl.Invoke(new Action(() => countryLbl.Text = meterState.Server.Country));
+                        countryLbl.Invoke(new Action(() => countryLbl.Text = meterState.Server.Location));
                         ping_val.Invoke(new Action(() => ping_val.Text = meterState.Server.Ping.ToString() + " ms"));
                         }
                         //update time
@@ -342,6 +342,7 @@ namespace tickMeter
         public void StartTracking()
         {
             Debug.Print("StartTracking");
+            if (meterState != null) StopTracking();
             InitManagers();
             meterState.IsTracking = true;
             ticksLoop.Enabled = true;
@@ -438,8 +439,22 @@ namespace tickMeter
                 }
             }
             try { RivaTuner.PrintData(""); } catch (Exception exc) { MessageBox.Show(exc.Message); }
+            if(meterState.Server.Ip != "")
+            {
+                if (!Directory.Exists("logs"))
+                {
+                    Directory.CreateDirectory("logs");
+                }
+                string serverStat = DateTime.Now.ToLocalTime() + " - IP: " + meterState.Server.Ip + " (" + meterState.Server.Location + ") Ping: " + meterState.Server.AvgPing + Environment.NewLine;
+                try
+                {
+                    File.AppendAllText(@"logs\SERVERS-STATS.log", serverStat);
+                }
+                catch (IOException) { }
+            }
             
-            meterState.Reset();
+            
+            meterState.IsTracking = false;
         }
 
         private void GUI_FormClosed(object sender, FormClosedEventArgs e)

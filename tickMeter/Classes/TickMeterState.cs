@@ -71,9 +71,16 @@ namespace tickMeter
         {
             private string CurrentIP = "";
             private int PingLimit = 1000;
-            public int Ping { get; set; } = 0;
-
-            public string Country { get; set; } = "";
+            private int _ping = 0;
+            public int Ping {
+                get { return _ping; }
+                set {
+                    _ping = value;
+                    AvgPing = (AvgPing + _ping) / 2;
+                }
+            }
+            public int AvgPing { get; set; } = 0;
+            public string Location { get; set; } = "";
             private System.Timers.Timer PingTimer;
 
             public string Ip {
@@ -86,7 +93,7 @@ namespace tickMeter
                     {
                         PingTimer = null;
                         SetPingTimer();
-                        DetectCountry();
+                        DetectLocation();
                     }
                 }
             }
@@ -138,7 +145,7 @@ namespace tickMeter
                 public string Postal { get; set; }
             }
 
-            private async void DetectCountry()
+            private async void DetectLocation()
             {
                 if (Ip == "") return;
 
@@ -156,10 +163,10 @@ namespace tickMeter
                     {
                         ipInfo.Country = "";
                     }
-                    Country = ipInfo.Country;
+                    Location = ipInfo.Country;
                     if (ipInfo.City != "")
                     {
-                        Country += ", " + ipInfo.City;
+                        Location += ", " + ipInfo.City;
                     }
                 });
             }
