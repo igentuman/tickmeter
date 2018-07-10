@@ -237,15 +237,9 @@ namespace tickMeter.Forms
 
         private void settings_netstats_checkbox_CheckedChanged(object sender, EventArgs e)
         {
-            try
+            if (App.meterState != null)
             {
                 App.meterState.ConnectionsManagerFlag = !settings_netstats_checkbox.Checked;
-            }
-            catch (Exception)
-            {
-                settings_netstats_checkbox.Checked = true;
-                App.meterState.ConnectionsManagerFlag = false;
-                MessageBox.Show("Connections Manager internal error");
             }
         }
 

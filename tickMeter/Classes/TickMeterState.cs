@@ -22,7 +22,7 @@ namespace tickMeter
         private System.Timers.Timer MeterValidateTimer;
         public int TickRate { get; set; }
         protected string timeStamp;
-        public ConnectionsManager ConnMngr;
+        
 
         public TickMeterState()
         {

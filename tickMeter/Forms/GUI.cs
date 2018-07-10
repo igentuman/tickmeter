@@ -82,24 +82,11 @@ namespace tickMeter.Forms
             
         }
 
-        public void InitManagers()
+        public void InitMeterState()
         {
-            Debug.Print("InitManagers");
+            Debug.Print("InitMeterState");
             App.meterState = new TickMeterState();
-
-            try
-            {
-                if (!App.settingsForm.settings_netstats_checkbox.Checked)
-                {
-                    App.meterState.ConnectionsManagerFlag = true;
-                }
-
-            }
-            catch (Exception)
-            {
-                App.meterState.ConnectionsManagerFlag =
-                App.settingsForm.settings_netstats_checkbox.Checked = true;
-            }
+            App.meterState.ConnectionsManagerFlag = !App.settingsForm.settings_netstats_checkbox.Checked;
         }
 
         protected void ShowAll()
