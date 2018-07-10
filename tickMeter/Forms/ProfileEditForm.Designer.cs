@@ -61,6 +61,7 @@
             this.linkLabel1.TabIndex = 58;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "Помощь по фильтру";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // label7
             // 

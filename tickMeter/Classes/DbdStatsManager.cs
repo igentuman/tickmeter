@@ -15,7 +15,7 @@ namespace tickMeter
         int EndPort = 65000;
         string ProcessName = "Steam";
         string GameName = "DeadByDaylight-Win64-Shipping";
-        public const string GameCode = "DBD";
+        public const string GameCode = "DEAD_BY_DAYLIGHT";
         Timer GameInfoTimer;
         public bool GameRunningFlag = false;
         public List<int> openPorts = new List<int>();
@@ -24,6 +24,7 @@ namespace tickMeter
         bool NetworkActivityFlag;
         public int ignorePortFrom = 27000;
         public int ignorePortTo = 27030;
+        public bool isEnabled = false;
 
         public bool IsGameRunning()
         {
@@ -57,6 +58,8 @@ namespace tickMeter
 
         public void FetchGameInfo()
         {
+            if (App.settingsManager.GetOption(GameCode) != "True") return;
+
             openPorts.Clear();
             openPorts2.Clear();
 
@@ -86,7 +89,7 @@ namespace tickMeter
         public void ProcessPacket(Packet packet)
         {
 
-            if (!GameRunningFlag) return;
+            if (!GameRunningFlag || App.settingsManager.GetOption(GameCode) != "True") return;
             if (packet.Ethernet.IpV4.Protocol != PcapDotNet.Packets.IpV4.IpV4Protocol.Udp) return;
             if (packet.Ethernet.IpV4.Udp.SourcePort < ignorePortTo && packet.Ethernet.IpV4.Udp.SourcePort > ignorePortFrom) return;
             if (packet.Ethernet.IpV4.Udp.DestinationPort < ignorePortTo && packet.Ethernet.IpV4.Udp.DestinationPort > ignorePortFrom) return;

@@ -17,18 +17,30 @@ namespace tickMeter
         public GameServer Server { get; set; }
         public string LocalIP { get; set; }
         public string Game { get; set; } = "";
-
+        protected int LastTicksCount = 0;
         public List<int> TicksHistory { get; set; }
-
+        private System.Timers.Timer MeterValidateTimer;
         public int TickRate { get; set; }
         protected string timeStamp;
         public ConnectionsManager ConnMngr;
 
         public TickMeterState()
         {
+            MeterValidateTimer = new System.Timers.Timer();
+            MeterValidateTimer.Elapsed += MeterValidateTimerTick;
+            MeterValidateTimer.Interval = 1000;
+            MeterValidateTimer.AutoReset = true;
+            MeterValidateTimer.Enabled = true;
             Reset();
         }
-
+        private void MeterValidateTimerTick(Object source, System.Timers.ElapsedEventArgs e)
+        {
+            if(LastTicksCount == TicksHistory.Count)
+            {
+                Reset();
+            }
+            LastTicksCount = TicksHistory.Count;
+        }
         public string CurrentTimestamp { get { return timeStamp; }
         set
             {
@@ -102,7 +114,7 @@ namespace tickMeter
             private void SetPingTimer()
             {
                 int PingInterval = 2000;
-                if(App.settingsManager.GetOption("ping_interval") != "")
+                if(App.settingsManager.GetOption("ping_interval") != null && App.settingsManager.GetOption("ping_interval") != "")
                 {
                     PingInterval = int.Parse(App.settingsManager.GetOption("ping_interval"));
                 }

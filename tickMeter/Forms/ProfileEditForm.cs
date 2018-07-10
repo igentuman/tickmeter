@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Windows.Forms;
 using tickMeter.Classes;
 
@@ -30,8 +23,13 @@ namespace tickMeter.Forms
         {
             Hide();
             GameProfileManager.FormToProfile();
+            App.profilesForm.LoadProfiles();
         }
 
-        
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://bitbucket.org/dvman8bit/tickmeter/wiki/Filter");
+
+        }
     }
 }

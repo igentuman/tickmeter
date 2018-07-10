@@ -30,6 +30,7 @@ namespace tickMeter.Classes
             settingsForm = new SettingsForm();
             packetStatsForm = new PacketStats();
             profilesForm = new ProfilesForm();
+            profileEditForm = new ProfileEditForm();
             settingsManager = new SettingsManager();
             connMngr = new ConnectionsManager();
         }

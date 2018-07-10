@@ -28,7 +28,7 @@ namespace tickMeter
         public bool tracking;
         Thread PcapThread;
         public BackgroundWorker pcapWorker;
-        PacketFilter packetFilter;
+        public PacketFilter packetFilter;
 
         public PacketStats()
         {

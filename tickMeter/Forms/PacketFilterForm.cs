@@ -15,19 +15,15 @@ namespace tickMeter.Forms
 
     public partial class PacketFilterForm : Form
     {
-        public PacketFilter packetFilter;
-        public ProfileEditForm profileForm;
 
         public PacketFilterForm()
         {
-            InitializeComponent();
-            profileForm = new ProfileEditForm();
-            
-
+            InitializeComponent();      
         }
 
         private void ApplyFilter()
         {
+            PacketFilter packetFilter = App.packetStatsForm.packetFilter;
             try
             {
                 packetFilter.PacketSizeFilter   = packet_size_filter.Text;
@@ -72,16 +68,16 @@ namespace tickMeter.Forms
 
         private void button2_Click(object sender, EventArgs e)
         {
-            profileForm.Show();
-            profileForm.packet_size_filter.Text = packet_size_filter.Text;
+            App.profileEditForm.Show();
+            App.profileEditForm.packet_size_filter.Text = packet_size_filter.Text;
 
-            profileForm.to_ip_filter.Text = to_ip_filter.Text;
-            profileForm.from_port_filter.Text = from_port_filter.Text;
-            profileForm.from_ip_filter.Text = from_ip_filter.Text;
-            profileForm.to_port_filter.Text = to_port_filter.Text;
-            profileForm.process_filter.Text = process_filter.Text;
-            profileForm.protocol_filter.SelectedIndex = protocol_filter.SelectedIndex;
-            profileForm.profile_name.Text = process_filter.Text.ToUpper();
+            App.profileEditForm.to_ip_filter.Text = to_ip_filter.Text;
+            App.profileEditForm.from_port_filter.Text = from_port_filter.Text;
+            App.profileEditForm.from_ip_filter.Text = from_ip_filter.Text;
+            App.profileEditForm.to_port_filter.Text = to_port_filter.Text;
+            App.profileEditForm.process_filter.Text = process_filter.Text;
+            App.profileEditForm.protocol_filter.SelectedIndex = protocol_filter.SelectedIndex;
+            App.profileEditForm.profile_name.Text = process_filter.Text.ToUpper();
         }
     }
 }

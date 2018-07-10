@@ -190,8 +190,9 @@ namespace tickMeter.Forms
         {
 
             if (!App.meterState.IsTracking) return;
-            GameProfileManager.DbdMngr.ProcessPacket(packet);
-            GameProfileManager.PubgMngr.ProcessPacket(packet);
+            GameProfileManager.CallBuitInProfiles(packet);
+            GameProfileManager.CallCustomProfiles(packet);
+
         }
 
         

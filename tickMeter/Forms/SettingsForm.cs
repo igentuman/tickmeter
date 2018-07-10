@@ -17,16 +17,11 @@ namespace tickMeter.Forms
     {
         public const string CURRENT_VERSION = "1.5";
 
-        public SettingsManager settings;
-
         public string verInfo;
         TagCollection TagsInfo;
         public SettingsForm()
         {
             InitializeComponent();
-            settings = new SettingsManager();
-            
-            
         }
         private class TagInfo
         {
@@ -52,12 +47,12 @@ namespace tickMeter.Forms
                     {
                         updateLbl.Text += TagsInfo.Tags[TagsInfo.Tags.Count - 1].Version;
                         updateLbl.Visible = true;
-                        if(settings.GetOption("last_checked_version") != TagsInfo.Tags[TagsInfo.Tags.Count - 1].Version)
+                        if(App.settingsManager.GetOption("last_checked_version") != TagsInfo.Tags[TagsInfo.Tags.Count - 1].Version)
                         {
                             MessageBox.Show(updateLbl.Text, "Update", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             Process.Start("https://bitbucket.org/dvman8bit/tickmeter/downloads/");
                         }
-                        settings.SetOption("last_checked_version", TagsInfo.Tags[TagsInfo.Tags.Count - 1].Version);
+                        App.settingsManager.SetOption("last_checked_version", TagsInfo.Tags[TagsInfo.Tags.Count - 1].Version);
                     }
                 }
                 catch (Exception) { }
@@ -73,9 +68,9 @@ namespace tickMeter.Forms
         public void InitRtss(bool last = false)
         {
 
-            if (File.Exists(settings.GetOption("rtss_exe_path")))
+            if (File.Exists(App.settingsManager.GetOption("rtss_exe_path")))
             {
-                RivaTuner.rtss_exe = settings.GetOption("rtss_exe_path");
+                RivaTuner.rtss_exe = App.settingsManager.GetOption("rtss_exe_path");
                 return;
             }
 
@@ -84,7 +79,7 @@ namespace tickMeter.Forms
             if (uninstallVal != null)
             {
                 RtssPath = Path.GetDirectoryName(uninstallVal.ToString().Replace("\"", ""));
-                settings.SetOption("rtss_exe_path", RtssPath + "/RTSS.exe");
+                App.settingsManager.SetOption("rtss_exe_path", RtssPath + "/RTSS.exe");
             }
             if (RtssPath == "" && MessageBox.Show("RTSS not found. Download?", "RTSS", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
@@ -98,7 +93,7 @@ namespace tickMeter.Forms
                 rtss_dialog.ShowDialog();
                 if (File.Exists(rtss_dialog.FileName))
                 {
-                    settings.SetOption("rtss_exe_path", rtss_dialog.FileName);
+                    App.settingsManager.SetOption("rtss_exe_path", rtss_dialog.FileName);
                     RivaTuner.rtss_exe = rtss_dialog.FileName;
                     return;
                 }
@@ -108,31 +103,31 @@ namespace tickMeter.Forms
 
         public void ApplyFromConfig()
         {
-            settings_chart_checkbox.Checked = settings.GetOption("chart") == "True";
-            settings_ip_checkbox.Checked = settings.GetOption("ip") == "True";
-            settings_ping_checkbox.Checked = settings.GetOption("ping") == "True";
-            settings_netstats_checkbox.Checked = settings.GetOption("netstats") == "True";
-            settings_traffic_checkbox.Checked = settings.GetOption("traffic") == "True";
-            settings_rtss_output.Checked = settings.GetOption("rtss") == "True";
-            rememberAdapter.Checked = settings.GetOption("remember_adapter") == "True";
-            settings_session_time_checkbox.Checked = settings.GetOption("session_time") == "True";
+            settings_chart_checkbox.Checked = App.settingsManager.GetOption("chart") == "True";
+            settings_ip_checkbox.Checked = App.settingsManager.GetOption("ip") == "True";
+            settings_ping_checkbox.Checked = App.settingsManager.GetOption("ping") == "True";
+            settings_netstats_checkbox.Checked = App.settingsManager.GetOption("netstats") == "True";
+            settings_traffic_checkbox.Checked = App.settingsManager.GetOption("traffic") == "True";
+            settings_rtss_output.Checked = App.settingsManager.GetOption("rtss") == "True";
+            rememberAdapter.Checked = App.settingsManager.GetOption("remember_adapter") == "True";
+            settings_session_time_checkbox.Checked = App.settingsManager.GetOption("session_time") == "True";
             if (rememberAdapter.Checked)
             {
                 try
                 {
-                    adapters_list.SelectedIndex = int.Parse(settings.GetOption("last_selected_adapter_id"));
+                    adapters_list.SelectedIndex = int.Parse(App.settingsManager.GetOption("last_selected_adapter_id"));
                 }
                 catch (Exception) { }
                 
             }
-            ColorLabel.ForeColor = ColorTranslator.FromHtml("#"+ settings.GetOption("color_label"));
-            ColorBad.ForeColor = ColorTranslator.FromHtml("#"+ settings.GetOption("color_bad"));
-            ColorMid.ForeColor = ColorTranslator.FromHtml("#"+ settings.GetOption("color_mid"));
-            ColorGood.ForeColor = ColorTranslator.FromHtml("#"+ settings.GetOption("color_good"));
-            RivaTuner.LabelColor = settings.GetOption("color_label");
-            RivaTuner.ColorBad = settings.GetOption("color_bad");
-            RivaTuner.ColorMid = settings.GetOption("color_mid");
-            RivaTuner.ColorGood = settings.GetOption("color_good");
+            ColorLabel.ForeColor = ColorTranslator.FromHtml("#"+ App.settingsManager.GetOption("color_label"));
+            ColorBad.ForeColor = ColorTranslator.FromHtml("#"+ App.settingsManager.GetOption("color_bad"));
+            ColorMid.ForeColor = ColorTranslator.FromHtml("#"+ App.settingsManager.GetOption("color_mid"));
+            ColorGood.ForeColor = ColorTranslator.FromHtml("#"+ App.settingsManager.GetOption("color_good"));
+            RivaTuner.LabelColor = App.settingsManager.GetOption("color_label");
+            RivaTuner.ColorBad = App.settingsManager.GetOption("color_bad");
+            RivaTuner.ColorMid = App.settingsManager.GetOption("color_mid");
+            RivaTuner.ColorGood = App.settingsManager.GetOption("color_good");
             App.gui.tickrate_lbl.ForeColor =
                 App.gui.ping_lbl.ForeColor =
                 App.gui.ip_lbl.ForeColor =
@@ -143,20 +138,20 @@ namespace tickMeter.Forms
 
         public void SaveToConfig()
         {
-            settings.SetOption("chart", settings_chart_checkbox.Checked.ToString());
-            settings.SetOption("ip", settings_ip_checkbox.Checked.ToString());
-            settings.SetOption("ping", settings_ping_checkbox.Checked.ToString());
-            settings.SetOption("netstats", settings_netstats_checkbox.Checked.ToString());
-            settings.SetOption("traffic", settings_traffic_checkbox.Checked.ToString());
-            settings.SetOption("color_label", HexConverter(ColorLabel.ForeColor));
-            settings.SetOption("color_bad", HexConverter(ColorBad.ForeColor));
-            settings.SetOption("color_mid", HexConverter(ColorMid.ForeColor));
-            settings.SetOption("color_good", HexConverter(ColorGood.ForeColor));
-            settings.SetOption("rtss", settings_rtss_output.Checked.ToString());
-            settings.SetOption("remember_adapter", rememberAdapter.Checked.ToString());
-            settings.SetOption("session_time", settings_session_time_checkbox.Checked.ToString());
-            settings.SetOption("last_selected_adapter_id", adapters_list.SelectedIndex.ToString());
-            settings.SaveConfig();
+            App.settingsManager.SetOption("chart", settings_chart_checkbox.Checked.ToString());
+            App.settingsManager.SetOption("ip", settings_ip_checkbox.Checked.ToString());
+            App.settingsManager.SetOption("ping", settings_ping_checkbox.Checked.ToString());
+            App.settingsManager.SetOption("netstats", settings_netstats_checkbox.Checked.ToString());
+            App.settingsManager.SetOption("traffic", settings_traffic_checkbox.Checked.ToString());
+            App.settingsManager.SetOption("color_label", HexConverter(ColorLabel.ForeColor));
+            App.settingsManager.SetOption("color_bad", HexConverter(ColorBad.ForeColor));
+            App.settingsManager.SetOption("color_mid", HexConverter(ColorMid.ForeColor));
+            App.settingsManager.SetOption("color_good", HexConverter(ColorGood.ForeColor));
+            App.settingsManager.SetOption("rtss", settings_rtss_output.Checked.ToString());
+            App.settingsManager.SetOption("remember_adapter", rememberAdapter.Checked.ToString());
+            App.settingsManager.SetOption("session_time", settings_session_time_checkbox.Checked.ToString());
+            App.settingsManager.SetOption("last_selected_adapter_id", adapters_list.SelectedIndex.ToString());
+            App.settingsManager.SaveConfig();
         }
 
         public void SwitchToEnglish()

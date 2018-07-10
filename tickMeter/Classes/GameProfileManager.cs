@@ -1,5 +1,6 @@
 ﻿using IniParser;
 using IniParser.Model;
+using PcapDotNet.Packets;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -19,12 +20,38 @@ namespace tickMeter.Classes
         static IniData data;
         public static DbdStatsManager DbdMngr = new DbdStatsManager();
         public static PubgStatsManager PubgMngr = new PubgStatsManager();
+
+        public static void CallBuitInProfiles(Packet packet)
+        {
+            DbdMngr.ProcessPacket(packet);
+            PubgMngr.ProcessPacket(packet);
+        }
+
+        public static void CallCustomProfiles(Packet packet)
+        {
+            foreach(GameProfile gProf in gameProfs)
+            {
+                gProf.ProcessPacket(packet);
+            }
+        }
+
         static GameProfileManager()
         {
             if(gameProfs.Count == 0)
             {
                 LoadProfiles();
             }
+        }
+
+        public static void SwitchState(int profileIndex, bool state)
+        {
+            Debug.Print(state.ToString());
+            try
+            {
+                gameProfs[profileIndex].isEnabled = state;
+                gameProfs[profileIndex].Save();
+            }
+            catch (Exception) { }
         }
 
         public static void LoadProfiles()
@@ -81,9 +108,11 @@ namespace tickMeter.Classes
             SetOption("to_ip_filter", App.profileEditForm.to_ip_filter.Text);
             SetOption("packet_size_filter", App.profileEditForm.packet_size_filter.Text);
             SetOption("process_filter", App.profileEditForm.process_filter.Text);
-            SetOption("protocol_filter", App.profileEditForm.protocol_filter.SelectedIndex.ToString());
+            SetOption("protocol_filter", App.profileEditForm.protocol_filter.Items[App.profileEditForm.protocol_filter.SelectedIndex].ToString());
             SetOption("require_process", App.profileEditForm.require_process.Text);
             SetOption("is_active", App.profileEditForm.is_active.Checked.ToString());
+            SetOption("profile_name", App.profileEditForm.profile_name.Text.ToUpper());
+
             SaveConfig(ProfileName);
             MessageBox.Show(string.Format("Профиль успешно сохранен: {0}.ini", ProfileName));
         }

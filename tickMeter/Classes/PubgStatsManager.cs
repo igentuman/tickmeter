@@ -21,6 +21,7 @@ namespace tickMeter.Classes
         public List<int> openPorts2 = new List<int>();
         public int lastGamePing = 0;
         bool NetworkActivityFlag;
+        public bool isEnabled = false;
 
         public bool IsGameRunning()
         {
@@ -44,6 +45,7 @@ namespace tickMeter.Classes
 
         public PubgStatsManager()
         {
+            
             SetGameInfoTimer();
         }
 
@@ -54,6 +56,7 @@ namespace tickMeter.Classes
 
         public void FetchGameInfo()
         {
+            if (App.settingsManager.GetOption(GameCode) != "True") return;
             openPorts.Clear();
             openPorts2.Clear();
 
@@ -82,7 +85,7 @@ namespace tickMeter.Classes
 
         public void ProcessPacket(Packet packet)
         {
-            if (!GameRunningFlag) return;
+            if (!GameRunningFlag || App.settingsManager.GetOption(GameCode) != "True") return;
             if (packet.Ethernet.IpV4.Protocol != PcapDotNet.Packets.IpV4.IpV4Protocol.Udp) return;
 
             //search within port range and destination (local) port we fetched from connections manager

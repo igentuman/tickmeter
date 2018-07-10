@@ -31,6 +31,11 @@ namespace tickMeter.Forms
 
         private void ApplyBtn_Click(object sender, EventArgs e)
         {
+            for (int i = 0; i < built_in_profiles.Items.Count; i++)
+            {
+                App.settingsManager.SetOption(built_in_profiles.Items[i].ToString().Replace(" ", "_").ToUpper(), built_in_profiles.GetItemChecked(i).ToString());
+            }
+            App.settingsManager.SaveConfig();
             Hide();
         }
 
@@ -44,7 +49,7 @@ namespace tickMeter.Forms
         {
             if (LastClickedItem == -1) return;
             GameProfileManager.ProfileToEditForm(LastClickedItem);
-            Hide();
+            
             App.profileEditForm.Show();
             
         }
@@ -57,6 +62,7 @@ namespace tickMeter.Forms
         private void custom_profiles_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             LastClickedItem = e.Index;
+            GameProfileManager.SwitchState(e.Index, !custom_profiles.GetItemChecked(e.Index));
             System.Timers.Timer DblClick = new System.Timers.Timer()
             {
                 Interval = 200,
@@ -70,11 +76,16 @@ namespace tickMeter.Forms
         {
             e.Cancel = true;
             Hide();
+            
         }
 
         private void profileForm_Shown(object sender, EventArgs e)
         {
             LoadProfiles();
+            for(int i = 0; i < built_in_profiles.Items.Count; i++)
+            {
+                built_in_profiles.SetItemChecked(i, App.settingsManager.GetOption(built_in_profiles.Items[i].ToString().Replace(" ", "_").ToUpper()) == "True");
+            }
         }
     }
 }
