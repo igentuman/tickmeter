@@ -28,7 +28,7 @@ namespace tickMeter
         {
             MeterValidateTimer = new System.Timers.Timer();
             MeterValidateTimer.Elapsed += MeterValidateTimerTick;
-            MeterValidateTimer.Interval = 1000;
+            MeterValidateTimer.Interval = 2000;
             MeterValidateTimer.AutoReset = true;
             MeterValidateTimer.Enabled = true;
             Reset();

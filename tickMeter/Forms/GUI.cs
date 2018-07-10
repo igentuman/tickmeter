@@ -278,7 +278,7 @@ namespace tickMeter.Forms
             
             if (App.meterState != null)
                 StopTracking();
-            InitManagers();
+            InitMeterState();
             App.meterState.IsTracking = true;
             ticksLoop.Enabled = true;
             selectedAdapter = App.GetAdapters()[App.settingsForm.adapters_list.SelectedIndex];
