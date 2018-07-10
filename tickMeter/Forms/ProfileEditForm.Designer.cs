@@ -48,6 +48,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.profile_name = new System.Windows.Forms.TextBox();
             this.ApplyBtn = new System.Windows.Forms.Button();
+            this.is_active = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // linkLabel1
@@ -73,6 +74,7 @@
             // process_filter
             // 
             this.process_filter.Location = new System.Drawing.Point(10, 320);
+            this.process_filter.Margin = new System.Windows.Forms.Padding(90);
             this.process_filter.Name = "process_filter";
             this.process_filter.Size = new System.Drawing.Size(252, 20);
             this.process_filter.TabIndex = 56;
@@ -134,6 +136,7 @@
             // from_port_filter
             // 
             this.from_port_filter.Location = new System.Drawing.Point(10, 95);
+            this.from_port_filter.Margin = new System.Windows.Forms.Padding(90);
             this.from_port_filter.Name = "from_port_filter";
             this.from_port_filter.Size = new System.Drawing.Size(252, 20);
             this.from_port_filter.TabIndex = 49;
@@ -141,6 +144,7 @@
             // from_ip_filter
             // 
             this.from_ip_filter.Location = new System.Drawing.Point(10, 43);
+            this.from_ip_filter.Margin = new System.Windows.Forms.Padding(90);
             this.from_ip_filter.Name = "from_ip_filter";
             this.from_ip_filter.Size = new System.Drawing.Size(252, 20);
             this.from_ip_filter.TabIndex = 48;
@@ -148,6 +152,7 @@
             // to_ip_filter
             // 
             this.to_ip_filter.Location = new System.Drawing.Point(10, 154);
+            this.to_ip_filter.Margin = new System.Windows.Forms.Padding(90);
             this.to_ip_filter.Name = "to_ip_filter";
             this.to_ip_filter.Size = new System.Drawing.Size(252, 20);
             this.to_ip_filter.TabIndex = 47;
@@ -155,6 +160,7 @@
             // to_port_filter
             // 
             this.to_port_filter.Location = new System.Drawing.Point(10, 215);
+            this.to_port_filter.Margin = new System.Windows.Forms.Padding(90);
             this.to_port_filter.Name = "to_port_filter";
             this.to_port_filter.Size = new System.Drawing.Size(252, 20);
             this.to_port_filter.TabIndex = 46;
@@ -162,6 +168,7 @@
             // packet_size_filter
             // 
             this.packet_size_filter.Location = new System.Drawing.Point(10, 269);
+            this.packet_size_filter.Margin = new System.Windows.Forms.Padding(90);
             this.packet_size_filter.Name = "packet_size_filter";
             this.packet_size_filter.Size = new System.Drawing.Size(252, 20);
             this.packet_size_filter.TabIndex = 45;
@@ -192,6 +199,7 @@
             // require_process
             // 
             this.require_process.Location = new System.Drawing.Point(10, 373);
+            this.require_process.Margin = new System.Windows.Forms.Padding(90);
             this.require_process.Name = "require_process";
             this.require_process.Size = new System.Drawing.Size(252, 20);
             this.require_process.TabIndex = 59;
@@ -199,7 +207,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(8, 454);
+            this.label9.Location = new System.Drawing.Point(7, 480);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(67, 13);
             this.label9.TabIndex = 62;
@@ -207,7 +215,8 @@
             // 
             // profile_name
             // 
-            this.profile_name.Location = new System.Drawing.Point(10, 470);
+            this.profile_name.Location = new System.Drawing.Point(9, 496);
+            this.profile_name.Margin = new System.Windows.Forms.Padding(90);
             this.profile_name.Name = "profile_name";
             this.profile_name.Size = new System.Drawing.Size(252, 20);
             this.profile_name.TabIndex = 61;
@@ -215,18 +224,30 @@
             // ApplyBtn
             // 
             this.ApplyBtn.Image = global::tickMeter.Properties.Resources.check;
-            this.ApplyBtn.Location = new System.Drawing.Point(9, 496);
+            this.ApplyBtn.Location = new System.Drawing.Point(8, 522);
             this.ApplyBtn.Name = "ApplyBtn";
             this.ApplyBtn.Size = new System.Drawing.Size(75, 68);
             this.ApplyBtn.TabIndex = 63;
             this.ApplyBtn.UseVisualStyleBackColor = true;
             this.ApplyBtn.Click += new System.EventHandler(this.ApplyBtn_Click);
             // 
+            // is_active
+            // 
+            this.is_active.AutoSize = true;
+            this.is_active.Location = new System.Drawing.Point(12, 445);
+            this.is_active.Name = "is_active";
+            this.is_active.Size = new System.Drawing.Size(75, 17);
+            this.is_active.TabIndex = 64;
+            this.is_active.Text = "Включить";
+            this.is_active.UseVisualStyleBackColor = true;
+            // 
             // ProfileEditForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(279, 571);
+            this.AutoValidate = System.Windows.Forms.AutoValidate.Disable;
+            this.ClientSize = new System.Drawing.Size(279, 594);
+            this.Controls.Add(this.is_active);
             this.Controls.Add(this.ApplyBtn);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.profile_name);
@@ -247,8 +268,10 @@
             this.Controls.Add(this.to_port_filter);
             this.Controls.Add(this.packet_size_filter);
             this.Controls.Add(this.protocol_filter);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "ProfileEditForm";
-            this.Text = "ProfileEditForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Game Profile";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ProfileEditForm_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -277,5 +300,6 @@
         public System.Windows.Forms.TextBox packet_size_filter;
         public System.Windows.Forms.TextBox require_process;
         public System.Windows.Forms.TextBox profile_name;
+        public System.Windows.Forms.CheckBox is_active;
     }
 }

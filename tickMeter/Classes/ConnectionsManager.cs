@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using tickMeter.Classes;
 
 namespace tickMeter
 {
@@ -24,12 +25,11 @@ namespace tickMeter
         public List<TcpProcessRecord> TcpActiveConnections = new List<TcpProcessRecord>();
 
         public List<UdpProcessRecord> UdpActiveConnections = new List<UdpProcessRecord>();
-
+    
         public Process[] ProcessInfoList;
-        public Thread ConnManagerTimer;
 
         private System.Timers.Timer MngrTimer;
-        public TickMeterState meterState;
+
 
         private void SetConnectionsManagerTimer()
         {
@@ -47,7 +47,7 @@ namespace tickMeter
 
         private async void MngrTimerTick(Object source, System.Timers.ElapsedEventArgs e)
         {
-            if (!meterState.ConnectionsManagerFlag) return;
+            if (App.meterState == null || !App.meterState.ConnectionsManagerFlag) return;
             await Task.Run(() =>
             {
                 ProcessInfoList = Process.GetProcesses();

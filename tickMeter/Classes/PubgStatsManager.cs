@@ -6,7 +6,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
 
-namespace tickMeter
+
+namespace tickMeter.Classes
 {
     public class PubgStatsManager
     {
@@ -16,11 +17,9 @@ namespace tickMeter
         public const string GameCode = "PUBG";
         Timer GameInfoTimer;
         public bool GameRunningFlag = false;
-        public ConnectionsManager ConnMngr;
         public List<int> openPorts = new List<int>();
         public List<int> openPorts2 = new List<int>();
         public int lastGamePing = 0;
-        public TickMeterState meterState;
         bool NetworkActivityFlag;
 
         public bool IsGameRunning()
@@ -60,10 +59,10 @@ namespace tickMeter
 
             GameRunningFlag = IsGameRunning();
             if (!GameRunningFlag) return;
-            if(meterState.ConnectionsManagerFlag)
+            if(App.meterState.ConnectionsManagerFlag)
             {
                 int ProcessId = Process.GetProcessesByName(ProcessName).First().Id;
-                List<UdpProcessRecord> gamePorts = ConnMngr.UdpActiveConnections;
+                List<UdpProcessRecord> gamePorts = App.connMngr.UdpActiveConnections;
                 foreach (UdpProcessRecord gamePort in gamePorts)
                 {
                     if (gamePort.ProcessId == ProcessId)
@@ -74,34 +73,34 @@ namespace tickMeter
             }
             
 
-            if (!NetworkActivityFlag && meterState.Game == GameCode)
+            if (!NetworkActivityFlag && App.meterState.Game == GameCode)
             {
-                meterState.IsTracking = false;
+                App.meterState.IsTracking = false;
             }
             NetworkActivityFlag = false;
         }
 
-        public void ProcessPacket(Packet packet, GUI gui)
+        public void ProcessPacket(Packet packet)
         {
             if (!GameRunningFlag) return;
             if (packet.Ethernet.IpV4.Protocol != PcapDotNet.Packets.IpV4.IpV4Protocol.Udp) return;
 
             //search within port range and destination (local) port we fetched from connections manager
-            if (packet.Ethernet.IpV4.Udp.SourcePort > StartPort && packet.Ethernet.IpV4.Udp.SourcePort < EndPort && packet.Ethernet.IpV4.Destination.ToString() == meterState.LocalIP)
+            if (packet.Ethernet.IpV4.Udp.SourcePort > StartPort && packet.Ethernet.IpV4.Udp.SourcePort < EndPort && packet.Ethernet.IpV4.Destination.ToString() == App.meterState.LocalIP)
             {
-                if (meterState.ConnectionsManagerFlag && !openPorts.Contains(packet.Ethernet.IpV4.Udp.DestinationPort)) return;
-                meterState.CurrentTimestamp = packet.Timestamp.ToString();
-                meterState.Game = GameCode;
-                meterState.Server.Ip = packet.Ethernet.IpV4.Source.ToString();
-                meterState.DownloadTraffic += packet.Ethernet.IpV4.Udp.TotalLength;
-                meterState.TickRate++;
+                if (App.meterState.ConnectionsManagerFlag && !openPorts.Contains(packet.Ethernet.IpV4.Udp.DestinationPort)) return;
+                App.meterState.CurrentTimestamp = packet.Timestamp.ToString();
+                App.meterState.Game = GameCode;
+                App.meterState.Server.Ip = packet.Ethernet.IpV4.Source.ToString();
+                App.meterState.DownloadTraffic += packet.Ethernet.IpV4.Udp.TotalLength;
+                App.meterState.TickRate++;
                 NetworkActivityFlag = true;
             }
-            if (packet.Ethernet.IpV4.Udp.DestinationPort > StartPort && packet.Ethernet.IpV4.Udp.DestinationPort < EndPort && packet.Ethernet.IpV4.Source.ToString() == meterState.LocalIP)
+            if (packet.Ethernet.IpV4.Udp.DestinationPort > StartPort && packet.Ethernet.IpV4.Udp.DestinationPort < EndPort && packet.Ethernet.IpV4.Source.ToString() == App.meterState.LocalIP)
             {
-                if (meterState.ConnectionsManagerFlag && !openPorts.Contains(packet.Ethernet.IpV4.Udp.SourcePort)) return;
+                if (App.meterState.ConnectionsManagerFlag && !openPorts.Contains(packet.Ethernet.IpV4.Udp.SourcePort)) return;
                 NetworkActivityFlag = true;
-                gui.meterState.UploadTraffic += packet.Ethernet.IpV4.Udp.TotalLength;
+                App.meterState.UploadTraffic += packet.Ethernet.IpV4.Udp.TotalLength;
             }
         }
     }

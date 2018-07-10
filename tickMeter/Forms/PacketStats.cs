@@ -6,14 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using tickMeter.Classes;
-using tickMeter.Forms;
 
 namespace tickMeter
 {
@@ -26,21 +24,16 @@ namespace tickMeter
         public int outTraffic = 0;
 
         public ConnectionsManager connMngr;
-        public GUI gui;
+
         public bool tracking;
         Thread PcapThread;
-        public PacketFilterForm filterForm;
         public BackgroundWorker pcapWorker;
-        public TickMeterState meterState;
-
         PacketFilter packetFilter;
 
         public PacketStats()
         {
             InitializeComponent();
             packetFilter = new PacketFilter();
-            filterForm = new PacketFilterForm();
-            filterForm.packetFilter = packetFilter;
         }
         public void InitWorker()
         {
@@ -56,11 +49,7 @@ namespace tickMeter
         {
             
             PacketBuffer = new List<Packet>();
-            connMngr = new ConnectionsManager(500)
-            {
-                meterState = meterState
-                
-            };
+            connMngr = new ConnectionsManager(500);
             try
             {
                 if (PcapThread == null)
@@ -75,7 +64,7 @@ namespace tickMeter
                 MessageBox.Show("PCAP Thread init error");
             }
             
-            meterState.LocalIP = gui.GetAdapterAddress((LivePacketDevice)gui.selectedAdapter);
+            App.meterState.LocalIP = App.GetAdapterAddress((LivePacketDevice)App.gui.selectedAdapter);
             RefreshTimer.Enabled = true;
             avgStats.Enabled = true;
             tracking = true;
@@ -99,7 +88,7 @@ namespace tickMeter
 
         private void PcapWorkerDoWork(object sender, DoWorkEventArgs e)
         {
-            using (PacketCommunicator communicator = gui.selectedAdapter.Open(65536, PacketDeviceOpenAttributes.Promiscuous, 1000))
+            using (PacketCommunicator communicator = App.gui.selectedAdapter.Open(65536, PacketDeviceOpenAttributes.Promiscuous, 1000))
             {
                 if (communicator.DataLink.Kind != DataLinkKind.Ethernet)
                 {
@@ -125,12 +114,12 @@ namespace tickMeter
             if (!packetFilter.Validate()) return;
             PacketBuffer.Add(packet);
 
-            if (ip.Source.ToString() == meterState.LocalIP)
+            if (ip.Source.ToString() == App.meterState.LocalIP)
             {
                 outPackets++;
                 outTraffic += ip.TotalLength;
             }
-            if (ip.Destination.ToString() == meterState.LocalIP)
+            if (ip.Destination.ToString() == App.meterState.LocalIP)
             {
                 inPackets++;
                 inTraffic += ip.TotalLength;
@@ -156,7 +145,7 @@ namespace tickMeter
                 {
                     ip = packet.Ethernet.IpV4;
                 }
-                catch (Exception) { return; }
+                catch (Exception) { Debug.Print("IpV4Datagram"); return; }
 
                 UdpDatagram udp = ip.Udp;
                 TcpDatagram tcp = ip.Tcp;
@@ -179,21 +168,24 @@ namespace tickMeter
                     try
                     {
                         UdpProcessRecord record;
-                        if (from_ip == meterState.LocalIP)
+                        List<UdpProcessRecord> UdpConnections = connMngr.UdpActiveConnections;
+                        if (UdpConnections.Count > 0)
                         {
-                            record = connMngr.UdpActiveConnections.Where(procReq => procReq.LocalPort.ToString() == from_port).First();
-                        }
-                        else
-                        {
-                            record = connMngr.UdpActiveConnections.Where(procReq => procReq.LocalPort.ToString() == to_port).First();
-                        }
+                            if (from_ip == App.meterState.LocalIP)
+                            {
+                                record = UdpConnections.Where(procReq => procReq.LocalPort.ToString() == from_port).First();
+                            }
+                            else
+                            {
+                                record = UdpConnections.Where(procReq => procReq.LocalPort.ToString() == to_port).First();
+                            }
 
-                        if (record != null)
-                        {
-                            
-                            processName = record.ProcessName;
+                            if (record != null)
+                            {
+                                processName = record.ProcessName;
+                            }
                         }
-                    } catch(Exception) { processName = @"n\a"; }
+                    } catch(Exception) { Debug.Print("UdpProcessRecord"); processName = @"n\a"; }
                     
                 }
                 else
@@ -201,18 +193,24 @@ namespace tickMeter
                     try
                     {
                         TcpProcessRecord record;
-                        if (from_ip == meterState.LocalIP)
+                        List<TcpProcessRecord> TcpConnections = connMngr.TcpActiveConnections;
+                        if(TcpConnections.Count > 0)
                         {
-                            record = connMngr.TcpActiveConnections.Where(procReq => procReq.LocalPort.ToString() == from_port && procReq.RemotePort.ToString() == to_port).First();
-                        } else
-                        {
-                            record = connMngr.TcpActiveConnections.Where(procReq => procReq.LocalPort.ToString() == to_port && procReq.RemotePort.ToString() == from_port).First();
+                            if (from_ip == App.meterState.LocalIP)
+                            {
+                                record = TcpConnections.Where(procReq => procReq.LocalPort.ToString() == from_port && procReq.RemotePort.ToString() == to_port).First();
+                            }
+                            else
+                            {
+                                record = TcpConnections.Where(procReq => procReq.LocalPort.ToString() == to_port && procReq.RemotePort.ToString() == from_port).First();
+                            }
+                            if (record != null)
+                            {
+                                processName = record.ProcessName;
+                            }
                         }
-                        if (record != null)
-                        {
-                            processName = record.ProcessName;
-                        }
-                    } catch (Exception) { processName = @"n\a"; }
+                        
+                    } catch (Exception) { Debug.Print("TcpProcessRecord"); processName = @"n\a"; }
                 from_port = tcp.SourcePort.ToString();
                     to_port = tcp.DestinationPort.ToString();
                 }
@@ -315,7 +313,7 @@ namespace tickMeter
 
         private void filter_Click(object sender, EventArgs e)
         {
-            filterForm.Show();
+            App.packetFilterForm.Show();
         }
 
         private async void avgStats_Tick(object sender, EventArgs e)
@@ -329,7 +327,7 @@ namespace tickMeter
                     label4.Text = "DL " + (inTraffic / 1024).ToString() + " | UP " + (outTraffic/ 1024).ToString();
                 }));
                 label5.Invoke(new Action(() => {
-                    label5.Text = "Local IP: " + meterState.LocalIP;
+                    label5.Text = "Local IP: " + App.meterState.LocalIP;
                 }));
                 inPackets = outPackets = inTraffic = outTraffic = 0;
             });

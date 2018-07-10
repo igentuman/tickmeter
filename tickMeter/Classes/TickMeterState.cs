@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using tickMeter.Classes;
 
 namespace tickMeter
 {
@@ -100,11 +101,16 @@ namespace tickMeter
 
             private void SetPingTimer()
             {
+                int PingInterval = 2000;
+                if(App.settingsManager.GetOption("ping_interval") != "")
+                {
+                    PingInterval = int.Parse(App.settingsManager.GetOption("ping_interval"));
+                }
                 if (PingTimer == null)
                 {
                     PingTimer = new System.Timers.Timer
                     {
-                        Interval = 2000
+                        Interval = PingInterval
                     };
                     PingTimer.Elapsed += PingServerTimer;
                     PingTimer.AutoReset = true;

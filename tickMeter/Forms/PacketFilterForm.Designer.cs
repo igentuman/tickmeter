@@ -233,6 +233,7 @@
             this.Controls.Add(this.packet_size_filter);
             this.Controls.Add(this.protocol_filter);
             this.Name = "PacketFilterForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Packet Filter Settings";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PacketFilterForm_FormClosing);
             this.ResumeLayout(false);

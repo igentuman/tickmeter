@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Linq;
 using System.IO;
 using System.Windows.Forms;
 using PcapDotNet.Core;
@@ -11,25 +10,19 @@ using System.Threading.Tasks;
 using System.Security.Permissions;
 using System.Runtime.InteropServices;
 using System.Globalization;
-using System.Text.RegularExpressions;
 using System.Diagnostics;
 using tickMeter.Classes;
 using System.Threading;
 
-namespace tickMeter
+
+namespace tickMeter.Forms
 {
     public partial class GUI : Form
     {
-        private  IList<LivePacketDevice> AdaptersList;
+        
         public PacketDevice selectedAdapter;
-        public ConnectionsManager NetworkConnectionsMngr;
-        public NetworkStats networkStats;
         public Thread PcapThread;
-        public SettingsForm settingsForm;
-        public PacketStats packetStats;
-        public TickMeterState meterState;
-        public string udpscr = "";
-        public string udpdes = "";
+
         public BackgroundWorker pcapWorker;
         int restarts = 0;
         int restartLimit = 1;
@@ -70,41 +63,20 @@ namespace tickMeter
         public GUI()
         {
             InitializeComponent();
-            settingsForm = new SettingsForm();
-            packetStats = new PacketStats();
-            packetStats.gui = this;
-            settingsForm.gui = this;
-            try
-            {
-                AdaptersList = LivePacketDevice.AllLocalMachine.ToList();
-            }
-            catch(Exception)
-            {
-                MessageBox.Show("Install WinPCAP. Try to run as Admin");
-                if (MessageBox.Show("Download WinPCAP?", "WinPCAP", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    Process.Start("https://bitbucket.org/dvman8bit/tickmeter/downloads/WinPcap_4_1_3.exe");
-                    Close();
-                }
-            }
+            App.Init();
+            App.gui = this;
 
-            if (AdaptersList.Count == 0)
+            for (int i = 0; i != App.GetAdapters().Count; ++i)
             {
-                MessageBox.Show("No network connections found");
-                return;
-            }
-
-            for (int i = 0; i != AdaptersList.Count; ++i)
-            {
-                LivePacketDevice Adapter = AdaptersList[i];
+                LivePacketDevice Adapter = App.GetAdapters()[i];
 
                 if (Adapter.Description != null)
                 {
-                    settingsForm.adapters_list.Items.Add(GetAdapterAddress(Adapter) + " " + Adapter.Description.Replace("Network adapter ","").Replace("'Microsoft' ",""));
+                    App.settingsForm.adapters_list.Items.Add(App.GetAdapterAddress(Adapter) + " " + Adapter.Description.Replace("Network adapter ","").Replace("'Microsoft' ",""));
                 }
                 else
                 {
-                    settingsForm.adapters_list.Items.Add("Unknown");
+                    App.settingsForm.adapters_list.Items.Add("Unknown");
                 }
             }
             
@@ -113,33 +85,20 @@ namespace tickMeter
         public void InitManagers()
         {
             Debug.Print("InitManagers");
-            meterState = new TickMeterState();
-            PubgMngr = new PubgStatsManager
-            {
-                meterState = meterState
-            };
-            DbdMngr = new DbdStatsManager
-            {
-                meterState = meterState
-            };
+            App.meterState = new TickMeterState();
+
             try
             {
-                if (!settingsForm.settings_netstats_checkbox.Checked)
+                if (!App.settingsForm.settings_netstats_checkbox.Checked)
                 {
-                    NetworkConnectionsMngr = new ConnectionsManager();
-                    meterState.ConnMngr = NetworkConnectionsMngr;
-                    meterState.ConnectionsManagerFlag = true;
-
-                    NetworkConnectionsMngr.meterState = meterState;
-                    PubgMngr.ConnMngr = NetworkConnectionsMngr;
-                    DbdMngr.ConnMngr = NetworkConnectionsMngr;
+                    App.meterState.ConnectionsManagerFlag = true;
                 }
 
             }
             catch (Exception)
             {
-                meterState.ConnectionsManagerFlag =
-                settingsForm.settings_netstats_checkbox.Checked = true;
+                App.meterState.ConnectionsManagerFlag =
+                App.settingsForm.settings_netstats_checkbox.Checked = true;
             }
         }
 
@@ -189,34 +148,34 @@ namespace tickMeter
                 FormBorderStyle = FormBorderStyle.None;
                 SettingsButton.Visible = false;
                 packetStatsBtn.Visible = false;
-                if (settingsForm.settings_rtss_output.Checked)
+                if (App.settingsForm.settings_rtss_output.Checked)
                 {
                     OnScreen = false;
                 }
-                if ( !settingsForm.settings_chart_checkbox.Checked)
+                if (!App.settingsForm.settings_chart_checkbox.Checked)
                 {
                     Height = 160;
                 }
                 Width = 475;
 
-                if( !settingsForm.settings_ip_checkbox.Checked)
+                if(!App.settingsForm.settings_ip_checkbox.Checked)
                 {
                     ip_val.Visible = false;
                     ip_lbl.Visible = false;
                 }
-                if (!settingsForm.settings_ping_checkbox.Checked)
+                if (!App.settingsForm.settings_ping_checkbox.Checked)
                 {
                     ping_val.Visible = false;
                     ping_lbl.Visible = false;
                     countryLbl.Visible = false;
                 }
-                if (!settingsForm.settings_traffic_checkbox.Checked)
+                if (!App.settingsForm.settings_traffic_checkbox.Checked)
                 {
                     traffic_lbl.Visible = false;
                     traffic_val.Visible = false;
                 }
 
-                if (!settingsForm.settings_session_time_checkbox.Checked)
+                if (!App.settingsForm.settings_session_time_checkbox.Checked)
                 {
                     time_lbl.Visible = false;
                     time_val.Visible = false;
@@ -230,20 +189,21 @@ namespace tickMeter
         private void PacketHandler(Packet packet)
         {
 
-            if (!meterState.IsTracking) return;
-            DbdMngr.ProcessPacket(packet, this);
-            PubgMngr.ProcessPacket(packet, this);
+            if (!App.meterState.IsTracking) return;
+            GameProfileManager.DbdMngr.ProcessPacket(packet);
+            GameProfileManager.PubgMngr.ProcessPacket(packet);
         }
 
         
         private async void TicksLoop_Tick(object sender, EventArgs e)
         {
-            if(meterState.IsTracking && meterState.Server.Ip != "")
-            meterState.SessionTime++;
-            if (settingsForm.settings_rtss_output.Checked)
+
+            if(App.meterState.IsTracking && App.meterState.Server.Ip != "")
+                App.meterState.SessionTime++;
+            if (App.settingsForm.settings_rtss_output.Checked)
             {
                 await Task.Run(() => {
-                    try { RivaTuner.BuildRivaOutput(this); } catch (Exception exc) { MessageBox.Show(exc.Message); }
+                    try { RivaTuner.BuildRivaOutput(); } catch (Exception exc) { MessageBox.Show(exc.Message); }
                 });
             }
 
@@ -251,54 +211,54 @@ namespace tickMeter
             if (!OnScreen) return;
 
             //update tickrate
-            Color TickRateColor = settingsForm.ColorGood.ForeColor;
-            if (meterState.OutputTickRate < 30)
+            Color TickRateColor = App.settingsForm.ColorGood.ForeColor;
+            if (App.meterState.OutputTickRate < 30)
             {
-                TickRateColor = settingsForm.ColorBad.ForeColor;
+                TickRateColor = App.settingsForm.ColorBad.ForeColor;
             }
-            else if (meterState.OutputTickRate < 50)
+            else if (App.meterState.OutputTickRate < 50)
             {
-                TickRateColor = settingsForm.ColorMid.ForeColor;
+                TickRateColor = App.settingsForm.ColorMid.ForeColor;
             }
 
             await Task.Run(
                     () => {
                         tickrate_val.Invoke(new Action(() => {
-                            tickrate_val.Text = meterState.OutputTickRate.ToString();
+                            tickrate_val.Text = App.meterState.OutputTickRate.ToString();
                             tickrate_val.ForeColor = TickRateColor;
                         }));
                         //update tickrate chart
-                        if (settingsForm.settings_chart_checkbox.Checked)
+                        if (App.settingsForm.settings_chart_checkbox.Checked)
                         {
-                            graph.Invoke(new Action(() => graph.Image = UpdateGraph(meterState.TicksHistory)));
+                            graph.Invoke(new Action(() => graph.Image = UpdateGraph(App.meterState.TicksHistory)));
                         }
                         //update traffic
-                        if (settingsForm.settings_traffic_checkbox.Checked)
+                        if (App.settingsForm.settings_traffic_checkbox.Checked)
                         {
-                            float formatedUpload = (float)meterState.UploadTraffic / (1024 * 1024);
-                            float formatedDownload = (float)meterState.DownloadTraffic / (1024 * 1024);
+                            float formatedUpload = (float)App.meterState.UploadTraffic / (1024 * 1024);
+                            float formatedDownload = (float)App.meterState.DownloadTraffic / (1024 * 1024);
                             traffic_val.Invoke(new Action(() => traffic_val.Text = formatedUpload.ToString("N2") + " / " + formatedDownload.ToString("N2") + " mb"));
                         }
                         //update IP
-                        if (settingsForm.settings_ip_checkbox.Checked)
+                        if (App.settingsForm.settings_ip_checkbox.Checked)
                         {
-                        ip_val.Invoke(new Action(() => ip_val.Text = meterState.Server.Ip));
+                        ip_val.Invoke(new Action(() => ip_val.Text = App.meterState.Server.Ip));
                         }
                         //update PING
-                        if (settingsForm.settings_ping_checkbox.Checked)
+                        if (App.settingsForm.settings_ping_checkbox.Checked)
                         {
-                        countryLbl.Invoke(new Action(() => countryLbl.Text = meterState.Server.Location));
-                        ping_val.Invoke(new Action(() => ping_val.Text = meterState.Server.Ping.ToString() + " ms"));
+                        countryLbl.Invoke(new Action(() => countryLbl.Text = App.meterState.Server.Location));
+                        ping_val.Invoke(new Action(() => ping_val.Text = App.meterState.Server.Ping.ToString() + " ms"));
                         }
                         //update time
-                        if (settingsForm.settings_session_time_checkbox.Checked)
+                        if (App.settingsForm.settings_session_time_checkbox.Checked)
                         {
-                            TimeSpan result = TimeSpan.FromSeconds(meterState.SessionTime);
+                            TimeSpan result = TimeSpan.FromSeconds(App.meterState.SessionTime);
                             string Duration = result.ToString("mm':'ss");
                             ip_val.Invoke(new Action(() => time_val.Text = Duration));
                         }
                     });
-            if (!meterState.IsTracking)
+            if (!App.meterState.IsTracking)
             {
                 StopTracking();
             }
@@ -323,39 +283,28 @@ namespace tickMeter
             return chartBckg;
         }
 
-        public string GetAdapterAddress(LivePacketDevice Adapter)
-        {
-            if (Adapter.Description != null)
-            {
-                string addr = Adapter.Addresses.First().ToString();
-                var match = Regex.Match(addr, "(\\d)+\\.(\\d)+\\.(\\d)+\\.(\\d)+");
-                if (match.Value == "")
-                {
-                    addr = Adapter.Addresses[1].ToString();
-                    match = Regex.Match(addr, "(\\d)+\\.(\\d)+\\.(\\d)+\\.(\\d)+");
-                }
-                return match.Value;
-            }
-            return "";
-        }
-
+       
         public void StartTracking()
         {
             Debug.Print("StartTracking");
-            if (meterState != null) StopTracking();
+            
+            if (App.meterState != null)
+                StopTracking();
             InitManagers();
-            meterState.IsTracking = true;
+            App.meterState.IsTracking = true;
             ticksLoop.Enabled = true;
-            selectedAdapter = AdaptersList[settingsForm.adapters_list.SelectedIndex];
-            meterState.LocalIP = GetAdapterAddress(AdaptersList[settingsForm.adapters_list.SelectedIndex]);
-            lastSelectedAdapterID = settingsForm.adapters_list.SelectedIndex;
+            selectedAdapter = App.GetAdapters()[App.settingsForm.adapters_list.SelectedIndex];
+            App.meterState.LocalIP = App.GetAdapterAddress(App.GetAdapters()[App.settingsForm.adapters_list.SelectedIndex]);
+            lastSelectedAdapterID = App.settingsForm.adapters_list.SelectedIndex;
             try
             {
                 if (PcapThread == null)
                 {
                     
                     PcapThread = new Thread(InitPcapWorker);
+                    
                     PcapThread.Start();
+                    PcapThread.Join();
                     Debug.Print("Starting thread " + PcapThread.ManagedThreadId.ToString());
                 }
             }
@@ -363,12 +312,14 @@ namespace tickMeter
             {
                 MessageBox.Show("PCAP Thread init error");
             }
-            
+            //InitPcapWorker();
+
+
         }
         private void PcapWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if (!meterState.IsTracking) return;
-            if (meterState.TickRate == 0)
+            if (!App.meterState.IsTracking) return;
+            if (App.meterState.TickRate == 0)
             {
                 restarts++;
                 if (restarts > restartLimit)
@@ -393,7 +344,7 @@ namespace tickMeter
 
         private void PcapWorkerDoWork(object sender, DoWorkEventArgs e)
         {
-            if (!meterState.IsTracking) return;
+            if (!App.meterState.IsTracking) return;
             using (PacketCommunicator communicator = selectedAdapter.Open(65536, PacketDeviceOpenAttributes.Promiscuous, 500))
             {
                 if (communicator.DataLink.Kind != DataLinkKind.Ethernet)
@@ -416,16 +367,16 @@ namespace tickMeter
         public void StopTracking()
         {
             ticksLoop.Enabled = false;
-            if (meterState == null) return;
-
-            tickrate_val.ForeColor = settingsForm.ColorBad.ForeColor;
-            ping_val.ForeColor = settingsForm.ColorMid.ForeColor;
+            if (App.meterState == null) return;
+            Debug.Print("StopTracking");
+            tickrate_val.ForeColor = App.settingsForm.ColorBad.ForeColor;
+            ping_val.ForeColor = App.settingsForm.ColorMid.ForeColor;
             graph.Image = graph.InitialImage;
             
             
-            if (settingsForm.settings_log_checkbox.Checked)
+            if (App.settingsForm.settings_log_checkbox.Checked)
             { 
-                if(meterState.Server.Ip != "" && meterState.TickRateLog != "")
+                if(App.meterState.Server.Ip != "" && App.meterState.TickRateLog != "")
                 {
                     if (!Directory.Exists("logs"))
                     {
@@ -433,34 +384,34 @@ namespace tickMeter
                     }
                     try
                     {
-                        File.AppendAllText(@"logs\" + meterState.Server.Ip + "_ticks.csv", "timestamp;tickrate" + Environment.NewLine + meterState.TickRateLog);
+                        File.AppendAllText(@"logs\" + App.meterState.Server.Ip + "_ticks.csv", "timestamp;tickrate" + Environment.NewLine + App.meterState.TickRateLog);
                     }
                     catch (IOException) { }
                 }
             }
             try { RivaTuner.PrintData(""); } catch (Exception exc) { MessageBox.Show(exc.Message); }
-            if(meterState.Server.Ip != "")
+            if(App.meterState.Server.Ip != "")
             {
                 if (!Directory.Exists("logs"))
                 {
                     Directory.CreateDirectory("logs");
                 }
-                string serverStat = DateTime.Now.ToLocalTime() + " - IP: " + meterState.Server.Ip + " (" + meterState.Server.Location + ") Ping: " + meterState.Server.AvgPing + Environment.NewLine;
+                string serverStat = DateTime.Now.ToLocalTime() + " - IP: " + App.meterState.Server.Ip + " (" + App.meterState.Server.Location + ") Ping: " + App.meterState.Server.AvgPing + Environment.NewLine;
                 try
                 {
                     File.AppendAllText(@"logs\SERVERS-STATS.log", serverStat);
                 }
                 catch (IOException) { }
             }
-            
-            
-            meterState.IsTracking = false;
+
+
+            App.meterState.IsTracking = false;
         }
 
         private void GUI_FormClosed(object sender, FormClosedEventArgs e)
         {
             StopTracking();
-            settingsForm.SaveToConfig();
+            App.settingsForm.SaveToConfig();
             RivaTuner.KillRtss();
         }
 
@@ -472,9 +423,9 @@ namespace tickMeter
         
         private void RetryTimer_Tick(object sender, EventArgs e)
         {
-            if ((meterState == null || !meterState.IsTracking) && lastSelectedAdapterID != -1)
+            if ((App.meterState == null || !App.meterState.IsTracking) && lastSelectedAdapterID != -1)
             {
-                settingsForm.adapters_list.SelectedIndex = lastSelectedAdapterID;
+                 App.settingsForm.adapters_list.SelectedIndex = lastSelectedAdapterID;
                 StartTracking();
             }
         }
@@ -495,32 +446,28 @@ namespace tickMeter
         {
             appInitHeigh = Height;
             appInitWidth = Width;
-            
 
-            settingsForm.ApplyFromConfig();
-            settingsForm.CheckNewVersion();
+
+            App.settingsForm.ApplyFromConfig();
+            App.settingsForm.CheckNewVersion();
             
 
             CultureInfo ci = CultureInfo.InstalledUICulture;
             if (ci.TwoLetterISOLanguageName == "en")
             {
-                settingsForm.SwitchToEnglish();
+                App.settingsForm.SwitchToEnglish();
             }
 
         }
 
         private void SettingsButton_Click(object sender, EventArgs e)
         {
-            settingsForm.Show();
+            App.settingsForm.Show();
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            packetStats.meterState = meterState;
-            packetStats.Show();
-
+            App.packetStatsForm.Show();
         }
-
-
     }
 }

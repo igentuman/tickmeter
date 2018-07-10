@@ -1,4 +1,4 @@
-﻿namespace tickMeter
+﻿namespace tickMeter.Forms
 {
     partial class GUI
     {

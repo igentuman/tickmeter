@@ -195,7 +195,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\App.cs" />
     <Compile Include="Classes\ConnectionsManager.cs" />
+    <Compile Include="Classes\GameProfile.cs" />
+    <Compile Include="Classes\GameProfileManager.cs" />
     <Compile Include="Classes\PacketFilter.cs" />
     <Compile Include="Classes\DbdStatsManager.cs" />
     <Compile Include="Classes\PubgStatsManager.cs" />
@@ -225,6 +228,12 @@
     <Compile Include="Forms\ProfileEditForm.Designer.cs">
       <DependentUpon>ProfileEditForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ProfilesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ProfilesForm.Designer.cs">
+      <DependentUpon>ProfilesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\en.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -251,6 +260,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ProfileEditForm.resx">
       <DependentUpon>ProfileEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ProfilesForm.resx">
+      <DependentUpon>ProfilesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

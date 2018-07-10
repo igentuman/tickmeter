@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace tickMeter
+namespace tickMeter.Classes
 {
     //initial source https://gist.github.com/cheynewallace/5971686
     public class NetworkStats
@@ -65,7 +65,7 @@ namespace tickMeter
 
                     ProcessStartInfo ps = new ProcessStartInfo
                     {
-                        Arguments = "-a -n -o",
+                        Arguments = "-ano",
                         FileName = "netstat.exe",
                         UseShellExecute = false,
                         WindowStyle = ProcessWindowStyle.Hidden,

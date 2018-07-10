@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace tickMeter
+namespace tickMeter.Forms
 {
     partial class SettingsForm
     {
@@ -52,6 +52,7 @@ namespace tickMeter
             this.updateLbl = new System.Windows.Forms.Label();
             this.rtss_dialog = new System.Windows.Forms.OpenFileDialog();
             this.settings_session_time_checkbox = new System.Windows.Forms.CheckBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // settings_netstats_checkbox
@@ -224,10 +225,18 @@ namespace tickMeter
             this.settings_session_time_checkbox.Name = "settings_session_time_checkbox";
             this.settings_session_time_checkbox.UseVisualStyleBackColor = true;
             // 
+            // button1
+            // 
+            resources.ApplyResources(this.button1, "button1");
+            this.button1.Name = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.settings_session_time_checkbox);
             this.Controls.Add(this.updateLbl);
             this.Controls.Add(this.rememberAdapter);
@@ -250,7 +259,6 @@ namespace tickMeter
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "SettingsForm";
             this.ShowInTaskbar = false;
-            this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SettingsForm_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -279,5 +287,6 @@ namespace tickMeter
         public System.Windows.Forms.Label updateLbl;
         private System.Windows.Forms.OpenFileDialog rtss_dialog;
         public CheckBox settings_session_time_checkbox;
+        private Button button1;
     }
 }

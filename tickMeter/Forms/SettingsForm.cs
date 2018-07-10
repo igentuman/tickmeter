@@ -7,18 +7,18 @@ using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Resources;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using tickMeter.Classes;
 
-namespace tickMeter
+namespace tickMeter.Forms
 {
     public partial class SettingsForm : Form
     {
         public const string CURRENT_VERSION = "1.5";
 
         public SettingsManager settings;
-        public GUI gui;
+
         public string verInfo;
         TagCollection TagsInfo;
         public SettingsForm()
@@ -133,10 +133,10 @@ namespace tickMeter
             RivaTuner.ColorBad = settings.GetOption("color_bad");
             RivaTuner.ColorMid = settings.GetOption("color_mid");
             RivaTuner.ColorGood = settings.GetOption("color_good");
-            gui.tickrate_lbl.ForeColor =
-                gui.ping_lbl.ForeColor =
-                gui.ip_lbl.ForeColor =
-                gui.traffic_lbl.ForeColor =
+            App.gui.tickrate_lbl.ForeColor =
+                App.gui.ping_lbl.ForeColor =
+                App.gui.ip_lbl.ForeColor =
+                App.gui.traffic_lbl.ForeColor =
                 ColorLabel.ForeColor;
             InitRtss();
         }
@@ -185,10 +185,10 @@ namespace tickMeter
         {
             colorDialog1.ShowDialog();
             ColorLabel.ForeColor = colorDialog1.Color;
-            gui.tickrate_lbl.ForeColor =
-                gui.ping_lbl.ForeColor =
-                gui.ip_lbl.ForeColor =
-                gui.traffic_lbl.ForeColor =
+            App.gui.tickrate_lbl.ForeColor =
+                App.gui.ping_lbl.ForeColor =
+                App.gui.ip_lbl.ForeColor =
+                App.gui.traffic_lbl.ForeColor =
                 ColorLabel.ForeColor;
             SaveToConfig();
             ApplyFromConfig();
@@ -237,37 +237,28 @@ namespace tickMeter
         private async void settings_rtss_output_CheckedChanged(object sender, EventArgs e)
         {
             await Task.Run(() => { try { RivaTuner.PrintData(""); } catch (Exception exc) { MessageBox.Show(exc.Message); } });
-            gui.UpdateStyle(settings_rtss_output.Checked);
+            App.gui.UpdateStyle(settings_rtss_output.Checked);
         }
 
         private void settings_netstats_checkbox_CheckedChanged(object sender, EventArgs e)
         {
             try
             {
-                if (gui.NetworkConnectionsMngr == null)
-                {
-                    gui.NetworkConnectionsMngr = new ConnectionsManager();
-                    gui.meterState.ConnMngr = gui.NetworkConnectionsMngr;
-                    gui.NetworkConnectionsMngr.meterState = gui.meterState;
-                    gui.PubgMngr.ConnMngr = gui.NetworkConnectionsMngr;
-                }
-                gui.meterState.ConnectionsManagerFlag = !settings_netstats_checkbox.Checked;
-
+                App.meterState.ConnectionsManagerFlag = !settings_netstats_checkbox.Checked;
             }
             catch (Exception)
             {
                 settings_netstats_checkbox.Checked = true;
-                gui.meterState.ConnectionsManagerFlag = false;
+                App.meterState.ConnectionsManagerFlag = false;
                 MessageBox.Show("Connections Manager internal error");
             }
         }
 
         private void adapters_list_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (adapters_list.SelectedIndex >= 0)
-            {
-                gui.StopTracking();
-                gui.StartTracking();
+            if (adapters_list.SelectedIndex > -1)
+            { 
+                App.gui.StartTracking();
             }
         }
 
@@ -282,5 +273,10 @@ namespace tickMeter
             Process.Start("https://bitbucket.org/dvman8bit/tickmeter/downloads/");
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Hide();
+            App.profilesForm.Show();
+        }
     }
 }

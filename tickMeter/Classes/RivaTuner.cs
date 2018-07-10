@@ -4,7 +4,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 
-namespace tickMeter
+namespace tickMeter.Classes
 {
     public static class RivaTuner
     {
@@ -162,31 +162,31 @@ namespace tickMeter
             return "<S><C0>Ping: " + pingFont + meterState.Server.Ping.ToString() + "<S0>ms <S0><C>(" + meterState.Server.Location + ")" + Environment.NewLine;
         }
 
-        public static void BuildRivaOutput(GUI gui)
+        public static void BuildRivaOutput()
         {
             string output = "";
-            if(gui.meterState.TickRate == 0 && gui.meterState.Game == "")
+            if(App.meterState.TickRate == 0 && App.meterState.Game == "")
             {
                 PrintData(output, true);
                 return;
             }
-            meterState = gui.meterState;
+            meterState = App.meterState;
             output += FormatTickrate();
 
-            if (gui.settingsForm.settings_ip_checkbox.Checked)
+            if (App.settingsForm.settings_ip_checkbox.Checked)
             {
                 output += FormatServer();
             }
 
-            if (gui.settingsForm.settings_ping_checkbox.Checked)
+            if (App.settingsForm.settings_ping_checkbox.Checked)
             {
                 output += FormatPing();
             }
-            if (gui.settingsForm.settings_traffic_checkbox.Checked)
+            if (App.settingsForm.settings_traffic_checkbox.Checked)
             {
                 output += FormatTraffic();
             }
-            if (gui.settingsForm.settings_session_time_checkbox.Checked)
+            if (App.settingsForm.settings_session_time_checkbox.Checked)
             {
                 output += FormatTime();
             }

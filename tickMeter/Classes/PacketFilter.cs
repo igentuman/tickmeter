@@ -1,5 +1,6 @@
 ﻿using PcapDotNet.Packets.IpV4;
 using System;
+using System.Diagnostics;
 
 namespace tickMeter.Classes
 {
@@ -65,14 +66,14 @@ namespace tickMeter.Classes
             return false;
         }
 
-        protected bool ValidatePort(string port, int portToCheck)
+        protected bool ValidatePort(string port, string portToCheck)
         {
-            if (port == "") return true;
+            if (port == "" || portToCheck == "") return true;
 
             string[] portParts = port.Split('-');
             if (portParts.Length == 2)
             {
-                return RangeCheck(portParts, portToCheck);
+                return RangeCheck(portParts, int.Parse(portToCheck));
             }
             portParts = port.Split(',');
             bool validFlag = false;
@@ -97,7 +98,7 @@ namespace tickMeter.Classes
                 {
                     if (ipFilterParts[i] != ipParts[i]) return false;
                 }
-                catch (Exception) { return false; }
+                catch (Exception) { Debug.Print("ValidateIP"); return false; }
 
             }
             return true;
@@ -152,9 +153,9 @@ namespace tickMeter.Classes
                 DestPort = ip.Tcp.DestinationPort.ToString();
             }
             
-            if (!ValidatePort(SourcePortFilter, int.Parse(SourcePort))) return false;
+            if (!ValidatePort(SourcePortFilter, SourcePort)) return false;
 
-            if (!ValidatePort(DestPortFilter, int.Parse(DestPort))) return false;
+            if (!ValidatePort(DestPortFilter, DestPort)) return false;
 
             string SourceIp = ip.Source.ToString();
             string DestIp = ip.Destination.ToString();

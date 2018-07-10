@@ -297,10 +297,12 @@ namespace tickMeter
             this.Controls.Add(this.stop);
             this.Controls.Add(this.start);
             this.Controls.Add(this.listView1);
+            this.DoubleBuffered = true;
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(798, 733);
             this.Name = "PacketStats";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Live Packets View";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PacketStats_FormClosing);
             this.Shown += new System.EventHandler(this.PacketStats_Shown);
