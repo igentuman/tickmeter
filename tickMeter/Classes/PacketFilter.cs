@@ -135,6 +135,38 @@ namespace tickMeter.Classes
             return ProcessToCheck.ToLower() == ProcessFilter.ToLower();
         }
 
+        public bool ValidateForOutputPacket()
+        {
+            if (!ValidateProtocol()) return false;
+
+            string SourcePort = "";
+            string DestPort = "";
+
+            if (ip.Protocol == IpV4Protocol.Udp)
+            {
+                DestPort = ip.Udp.SourcePort.ToString();
+                SourcePort = ip.Udp.DestinationPort.ToString();
+            }
+            else if (ip.Protocol == IpV4Protocol.Tcp)
+            {
+                DestPort = ip.Tcp.SourcePort.ToString();
+                SourcePort = ip.Tcp.DestinationPort.ToString();
+            }
+            if (!ValidatePort(SourcePortFilter, SourcePort)) return false;
+
+            if (!ValidatePort(DestPortFilter, DestPort)) return false;
+
+            string DestIp = ip.Source.ToString();
+            string SourceIp = ip.Destination.ToString();
+
+            if (!ValidateIP(SourceIpFilter, SourceIp)) return false;
+            if (!ValidateIP(DestIpFilter, DestIp)) return false;
+
+            if (!ValidatePacketSize()) return false;
+
+            return true;
+        }
+
         public bool Validate()
         {
             if (!ValidateProtocol()) return false;

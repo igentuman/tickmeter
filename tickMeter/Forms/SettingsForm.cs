@@ -262,9 +262,12 @@ namespace tickMeter.Forms
             Process.Start("https://bitbucket.org/dvman8bit/tickmeter/downloads/");
         }
 
-        private void button1_Click(object sender, EventArgs e)
+
+        private void label1_Click(object sender, EventArgs e)
         {
+
             Hide();
+
             App.profilesForm.Show();
         }
     }

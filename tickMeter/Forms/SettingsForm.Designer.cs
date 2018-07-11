@@ -52,7 +52,7 @@ namespace tickMeter.Forms
             this.updateLbl = new System.Windows.Forms.Label();
             this.rtss_dialog = new System.Windows.Forms.OpenFileDialog();
             this.settings_session_time_checkbox = new System.Windows.Forms.CheckBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // settings_netstats_checkbox
@@ -225,18 +225,20 @@ namespace tickMeter.Forms
             this.settings_session_time_checkbox.Name = "settings_session_time_checkbox";
             this.settings_session_time_checkbox.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // label1
             // 
-            resources.ApplyResources(this.button1, "button1");
-            this.button1.Name = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.label1.ForeColor = System.Drawing.Color.Blue;
+            this.label1.Name = "label1";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.settings_session_time_checkbox);
             this.Controls.Add(this.updateLbl);
             this.Controls.Add(this.rememberAdapter);
@@ -259,6 +261,7 @@ namespace tickMeter.Forms
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "SettingsForm";
             this.ShowInTaskbar = false;
+            this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SettingsForm_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -287,6 +290,6 @@ namespace tickMeter.Forms
         public System.Windows.Forms.Label updateLbl;
         private System.Windows.Forms.OpenFileDialog rtss_dialog;
         public CheckBox settings_session_time_checkbox;
-        private Button button1;
+        public Label label1;
     }
 }

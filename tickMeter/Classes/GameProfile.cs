@@ -30,11 +30,19 @@ namespace tickMeter.Classes
                     App.meterState.Server.Ip = packet.Ethernet.IpV4.Source.ToString();
                     App.meterState.DownloadTraffic += packet.Ethernet.IpV4.Udp.TotalLength;
                     App.meterState.TickRate++;
-                } else
+                    return;
+                } 
+            }
+            // validate packet sending
+            if(profileFilter.ValidateForOutputPacket())
+            {
+                if (packet.Ethernet.IpV4.Source.ToString() == App.meterState.LocalIP)
                 {
                     App.meterState.UploadTraffic += packet.Ethernet.IpV4.Udp.TotalLength;
                 }
             }
+            
+
         }
 
         public void Save()
