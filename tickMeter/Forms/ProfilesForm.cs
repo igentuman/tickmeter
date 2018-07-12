@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 using tickMeter.Classes;
 
@@ -85,6 +86,21 @@ namespace tickMeter.Forms
             for(int i = 0; i < built_in_profiles.Items.Count; i++)
             {
                 built_in_profiles.SetItemChecked(i, App.settingsManager.GetOption(built_in_profiles.Items[i].ToString().Replace(" ", "_").ToUpper()) == "True");
+            }
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Двойной клик, что бы отредактировать профиль. Dell - для удаления.");
+        }
+
+        private void custom_profiles_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode.ToString() == "Delete")
+            {
+                GameProfileManager.RemoveProfile(custom_profiles.SelectedIndex);
+                custom_profiles.Items.RemoveAt(custom_profiles.SelectedIndex);
+
             }
         }
     }

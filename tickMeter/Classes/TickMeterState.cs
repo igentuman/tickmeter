@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using tickMeter.Classes;
 
 namespace tickMeter
@@ -18,26 +19,41 @@ namespace tickMeter
         public string LocalIP { get; set; }
         public string Game { get; set; } = "";
         protected int LastTicksCount = 0;
+        protected int _tickrate;
         public List<int> TicksHistory { get; set; }
         private System.Timers.Timer MeterValidateTimer;
-        public int TickRate { get; set; }
+        public int TickRate { get { return _tickrate; } set { _tickrate = value; SetMeterTimer(); } }
+        public int AvgTickrate;
+
         protected string timeStamp;
         
+        public void SetMeterTimer()
+        {
+            if(MeterValidateTimer == null || !MeterValidateTimer.Enabled)
+            {
+                MeterValidateTimer = new System.Timers.Timer();
+                MeterValidateTimer.Elapsed += MeterValidateTimerTick;
+                MeterValidateTimer.Interval = 2000;
+                MeterValidateTimer.AutoReset = true;
+                MeterValidateTimer.Enabled = true;
+            }
+        }
 
         public TickMeterState()
         {
-            MeterValidateTimer = new System.Timers.Timer();
-            MeterValidateTimer.Elapsed += MeterValidateTimerTick;
-            MeterValidateTimer.Interval = 2000;
-            MeterValidateTimer.AutoReset = true;
-            MeterValidateTimer.Enabled = true;
+           
             Reset();
+            Server = new GameServer();
+            SetMeterTimer();
         }
         private void MeterValidateTimerTick(Object source, System.Timers.ElapsedEventArgs e)
         {
             if(LastTicksCount == TicksHistory.Count)
             {
-                Reset();
+                KillTimers();
+            } else
+            {
+                Server.SetPingTimer();
             }
             LastTicksCount = TicksHistory.Count;
         }
@@ -48,9 +64,10 @@ namespace tickMeter
                 if(value != timeStamp)
                 {
                     OutputTickRate = TickRate;
+                    AvgTickrate = (AvgTickrate+OutputTickRate)/2;
                     TicksHistory.Add(OutputTickRate);
                     TickRateLog += timeStamp + ";" + OutputTickRate.ToString() + Environment.NewLine;
-                    TickRate = 0;
+                    TickRate = -1;
                     timeStamp = value;
                 }
             }
@@ -66,7 +83,7 @@ namespace tickMeter
         public void Reset()
         {
             IsTracking = false;
-            Server = new GameServer();
+            
             Game = "";
             TicksHistory = new List<int>();
             UploadTraffic = 0;
@@ -76,13 +93,27 @@ namespace tickMeter
             TickRateLog = "";
             timeStamp = "";
             CurrentTimestamp = "";
+            
         }
 
-        
+        public void KillTimers()
+        {
+            if(MeterValidateTimer != null)
+            {
+                MeterValidateTimer.Enabled = false;
+                MeterValidateTimer.Close();
+                MeterValidateTimer.Dispose();
+                Debug.Print("killed meter timer");
+            }
+            
+            Server.KillTimer();
+        }
+
 
         public class GameServer
         {
             private string CurrentIP = "";
+            public int PingPort = 80;
             private int PingLimit = 1000;
             private int _ping = 0;
             public int Ping {
@@ -102,23 +133,41 @@ namespace tickMeter
                 {
                     string oldIP = CurrentIP;
                     CurrentIP = value;
-                    if (oldIP != CurrentIP)
+                    if (oldIP != CurrentIP && CurrentIP != "")
                     {
-                        PingTimer = null;
+                        if(PingTimer == null)
                         SetPingTimer();
                         DetectLocation();
                     }
                 }
             }
 
-            private void SetPingTimer()
+            public GameServer()
+            {
+                SetPingTimer();
+            }
+
+
+            public void KillTimer()
+            {
+               
+                if(PingTimer != null)
+                {
+                    PingTimer.Enabled = false;
+                    PingTimer.Close();
+                    PingTimer.Dispose();
+                    Debug.Print("killed server timer");
+                }
+            }
+
+            public void SetPingTimer()
             {
                 int PingInterval = 2000;
                 if(App.settingsManager.GetOption("ping_interval") != null && App.settingsManager.GetOption("ping_interval") != "")
                 {
                     PingInterval = int.Parse(App.settingsManager.GetOption("ping_interval"));
                 }
-                if (PingTimer == null)
+                if (PingTimer == null || !PingTimer.Enabled)
                 {
                     PingTimer = new System.Timers.Timer
                     {
@@ -189,21 +238,15 @@ namespace tickMeter
                 });
             }
 
-            public static IPEndPoint CreateIPEndPoint(string endPoint)
+            public static IPEndPoint CreateIPEndPoint(string endPoint,int Port)
             {
-                string[] ep = endPoint.Split(':');
-                if (ep.Length != 2) throw new FormatException("Invalid endpoint format");
                 IPAddress ip;
-                if (!IPAddress.TryParse(ep[0], out ip))
+                if (!IPAddress.TryParse(endPoint, out ip))
                 {
                     throw new FormatException("Invalid ip-adress");
                 }
-                int port;
-                if (!int.TryParse(ep[1], NumberStyles.None, NumberFormatInfo.CurrentInfo, out port))
-                {
-                    throw new FormatException("Invalid port");
-                }
-                return new IPEndPoint(ip, port);
+
+                return new IPEndPoint(ip, Port);
             }
 
             public int PingICMP()
@@ -224,7 +267,7 @@ namespace tickMeter
                     Blocking = true,
                     ReceiveTimeout = PingLimit
                 };
-                EndPoint ep = CreateIPEndPoint(Ip + ":80");
+                EndPoint ep = CreateIPEndPoint(Ip,PingPort);
                 Stopwatch stopwatch = new Stopwatch();
                 stopwatch.Start();
 
@@ -243,13 +286,13 @@ namespace tickMeter
                     int pingTime = PingICMP();
                     
                     Debug.Print("icmp " + pingTime.ToString());
-                    
                     if (pingTime == 0 || pingTime == 1000) {
                         pingTime = PingSocket();
                         Debug.Print("socket " + pingTime.ToString());
+
                     }
 
-                    if(pingTime < PingLimit) Ping = pingTime;
+                    if (pingTime < PingLimit) Ping = pingTime;
                 });
             }
         }

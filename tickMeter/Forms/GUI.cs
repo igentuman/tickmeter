@@ -85,6 +85,7 @@ namespace tickMeter.Forms
         public void InitMeterState()
         {
             Debug.Print("InitMeterState");
+            if (App.meterState != null) App.meterState.KillTimers();
             App.meterState = new TickMeterState();
             App.meterState.ConnectionsManagerFlag = !App.settingsForm.settings_netstats_checkbox.Checked;
         }
@@ -384,10 +385,10 @@ namespace tickMeter.Forms
                 {
                     Directory.CreateDirectory("logs");
                 }
-                string serverStat = DateTime.Now.ToLocalTime() + " - IP: " + App.meterState.Server.Ip + " (" + App.meterState.Server.Location + ") Ping: " + App.meterState.Server.AvgPing + Environment.NewLine;
+                string serverStat = DateTime.Now.ToLocalTime() + " - IP: " + App.meterState.Server.Ip + " (" + App.meterState.Server.Location + ") Ping: " + App.meterState.Server.AvgPing + "ms avg Tickrate: "+ App.meterState.AvgTickrate+ Environment.NewLine;
                 try
                 {
-                    File.AppendAllText(@"logs\SERVERS-STATS.log", serverStat);
+                    File.AppendAllText(@"logs\"+App.meterState.Game+"_SERVERS-STATS.log", serverStat);
                 }
                 catch (IOException) { }
             }

@@ -15,7 +15,7 @@ namespace tickMeter.Forms
 {
     public partial class SettingsForm : Form
     {
-        public const string CURRENT_VERSION = "1.5";
+        public const string CURRENT_VERSION = "1.6";
 
         public string verInfo;
         TagCollection TagsInfo;
@@ -132,6 +132,7 @@ namespace tickMeter.Forms
                 App.gui.ping_lbl.ForeColor =
                 App.gui.ip_lbl.ForeColor =
                 App.gui.traffic_lbl.ForeColor =
+                App.gui.time_lbl.ForeColor =
                 ColorLabel.ForeColor;
             InitRtss();
         }

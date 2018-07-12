@@ -5,11 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using tickMeter.Forms;
+
 
 namespace tickMeter.Classes
 {
@@ -76,7 +73,7 @@ namespace tickMeter.Classes
                 App.profileEditForm.to_port_filter.Text = pcktF.DestPortFilter;
                 App.profileEditForm.packet_size_filter.Text = pcktF.PacketSizeFilter;
                 if (pcktF.ProtocolFilter != "")
-                    App.profileEditForm.protocol_filter.SelectedIndex = int.Parse(pcktF.ProtocolFilter);
+                    App.profileEditForm.protocol_filter.SelectedItem = pcktF.ProtocolFilter;
                 App.profileEditForm.is_active.Checked = gameProfs[profileId].isEnabled;
                 App.profileEditForm.require_process.Text = gameProfs[profileId].RequireProcess;
                 App.profileEditForm.process_filter.Text = pcktF.ProcessFilter;
@@ -97,7 +94,6 @@ namespace tickMeter.Classes
             try
             {
                 File.WriteAllText("profiles/" + ProfileName + ".ini", "[PROFILE_CONFIG]" + Environment.NewLine);
-
             }
             catch (Exception) { MessageBox.Show(string.Format("Не могу сохранить профиль: {0}.ini", ProfileName)); }
 
@@ -117,6 +113,15 @@ namespace tickMeter.Classes
             MessageBox.Show(string.Format("Профиль успешно сохранен: {0}.ini", ProfileName));
         }
 
+        public static void RemoveProfile(int index)
+        {
+            if(File.Exists(@"profiles\" + gameProfs[index].GameName + ".ini"))
+            {
+                File.Delete(@"profiles\" + gameProfs[index].GameName + ".ini");
+            }
+            gameProfs.RemoveAt(index);
+        }
+
         public static string GetOption(string optionName, string scope = "PROFILE_CONFIG")
         {
 
@@ -131,7 +136,6 @@ namespace tickMeter.Classes
         {
             if (data[scope] == null) return;
             data[scope][optionName] = value;
-
         }
 
         public static void SaveConfig(string ProfileName)

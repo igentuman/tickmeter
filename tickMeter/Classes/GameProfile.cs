@@ -28,8 +28,9 @@ namespace tickMeter.Classes
                     App.meterState.CurrentTimestamp = packet.Timestamp.ToString();
                     App.meterState.Game = GameName;
                     App.meterState.Server.Ip = packet.Ethernet.IpV4.Source.ToString();
-                    App.meterState.DownloadTraffic += packet.Ethernet.IpV4.Udp.TotalLength;
+                    App.meterState.DownloadTraffic += packet.Ethernet.IpV4.TotalLength;
                     App.meterState.TickRate++;
+                    App.meterState.Server.PingPort = packet.Ethernet.IpV4.Udp.SourcePort;
                     return;
                 } 
             }
@@ -38,11 +39,9 @@ namespace tickMeter.Classes
             {
                 if (packet.Ethernet.IpV4.Source.ToString() == App.meterState.LocalIP)
                 {
-                    App.meterState.UploadTraffic += packet.Ethernet.IpV4.Udp.TotalLength;
+                    App.meterState.UploadTraffic += packet.Ethernet.IpV4.TotalLength;
                 }
             }
-            
-
         }
 
         public void Save()

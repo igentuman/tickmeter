@@ -35,10 +35,12 @@
             this.button2 = new System.Windows.Forms.Button();
             this.ApplyBtn = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // built_in_profiles
             // 
+            this.built_in_profiles.CheckOnClick = true;
             this.built_in_profiles.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.built_in_profiles.FormattingEnabled = true;
             this.built_in_profiles.Items.AddRange(new object[] {
@@ -69,6 +71,7 @@
             // 
             // custom_profiles
             // 
+            this.custom_profiles.CheckOnClick = true;
             this.custom_profiles.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.custom_profiles.FormattingEnabled = true;
             this.custom_profiles.Location = new System.Drawing.Point(12, 134);
@@ -76,6 +79,7 @@
             this.custom_profiles.Size = new System.Drawing.Size(236, 130);
             this.custom_profiles.TabIndex = 2;
             this.custom_profiles.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.custom_profiles_ItemCheck);
+            this.custom_profiles.KeyDown += new System.Windows.Forms.KeyEventHandler(this.custom_profiles_KeyDown);
             this.custom_profiles.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.custom_profiles_MouseDoubleClick);
             // 
             // button2
@@ -108,11 +112,25 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // profileForm
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.label3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label3.Location = new System.Drawing.Point(232, 115);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(16, 16);
+            this.label3.TabIndex = 48;
+            this.label3.Text = "?";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
+            // 
+            // ProfilesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(260, 359);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.ApplyBtn);
@@ -122,7 +140,7 @@
             this.Controls.Add(this.built_in_profiles);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
-            this.Name = "profileForm";
+            this.Name = "ProfilesForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Профили отслеживания";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.profileForm_FormClosing);
@@ -141,5 +159,6 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button ApplyBtn;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label3;
     }
 }
