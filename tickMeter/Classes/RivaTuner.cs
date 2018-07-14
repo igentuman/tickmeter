@@ -21,16 +21,25 @@ namespace tickMeter.Classes
         public static string RivaOutput;
         public static uint chartOffset = 0;
 
-        public static string DrawChart(float[] graphData, float min = 0, float max = 120)
+        public static string DrawChart(float[] graphData)
         {
             uint chartSize;
+            int max = 60;
+            if(graphData.Max() > 61)
+            {
+                max = 90;
+            }
+            if (graphData.Max() > 91)
+            {
+                max = 120;
+            }
             unsafe
             {
                 fixed (float* lpBuffer = graphData)
                 {
-                    chartSize = osd.EmbedGraph(chartOffset, lpBuffer: lpBuffer, dwBufferPos: 0, 512, dwWidth: -24, dwHeight: -3, dwMargin: 1, fltMin: 0, fltMax: graphData.Max(), dwFlags: 0);
+                    chartSize = osd.EmbedGraph(chartOffset, lpBuffer: lpBuffer, dwBufferPos: 0, 512, dwWidth: -24, dwHeight: -3, dwMargin: 1, fltMin: 0, fltMax: max, dwFlags: 0);
                 }
-                string chartEntry = "<C1><OBJ=" + chartOffset.ToString("X8") + "><A0><S2>" + App.meterState.OutputTickRate.ToString();
+                string chartEntry = "<C1><S2>" + max + "<OBJ=" + chartOffset.ToString("X8") + "><S1>" + App.meterState.OutputTickRate.ToString();
                 chartOffset += chartSize;
                 return chartEntry;
             }
@@ -99,7 +108,7 @@ namespace tickMeter.Classes
 
         public static string TextFormat()
         {
-            return "<C0=" + LabelColor + "><C1=" + ColorBad+ "><C2=" + ColorMid + "><C3=" + ColorGood + "><S0=47><S1=70><S2=55><A0=-5>";
+            return "<C0=" + LabelColor + "><C1=" + ColorBad+ "><C2=" + ColorMid + "><C3=" + ColorGood + "><S0=47><S1=65><S2=55><A0=-15><A1=55>";
         }
 
         public static string FormatTickrate()
@@ -130,7 +139,7 @@ namespace tickMeter.Classes
         {
             float formatedUpload = (float)meterState.UploadTraffic / (1024 * 1024);
             float formatedDownload = (float)meterState.DownloadTraffic / (1024 * 1024);
-            return "<S><C0>UP/DL: <C>" + formatedUpload.ToString("N2") + " / " + formatedDownload.ToString("N2") + "<S1> Mb" + Environment.NewLine;
+            return "<S><C0>UP/DL: <C>" + formatedUpload.ToString("N2") + " / " + formatedDownload.ToString("N2") + "<S0> Mb" + Environment.NewLine;
         }
 
         public static string FormatTime()

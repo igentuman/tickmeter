@@ -376,7 +376,7 @@ namespace tickMeter.Forms
                     {
                         File.AppendAllText(@"logs\" + App.meterState.Server.Ip + "_ticks.csv", "timestamp;tickrate" + Environment.NewLine + App.meterState.TickRateLog);
                     }
-                    catch (IOException) { }
+                    catch (Exception) { }
                 }
             }
             try { RivaTuner.PrintData(""); } catch (Exception exc) { MessageBox.Show(exc.Message); }
@@ -386,12 +386,12 @@ namespace tickMeter.Forms
                 {
                     Directory.CreateDirectory("logs");
                 }
-                string serverStat = DateTime.Now.ToLocalTime() + " - IP: " + App.meterState.Server.Ip + " (" + App.meterState.Server.Location + ") Ping: " + App.meterState.Server.AvgPing + "ms avg Tickrate: "+ App.meterState.AvgTickrate+ Environment.NewLine;
+                string serverStat = DateTime.Now.ToLocalTime() + " - IP: " + App.meterState.Server.Ip + " (" + App.meterState.Server.Location + ") Ping: " + App.meterState.Server.AvgPing + "ms, avg Tickrate: "+ App.meterState.AvgTickrate+ ", Time: "+App.meterState.SessionTime.ToString("mm':'ss")+ Environment.NewLine;
                 try
                 {
                     File.AppendAllText(@"logs\"+App.meterState.Game+"_SERVERS-STATS.log", serverStat);
                 }
-                catch (IOException) { }
+                catch (Exception) { }
             }
 
 
