@@ -25,6 +25,8 @@ namespace tickMeter
         public int TickRate { get { return _tickrate; } set { _tickrate = value; SetMeterTimer(); } }
         public int AvgTickrate;
 
+        public List<float> tickrateGraph = new List<float>();
+        
         protected string timeStamp;
         
         public void SetMeterTimer()
@@ -41,7 +43,11 @@ namespace tickMeter
 
         public TickMeterState()
         {
-           
+            for(int i = 0; i < 513; i++)
+            {
+                tickrateGraph.Add(0);
+            }
+            
             Reset();
             Server = new GameServer();
             SetMeterTimer();
@@ -66,6 +72,13 @@ namespace tickMeter
                     OutputTickRate = TickRate;
                     AvgTickrate = (AvgTickrate+OutputTickRate)/2;
                     TicksHistory.Add(OutputTickRate);
+                    if(tickrateGraph.Count > 512)
+                    {
+                        tickrateGraph.RemoveAt(0);
+                        tickrateGraph.RemoveAt(0);
+                    }
+                    tickrateGraph.Add(OutputTickRate);
+                    tickrateGraph.Add(OutputTickRate);
                     TickRateLog += timeStamp + ";" + OutputTickRate.ToString() + Environment.NewLine;
                     TickRate = -1;
                     timeStamp = value;
@@ -79,6 +92,7 @@ namespace tickMeter
 
         public string TickRateLog { get; set; } = "";
         public bool ConnectionsManagerFlag = false;
+
 
         public void Reset()
         {

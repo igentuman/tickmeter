@@ -6,15 +6,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
 
-
 namespace tickMeter.Classes
 {
-    public class PubgStatsManager
+    public class QCStatsManager
     {
-        int StartPort = 6999;
-        int EndPort = 7999;
-        string ProcessName = "tslGame";
-        public const string GameCode = "PUBG";
+
+        int StartPort = 45000;
+        int EndPort = 50000;
+        string ProcessName = "QuakeChampions";
+        public const string GameCode = "QUAKE_CHAMPIONS";
         Timer GameInfoTimer;
         public bool GameRunningFlag = false;
         public List<int> openPorts = new List<int>();
@@ -22,6 +22,11 @@ namespace tickMeter.Classes
         public int lastGamePing = 0;
         bool NetworkActivityFlag;
         public bool isEnabled = false;
+
+        public QCStatsManager()
+        {
+            SetGameInfoTimer();
+        }
 
         public bool IsGameRunning()
         {
@@ -43,11 +48,6 @@ namespace tickMeter.Classes
             }
         }
 
-        public PubgStatsManager()
-        {
-            
-            SetGameInfoTimer();
-        }
 
         private async void GameInfoTimerTick(Object source, ElapsedEventArgs e)
         {
@@ -62,7 +62,7 @@ namespace tickMeter.Classes
 
             GameRunningFlag = IsGameRunning();
             if (!GameRunningFlag) return;
-            if(App.meterState.ConnectionsManagerFlag)
+            if (App.meterState.ConnectionsManagerFlag)
             {
                 int ProcessId = Process.GetProcessesByName(ProcessName).First().Id;
                 List<UdpProcessRecord> gamePorts = App.connMngr.UdpActiveConnections;
@@ -74,7 +74,7 @@ namespace tickMeter.Classes
                     }
                 }
             }
-            
+
 
             if (!NetworkActivityFlag && App.meterState.Game == GameCode)
             {
@@ -96,7 +96,6 @@ namespace tickMeter.Classes
                 App.meterState.Game = GameCode;
                 App.meterState.Server.Ip = packet.Ethernet.IpV4.Source.ToString();
                 App.meterState.DownloadTraffic += packet.Ethernet.IpV4.Udp.TotalLength;
-                
                 App.meterState.TickRate++;
                 NetworkActivityFlag = true;
             }
@@ -107,5 +106,6 @@ namespace tickMeter.Classes
                 App.meterState.UploadTraffic += packet.Ethernet.IpV4.Udp.TotalLength;
             }
         }
+        
     }
 }

@@ -1,6 +1,8 @@
-﻿using System;
+﻿using RTSS;
+using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 
@@ -15,42 +17,39 @@ namespace tickMeter.Classes
         public static string ColorMid;
         public static string ColorGood;
         public static Process RtssInstance;
+        static OSD osd;
+        public static string RivaOutput;
+        public static uint chartOffset = 0;
 
-        [DllImport("kernel32")]
-        private unsafe static extern void* LoadLibrary(string dllname);
-        [DllImport("kernel32")]
-        private unsafe static extern void FreeLibrary(void* handle);
-
-        private sealed unsafe class LibraryUnloader
+        public static string DrawChart(float[] graphData, float min = 0, float max = 120)
         {
-            internal LibraryUnloader(void* handle)
+            uint chartSize;
+            unsafe
             {
-                this.handle = handle;
+                fixed (float* lpBuffer = graphData)
+                {
+                    chartSize = osd.EmbedGraph(chartOffset, lpBuffer: lpBuffer, dwBufferPos: 0, 512, dwWidth: -24, dwHeight: -3, dwMargin: 1, fltMin: 0, fltMax: graphData.Max(), dwFlags: 0);
+                }
+                string chartEntry = "<C1><OBJ=" + chartOffset.ToString("X8") + "><A0><S2>" + App.meterState.OutputTickRate.ToString();
+                chartOffset += chartSize;
+                return chartEntry;
             }
 
-            ~LibraryUnloader()
-            {
-                if (handle != null)
-                    FreeLibrary(handle);
-            }
+        }
 
-            private void* handle;
-
-        } // LibraryUnloader
-
-        private static readonly LibraryUnloader unloader;
+        public static void Print(string text)
+        {
+            osd.Update(text);
+        }
 
         static RivaTuner()
         {
-            string path = "rivatuner.dll";
-            unsafe
+            if (!IsRivaRunning())
             {
-                void* handle = LoadLibrary(path);
-
-                if (handle == null)
-                    throw new FileNotFoundException("Unable to find the native rivatuner library: " + path);
-
-                unloader = new LibraryUnloader(handle);
+                RunRiva();
+            } else
+            {
+                osd = new OSD("TickMeter");
             }
         }
 
@@ -65,9 +64,7 @@ namespace tickMeter.Classes
 
         public static bool VerifyRiva()
         {
-            bool fExists = File.Exists(rtss_exe);
-            bool dllEsists = File.Exists("rivatuner.dll");
-            return dllEsists && fExists;
+           return File.Exists(rtss_exe);
         }
 
         public static void RunRiva()
@@ -82,7 +79,6 @@ namespace tickMeter.Classes
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
             }
@@ -103,7 +99,7 @@ namespace tickMeter.Classes
 
         public static string TextFormat()
         {
-            return "<C0=" + LabelColor + "><C1=" + ColorBad+ "><C2=" + ColorMid + "><C3=" + ColorGood + "><S0=47><S1=70>";
+            return "<C0=" + LabelColor + "><C1=" + ColorBad+ "><C2=" + ColorMid + "><C3=" + ColorGood + "><S0=47><S1=70><S2=55><A0=-5>";
         }
 
         public static string FormatTickrate()
@@ -170,6 +166,7 @@ namespace tickMeter.Classes
                 PrintData(output, true);
                 return;
             }
+            chartOffset = 0;
             meterState = App.meterState;
             output += FormatTickrate();
 
@@ -190,6 +187,10 @@ namespace tickMeter.Classes
             {
                 output += FormatTime();
             }
+            if (App.settingsForm.settings_chart_checkbox.Checked)
+            {
+                output += DrawChart(App.meterState.tickrateGraph.ToArray());
+            }
             PrintData(output, true);
         }
 
@@ -206,10 +207,7 @@ namespace tickMeter.Classes
             {
                 text = TextFormat() + text;
             }
-            print(text);
+            Print(text);
         }
-
-        [DllImport("rivatuner", CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool print(string text);
     }
 }

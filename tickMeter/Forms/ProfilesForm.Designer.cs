@@ -45,10 +45,12 @@
             this.built_in_profiles.FormattingEnabled = true;
             this.built_in_profiles.Items.AddRange(new object[] {
             "PUBG",
-            "Dead By Daylight"});
+            "Dead By Daylight",
+            "Quake Champions",
+            "Islands of Nyne"});
             this.built_in_profiles.Location = new System.Drawing.Point(12, 36);
             this.built_in_profiles.Name = "built_in_profiles";
-            this.built_in_profiles.Size = new System.Drawing.Size(236, 46);
+            this.built_in_profiles.Size = new System.Drawing.Size(236, 130);
             this.built_in_profiles.TabIndex = 0;
             // 
             // label1
@@ -63,7 +65,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 118);
+            this.label2.Location = new System.Drawing.Point(12, 177);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(123, 13);
             this.label2.TabIndex = 3;
@@ -74,9 +76,9 @@
             this.custom_profiles.CheckOnClick = true;
             this.custom_profiles.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.custom_profiles.FormattingEnabled = true;
-            this.custom_profiles.Location = new System.Drawing.Point(12, 134);
+            this.custom_profiles.Location = new System.Drawing.Point(12, 193);
             this.custom_profiles.Name = "custom_profiles";
-            this.custom_profiles.Size = new System.Drawing.Size(236, 130);
+            this.custom_profiles.Size = new System.Drawing.Size(236, 172);
             this.custom_profiles.TabIndex = 2;
             this.custom_profiles.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.custom_profiles_ItemCheck);
             this.custom_profiles.KeyDown += new System.Windows.Forms.KeyEventHandler(this.custom_profiles_KeyDown);
@@ -85,7 +87,7 @@
             // button2
             // 
             this.button2.Image = global::tickMeter.Properties.Resources.add;
-            this.button2.Location = new System.Drawing.Point(173, 279);
+            this.button2.Location = new System.Drawing.Point(173, 377);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 68);
             this.button2.TabIndex = 46;
@@ -95,7 +97,7 @@
             // ApplyBtn
             // 
             this.ApplyBtn.Image = global::tickMeter.Properties.Resources.check;
-            this.ApplyBtn.Location = new System.Drawing.Point(12, 280);
+            this.ApplyBtn.Location = new System.Drawing.Point(12, 378);
             this.ApplyBtn.Name = "ApplyBtn";
             this.ApplyBtn.Size = new System.Drawing.Size(75, 68);
             this.ApplyBtn.TabIndex = 45;
@@ -105,7 +107,7 @@
             // button1
             // 
             this.button1.Image = global::tickMeter.Properties.Resources._switch;
-            this.button1.Location = new System.Drawing.Point(93, 279);
+            this.button1.Location = new System.Drawing.Point(93, 377);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 68);
             this.button1.TabIndex = 47;
@@ -118,7 +120,7 @@
             this.label3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.label3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(232, 115);
+            this.label3.Location = new System.Drawing.Point(232, 174);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(16, 16);
             this.label3.TabIndex = 48;
@@ -129,7 +131,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(260, 359);
+            this.ClientSize = new System.Drawing.Size(260, 457);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.button2);

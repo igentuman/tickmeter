@@ -355,6 +355,7 @@ namespace tickMeter.Forms
 
         public void StopTracking()
         {
+
             ticksLoop.Enabled = false;
             if (App.meterState == null) return;
             Debug.Print("StopTracking");
@@ -458,5 +459,12 @@ namespace tickMeter.Forms
         {
             App.packetStatsForm.Show();
         }
+       
+        private void button1_Click(object sender, EventArgs e)
+        {
+            WebStatsManager.uploadTickrate();
+        }
+
+
     }
 }
