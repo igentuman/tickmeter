@@ -61,7 +61,11 @@ namespace tickMeter.Classes
         {
             if (Adapter.Description != null)
             {
-                string addr = Adapter.Addresses.First().ToString();
+                DeviceAddress adapterAddress = Adapter.Addresses.LastOrDefault();
+                string addr = "";
+                if (adapterAddress != null)
+                    addr = adapterAddress.ToString();
+
                 var match = Regex.Match(addr, "(\\d)+\\.(\\d)+\\.(\\d)+\\.(\\d)+");
                 if (match.Value == "")
                 {
