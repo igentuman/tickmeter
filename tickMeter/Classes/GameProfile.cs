@@ -29,12 +29,11 @@ namespace tickMeter.Classes
                     {
                         App.meterState.tickTimeBuffer.RemoveAt(0);
                     }
-                    if(App.meterState.CurrentTimestamp != null)
+                    if (App.meterState.CurrentTimestamp != null)
                     {
-                        float tickTime = (float)packet.Timestamp.Subtract(App.meterState.CurrentTimestamp).TotalMilliseconds;
+                        float tickTime = (float)(packet.Timestamp.Ticks - App.meterState.CurrentTimestamp.Ticks) / 10000;
                         App.meterState.tickTimeBuffer.Add(tickTime);
                     }
-                    
                     App.meterState.CurrentTimestamp = packet.Timestamp;
                     App.meterState.Game = GameName;
                     App.meterState.Server.Ip = packet.Ethernet.IpV4.Source.ToString();
