@@ -132,6 +132,9 @@
   <data name="ColorMid" xml:space="preserve">
     <value>Hormal color</value>
   </data>
+  <data name="donate_lbl" xml:space="preserve">
+    <value>Donate</value>
+  </data>
   <data name="game_profiles" xml:space="preserve">
     <value>Game Profiles</value>
   </data>

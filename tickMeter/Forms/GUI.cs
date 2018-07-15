@@ -208,7 +208,7 @@ namespace tickMeter.Forms
             {
                 TickRateColor = App.settingsForm.ColorMid.ForeColor;
             }
-
+            
             await Task.Run(
                     () => {
                         tickrate_val.Invoke(new Action(() => {
@@ -239,7 +239,7 @@ namespace tickMeter.Forms
                         ping_val.Invoke(new Action(() => ping_val.Text = App.meterState.Server.Ping.ToString() + " ms"));
                         }
                         //update time
-                        if (App.settingsForm.settings_session_time_checkbox.Checked)
+                        if (App.settingsForm.settings_session_time_checkbox.Checked && App.meterState.Server.Ip != "")
                         {
                             TimeSpan result = DateTime.Now.Subtract(App.meterState.SessionStart);
                             string Duration = result.ToString("mm':'ss");

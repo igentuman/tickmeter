@@ -106,6 +106,15 @@ namespace tickMeter.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Donate.
+        /// </summary>
+        internal static string donate_lbl {
+            get {
+                return ResourceManager.GetString("donate_lbl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Game Profiles.
         /// </summary>
         internal static string game_profiles {

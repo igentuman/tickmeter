@@ -15,7 +15,7 @@ namespace tickMeter.Forms
 {
     public partial class SettingsForm : Form
     {
-        public const string CURRENT_VERSION = "1.6";
+        public const string CURRENT_VERSION = "1.7";
 
         public string verInfo;
         TagCollection TagsInfo;
@@ -182,6 +182,7 @@ namespace tickMeter.Forms
             rememberAdapter.Text = eng.GetString(rememberAdapter.Name);
             updateLbl.Text = eng.GetString(updateLbl.Name);
             game_profiles.Text = eng.GetString(game_profiles.Name);
+            donate_lbl.Text = eng.GetString(donate_lbl.Name);
         }
 
         private void LabelsColor_Click(object sender, EventArgs e)
@@ -283,6 +284,11 @@ namespace tickMeter.Forms
             ColorChart.ForeColor = colorDialog1.Color;
             SaveToConfig();
             ApplyFromConfig();
+        }
+
+        private void donate_lbl_Click(object sender, EventArgs e)
+        {
+            Process.Start("http://www.donationalerts.ru/r/gen2man");
         }
     }
 }
