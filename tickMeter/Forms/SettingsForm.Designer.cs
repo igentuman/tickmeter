@@ -52,7 +52,10 @@ namespace tickMeter.Forms
             this.updateLbl = new System.Windows.Forms.Label();
             this.rtss_dialog = new System.Windows.Forms.OpenFileDialog();
             this.settings_session_time_checkbox = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.game_profiles = new System.Windows.Forms.Label();
+            this.settings_ticktime_chart = new System.Windows.Forms.CheckBox();
+            this.ColorChart = new System.Windows.Forms.Label();
+            this.settings_tickrate_show = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // settings_netstats_checkbox
@@ -225,20 +228,50 @@ namespace tickMeter.Forms
             this.settings_session_time_checkbox.Name = "settings_session_time_checkbox";
             this.settings_session_time_checkbox.UseVisualStyleBackColor = true;
             // 
-            // label1
+            // game_profiles
             // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label1.ForeColor = System.Drawing.Color.Blue;
-            this.label1.Name = "label1";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+            resources.ApplyResources(this.game_profiles, "game_profiles");
+            this.game_profiles.BackColor = System.Drawing.Color.Transparent;
+            this.game_profiles.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.game_profiles.ForeColor = System.Drawing.Color.Blue;
+            this.game_profiles.Name = "game_profiles";
+            this.game_profiles.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // settings_ticktime_chart
+            // 
+            resources.ApplyResources(this.settings_ticktime_chart, "settings_ticktime_chart");
+            this.settings_ticktime_chart.Checked = true;
+            this.settings_ticktime_chart.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.settings_ticktime_chart.ForeColor = System.Drawing.Color.Black;
+            this.settings_ticktime_chart.Name = "settings_ticktime_chart";
+            this.settings_ticktime_chart.UseVisualStyleBackColor = true;
+            // 
+            // ColorChart
+            // 
+            resources.ApplyResources(this.ColorChart, "ColorChart");
+            this.ColorChart.BackColor = System.Drawing.Color.Transparent;
+            this.ColorChart.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ColorChart.ForeColor = System.Drawing.Color.DarkRed;
+            this.ColorChart.Name = "ColorChart";
+            this.ColorChart.Click += new System.EventHandler(this.ColorChart_Click);
+            // 
+            // settings_tickrate_show
+            // 
+            resources.ApplyResources(this.settings_tickrate_show, "settings_tickrate_show");
+            this.settings_tickrate_show.Checked = true;
+            this.settings_tickrate_show.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.settings_tickrate_show.ForeColor = System.Drawing.Color.Black;
+            this.settings_tickrate_show.Name = "settings_tickrate_show";
+            this.settings_tickrate_show.UseVisualStyleBackColor = true;
             // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.settings_tickrate_show);
+            this.Controls.Add(this.ColorChart);
+            this.Controls.Add(this.settings_ticktime_chart);
+            this.Controls.Add(this.game_profiles);
             this.Controls.Add(this.settings_session_time_checkbox);
             this.Controls.Add(this.updateLbl);
             this.Controls.Add(this.rememberAdapter);
@@ -290,6 +323,9 @@ namespace tickMeter.Forms
         public System.Windows.Forms.Label updateLbl;
         private System.Windows.Forms.OpenFileDialog rtss_dialog;
         public CheckBox settings_session_time_checkbox;
-        public Label label1;
+        public Label game_profiles;
+        public CheckBox settings_ticktime_chart;
+        public Label ColorChart;
+        public CheckBox settings_tickrate_show;
     }
 }

@@ -124,10 +124,12 @@ namespace tickMeter.Forms
             ColorBad.ForeColor = ColorTranslator.FromHtml("#"+ App.settingsManager.GetOption("color_bad"));
             ColorMid.ForeColor = ColorTranslator.FromHtml("#"+ App.settingsManager.GetOption("color_mid"));
             ColorGood.ForeColor = ColorTranslator.FromHtml("#"+ App.settingsManager.GetOption("color_good"));
+            ColorChart.ForeColor = ColorTranslator.FromHtml("#"+ App.settingsManager.GetOption("color_chart"));
             RivaTuner.LabelColor = App.settingsManager.GetOption("color_label");
             RivaTuner.ColorBad = App.settingsManager.GetOption("color_bad");
             RivaTuner.ColorMid = App.settingsManager.GetOption("color_mid");
             RivaTuner.ColorGood = App.settingsManager.GetOption("color_good");
+            RivaTuner.ColorChart = App.settingsManager.GetOption("color_chart");
             App.gui.tickrate_lbl.ForeColor =
                 App.gui.ping_lbl.ForeColor =
                 App.gui.ip_lbl.ForeColor =
@@ -148,6 +150,7 @@ namespace tickMeter.Forms
             App.settingsManager.SetOption("color_bad", HexConverter(ColorBad.ForeColor));
             App.settingsManager.SetOption("color_mid", HexConverter(ColorMid.ForeColor));
             App.settingsManager.SetOption("color_good", HexConverter(ColorGood.ForeColor));
+            App.settingsManager.SetOption("color_chart", HexConverter(ColorChart.ForeColor));
             App.settingsManager.SetOption("rtss", settings_rtss_output.Checked.ToString());
             App.settingsManager.SetOption("remember_adapter", rememberAdapter.Checked.ToString());
             App.settingsManager.SetOption("session_time", settings_session_time_checkbox.Checked.ToString());
@@ -173,8 +176,12 @@ namespace tickMeter.Forms
             ColorBad.Text = eng.GetString(ColorBad.Name);
             ColorMid.Text = eng.GetString(ColorMid.Name);
             ColorGood.Text = eng.GetString(ColorGood.Name);
+            ColorChart.Text = eng.GetString(ColorChart.Name);
+            settings_ticktime_chart.Text = eng.GetString(settings_ticktime_chart.Name);
+            settings_tickrate_show.Text = eng.GetString(settings_tickrate_show.Name);
             rememberAdapter.Text = eng.GetString(rememberAdapter.Name);
             updateLbl.Text = eng.GetString(updateLbl.Name);
+            game_profiles.Text = eng.GetString(game_profiles.Name);
         }
 
         private void LabelsColor_Click(object sender, EventArgs e)
@@ -266,10 +273,16 @@ namespace tickMeter.Forms
 
         private void label1_Click(object sender, EventArgs e)
         {
-
             Hide();
-
             App.profilesForm.Show();
+        }
+
+        private void ColorChart_Click(object sender, EventArgs e)
+        {
+            colorDialog1.ShowDialog();
+            ColorChart.ForeColor = colorDialog1.Color;
+            SaveToConfig();
+            ApplyFromConfig();
         }
     }
 }

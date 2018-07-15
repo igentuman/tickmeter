@@ -70,6 +70,15 @@ namespace tickMeter.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Charts Color.
+        /// </summary>
+        internal static string ColorChart {
+            get {
+                return ResourceManager.GetString("ColorChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Good quality data color.
         /// </summary>
         internal static string ColorGood {
@@ -93,6 +102,15 @@ namespace tickMeter.Resources {
         internal static string ColorMid {
             get {
                 return ResourceManager.GetString("ColorMid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Game Profiles.
+        /// </summary>
+        internal static string game_profiles {
+            get {
+                return ResourceManager.GetString("game_profiles", resourceCulture);
             }
         }
         
@@ -193,6 +211,24 @@ namespace tickMeter.Resources {
         internal static string settings_session_time_checkbox {
             get {
                 return ResourceManager.GetString("settings_session_time_checkbox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Display Tickrate.
+        /// </summary>
+        internal static string settings_tickrate_show {
+            get {
+                return ResourceManager.GetString("settings_tickrate_show", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Ticktime Chart.
+        /// </summary>
+        internal static string settings_ticktime_chart {
+            get {
+                return ResourceManager.GetString("settings_ticktime_chart", resourceCulture);
             }
         }
         

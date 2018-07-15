@@ -25,7 +25,17 @@ namespace tickMeter.Classes
             {
                 if(packet.Ethernet.IpV4.Destination.ToString() == App.meterState.LocalIP)
                 {
-                    App.meterState.CurrentTimestamp = packet.Timestamp.ToString();
+                    if (App.meterState.tickTimeBuffer.Count > 512)
+                    {
+                        App.meterState.tickTimeBuffer.RemoveAt(0);
+                    }
+                    if(App.meterState.CurrentTimestamp != null)
+                    {
+                        float tickTime = (float)packet.Timestamp.Subtract(App.meterState.CurrentTimestamp).TotalMilliseconds;
+                        App.meterState.tickTimeBuffer.Add(tickTime);
+                    }
+                    
+                    App.meterState.CurrentTimestamp = packet.Timestamp;
                     App.meterState.Game = GameName;
                     App.meterState.Server.Ip = packet.Ethernet.IpV4.Source.ToString();
                     App.meterState.DownloadTraffic += packet.Ethernet.IpV4.TotalLength;

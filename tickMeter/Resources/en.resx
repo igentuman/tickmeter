@@ -120,6 +120,9 @@
   <data name="ColorBad" xml:space="preserve">
     <value>Low data color</value>
   </data>
+  <data name="ColorChart" xml:space="preserve">
+    <value>Charts Color</value>
+  </data>
   <data name="ColorGood" xml:space="preserve">
     <value>Good quality data color</value>
   </data>
@@ -128,6 +131,9 @@
   </data>
   <data name="ColorMid" xml:space="preserve">
     <value>Hormal color</value>
+  </data>
+  <data name="game_profiles" xml:space="preserve">
+    <value>Game Profiles</value>
   </data>
   <data name="network_connection_lbl" xml:space="preserve">
     <value>Network connection:</value>
@@ -162,6 +168,12 @@
   </data>
   <data name="settings_session_time_checkbox" xml:space="preserve">
     <value>Display connection time</value>
+  </data>
+  <data name="settings_tickrate_show" xml:space="preserve">
+    <value>Display Tickrate</value>
+  </data>
+  <data name="settings_ticktime_chart" xml:space="preserve">
+    <value>Ticktime Chart</value>
   </data>
   <data name="settings_traffic_checkbox" xml:space="preserve">
     <value>Display traffic</value>

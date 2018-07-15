@@ -14,7 +14,7 @@ namespace tickMeter
     public class TickMeterState
     {
         public bool IsTracking { get; set; } = false;
-        public int SessionTime { get; set; } = 0;
+        public DateTime SessionStart { get; set; }
         public GameServer Server { get; set; }
         public string LocalIP { get; set; }
         public string Game { get; set; } = "";
@@ -22,12 +22,13 @@ namespace tickMeter
         protected int _tickrate;
         public List<int> TicksHistory { get; set; }
         private System.Timers.Timer MeterValidateTimer;
+        public List<float> tickTimeBuffer = new List<float>();
         public int TickRate { get { return _tickrate; } set { _tickrate = value; SetMeterTimer(); } }
         public int AvgTickrate;
 
         public List<float> tickrateGraph = new List<float>();
         
-        protected string timeStamp;
+        protected DateTime timeStamp;
         
         public void SetMeterTimer()
         {
@@ -45,6 +46,7 @@ namespace tickMeter
         {
             for(int i = 0; i < 513; i++)
             {
+                tickTimeBuffer.Add(0);
                 tickrateGraph.Add(0);
             }
             
@@ -63,11 +65,11 @@ namespace tickMeter
             }
             LastTicksCount = TicksHistory.Count;
         }
-        public string CurrentTimestamp { get { return timeStamp; }
+        public DateTime CurrentTimestamp { get { return timeStamp; }
         set
             {
                 if (!IsTracking) return;
-                if(value != timeStamp)
+                if(value.ToString() != timeStamp.ToString())
                 {
                     OutputTickRate = TickRate;
                     AvgTickrate = (AvgTickrate+OutputTickRate)/2;
@@ -79,10 +81,11 @@ namespace tickMeter
                     }
                     tickrateGraph.Add(OutputTickRate);
                     tickrateGraph.Add(OutputTickRate);
-                    TickRateLog += timeStamp + ";" + OutputTickRate.ToString() + Environment.NewLine;
+                    TickRateLog += timeStamp.ToString() + ";" + OutputTickRate.ToString() + Environment.NewLine;
                     TickRate = 0;
-                    timeStamp = value;
+                    
                 }
+                timeStamp = value;
             }
         }
         public int OutputTickRate { get; set; }
@@ -104,10 +107,7 @@ namespace tickMeter
             DownloadTraffic = 0;
             TickRate = 0;
             OutputTickRate = 0;
-            TickRateLog = "";
-            timeStamp = "";
-            CurrentTimestamp = "";
-            
+            TickRateLog = "";           
         }
 
         public void KillTimers()
@@ -146,9 +146,11 @@ namespace tickMeter
                 set
                 {
                     string oldIP = CurrentIP;
+   
                     CurrentIP = value;
                     if (oldIP != CurrentIP && CurrentIP != "")
                     {
+                        App.meterState.SessionStart = DateTime.Now;
                         if(PingTimer == null)
                         SetPingTimer();
                         DetectLocation();

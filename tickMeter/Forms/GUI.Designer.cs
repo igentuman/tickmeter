@@ -68,7 +68,7 @@
             // 
             // ticksLoop
             // 
-            this.ticksLoop.Interval = 1000;
+            this.ticksLoop.Interval = 33;
             this.ticksLoop.Tick += new System.EventHandler(this.TicksLoop_Tick);
             // 
             // tickrate_val

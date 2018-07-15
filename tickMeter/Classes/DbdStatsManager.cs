@@ -97,7 +97,16 @@ namespace tickMeter
             if (packet.Ethernet.IpV4.Udp.SourcePort > StartPort && packet.Ethernet.IpV4.Udp.SourcePort < EndPort && packet.Ethernet.IpV4.Destination.ToString() == App.meterState.LocalIP)
             {
                 if (App.meterState.ConnectionsManagerFlag && !openPorts.Contains(packet.Ethernet.IpV4.Udp.DestinationPort)) return;
-                App.meterState.CurrentTimestamp = packet.Timestamp.ToString();
+                if (App.meterState.tickTimeBuffer.Count > 512)
+                {
+                    App.meterState.tickTimeBuffer.RemoveAt(0);
+                }
+                if (App.meterState.CurrentTimestamp != null)
+                {
+                    float tickTime = (float)packet.Timestamp.Subtract(App.meterState.CurrentTimestamp).TotalMilliseconds;
+                    App.meterState.tickTimeBuffer.Add(tickTime);
+                }
+                App.meterState.CurrentTimestamp = packet.Timestamp;
                 App.meterState.Game = GameCode;
                 App.meterState.Server.Ip = packet.Ethernet.IpV4.Source.ToString();
                 App.meterState.DownloadTraffic += packet.Ethernet.IpV4.Udp.TotalLength;

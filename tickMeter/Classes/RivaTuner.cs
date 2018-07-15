@@ -16,12 +16,13 @@ namespace tickMeter.Classes
         public static string ColorBad;
         public static string ColorMid;
         public static string ColorGood;
+        public static string ColorChart;
         public static Process RtssInstance;
         static OSD osd;
         public static string RivaOutput;
         public static uint chartOffset = 0;
 
-        public static string DrawChart(float[] graphData)
+        public static string DrawChart(float[] graphData,int min = 0,int max = 0)
         {
             if (!VerifyRiva()) return "";
             if (osd == null)
@@ -29,22 +30,26 @@ namespace tickMeter.Classes
                 osd = new OSD("TickMeter");
             }
             uint chartSize;
-            int max = 60;
-            if(graphData.Max() > 62)
+            if(max == 0)
             {
-                max = 90;
+                max = 60;
+                if (graphData.Max() > 62)
+                {
+                    max = 90;
+                }
+                if (graphData.Max() > 92)
+                {
+                    max = 120;
+                }
             }
-            if (graphData.Max() > 92)
-            {
-                max = 120;
-            }
+            
             unsafe
             {
                 fixed (float* lpBuffer = graphData)
                 {
-                    chartSize = osd.EmbedGraph(chartOffset, lpBuffer: lpBuffer, dwBufferPos: 0, 512, dwWidth: -24, dwHeight: -3, dwMargin: 1, fltMin: 0, fltMax: max, dwFlags: 0);
+                    chartSize = osd.EmbedGraph(chartOffset, lpBuffer: lpBuffer, dwBufferPos: 0, 512, dwWidth: -24, dwHeight: -3, dwMargin: 1, fltMin: min, fltMax: max, dwFlags: 0);
                 }
-                string chartEntry = "<C1><S2>" + max + "<OBJ=" + chartOffset.ToString("X8") + "><S1>" + App.meterState.OutputTickRate.ToString();
+                string chartEntry = "<C4><S2>" + max + "<OBJ=" + chartOffset.ToString("X8") + "><C>";
                 chartOffset += chartSize;
                 return chartEntry;
             }
@@ -118,7 +123,7 @@ namespace tickMeter.Classes
 
         public static string TextFormat()
         {
-            return "<C0=" + LabelColor + "><C1=" + ColorBad+ "><C2=" + ColorMid + "><C3=" + ColorGood + "><S0=47><S1=65><S2=55><A0=-15><A1=55>";
+            return "<C0=" + LabelColor + "><C1=" + ColorBad+ "><C2=" + ColorMid + "><C3=" + ColorGood + "><C4="+ColorChart+"><S0=47><S1=65><S2=55><A0=-2><A1=2>";
         }
 
         public static string FormatTickrate()
@@ -154,7 +159,7 @@ namespace tickMeter.Classes
 
         public static string FormatTime()
         {
-            TimeSpan result = TimeSpan.FromSeconds(meterState.SessionTime);
+            TimeSpan result = DateTime.Now.Subtract(App.meterState.SessionStart);
             string Duration = result.ToString("mm':'ss");
             return "<S><C0>Time: <C>" + Duration + Environment.NewLine;
         }
@@ -187,7 +192,10 @@ namespace tickMeter.Classes
             }
             chartOffset = 0;
             meterState = App.meterState;
-            output += FormatTickrate();
+            if(App.settingsForm.settings_tickrate_show.Checked)
+            {
+                output += FormatTickrate();
+            }
 
             if (App.settingsForm.settings_ip_checkbox.Checked)
             {
@@ -208,7 +216,13 @@ namespace tickMeter.Classes
             }
             if (App.settingsForm.settings_chart_checkbox.Checked)
             {
-                output += DrawChart(App.meterState.tickrateGraph.ToArray());
+                output += "<S0><C4>Tickrate" + Environment.NewLine;
+                output += DrawChart(App.meterState.tickrateGraph.ToArray())+ "<A0><S0>"+App.meterState.OutputTickRate.ToString() + Environment.NewLine;
+            }
+            if (App.settingsForm.settings_ticktime_chart.Checked)
+            {
+                output += Environment.NewLine + "<S0><C4>Ticktime" + Environment.NewLine;
+                output += DrawChart(App.meterState.tickTimeBuffer.ToArray(),8,100);
             }
             PrintData(output, true);
         }

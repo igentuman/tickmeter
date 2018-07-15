@@ -187,8 +187,7 @@ namespace tickMeter.Forms
         private async void TicksLoop_Tick(object sender, EventArgs e)
         {
 
-            if(App.meterState.IsTracking && App.meterState.Server.Ip != "")
-                App.meterState.SessionTime++;
+
             if (App.settingsForm.settings_rtss_output.Checked)
             {
                 await Task.Run(() => {
@@ -242,7 +241,7 @@ namespace tickMeter.Forms
                         //update time
                         if (App.settingsForm.settings_session_time_checkbox.Checked)
                         {
-                            TimeSpan result = TimeSpan.FromSeconds(App.meterState.SessionTime);
+                            TimeSpan result = DateTime.Now.Subtract(App.meterState.SessionStart);
                             string Duration = result.ToString("mm':'ss");
                             ip_val.Invoke(new Action(() => time_val.Text = Duration));
                         }
@@ -386,7 +385,7 @@ namespace tickMeter.Forms
                 {
                     Directory.CreateDirectory("logs");
                 }
-                TimeSpan result = TimeSpan.FromSeconds(App.meterState.SessionTime);
+                TimeSpan result = DateTime.Now.Subtract(App.meterState.SessionStart);
                 string Duration = result.ToString("mm':'ss");
                 string serverStat = DateTime.Now.ToLocalTime() + " - IP: " + App.meterState.Server.Ip + " (" + App.meterState.Server.Location + ") Ping: " + App.meterState.Server.AvgPing + "ms, avg Tickrate: "+ App.meterState.AvgTickrate+ ", Time: "+ Duration + Environment.NewLine;
                 try
@@ -438,14 +437,11 @@ namespace tickMeter.Forms
         {
             appInitHeigh = Height;
             appInitWidth = Width;
-
-
             App.settingsForm.ApplyFromConfig();
             App.settingsForm.CheckNewVersion();
-            
 
             CultureInfo ci = CultureInfo.InstalledUICulture;
-            if (ci.TwoLetterISOLanguageName == "en")
+            if (ci.TwoLetterISOLanguageName != "ru")
             {
                 App.settingsForm.SwitchToEnglish();
             }
@@ -467,6 +463,9 @@ namespace tickMeter.Forms
             WebStatsManager.uploadTickrate();
         }
 
+        private void ticktime_timer_Tick(object sender, EventArgs e)
+        {
 
+        }
     }
 }
