@@ -104,6 +104,7 @@ namespace tickMeter
 
         private void PacketHandler(Packet packet)
         {
+            if (!tracking) return;
             IpV4Datagram ip;
             try
             {
@@ -126,7 +127,7 @@ namespace tickMeter
             }
         }
 
-        int packet_id;
+        Int32 packet_id;
         private async void RefreshTick(object sender, EventArgs e)
         {
             
@@ -138,7 +139,7 @@ namespace tickMeter
             PacketBuffer.Clear();
             
             ListViewItem[] items = new ListViewItem[tmpPackets.Count];
-            int iKey = 0;
+            Int32 iKey = 0;
             foreach (Packet packet in tmpPackets) {
                 IpV4Datagram ip;
                 try

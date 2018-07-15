@@ -23,13 +23,18 @@ namespace tickMeter.Classes
 
         public static string DrawChart(float[] graphData)
         {
+            if (!VerifyRiva()) return "";
+            if (osd == null)
+            {
+                osd = new OSD("TickMeter");
+            }
             uint chartSize;
             int max = 60;
-            if(graphData.Max() > 61)
+            if(graphData.Max() > 62)
             {
                 max = 90;
             }
-            if (graphData.Max() > 91)
+            if (graphData.Max() > 92)
             {
                 max = 120;
             }
@@ -43,16 +48,21 @@ namespace tickMeter.Classes
                 chartOffset += chartSize;
                 return chartEntry;
             }
-
         }
 
         public static void Print(string text)
         {
+            if (!VerifyRiva()) return;
+            if (osd == null)
+            {
+                osd = new OSD("TickMeter");
+            }
             osd.Update(text);
         }
 
         static RivaTuner()
         {
+            if (!VerifyRiva()) return;
             if (!IsRivaRunning())
             {
                 RunRiva();

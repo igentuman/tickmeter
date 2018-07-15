@@ -80,7 +80,7 @@ namespace tickMeter
                     tickrateGraph.Add(OutputTickRate);
                     tickrateGraph.Add(OutputTickRate);
                     TickRateLog += timeStamp + ";" + OutputTickRate.ToString() + Environment.NewLine;
-                    TickRate = -1;
+                    TickRate = 0;
                     timeStamp = value;
                 }
             }
