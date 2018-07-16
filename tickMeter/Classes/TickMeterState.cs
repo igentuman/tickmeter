@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PcapDotNet.Packets;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +27,26 @@ namespace tickMeter
         public int TickRate { get { return _tickrate; } set { _tickrate = value; SetMeterTimer(); } }
         public int AvgTickrate;
 
+        public void updateTicktimeBuffer(long packetTicks)
+        {
+            if (tickTimeBuffer.Count > 512)
+            {
+                tickTimeBuffer.RemoveAt(0);
+            }
+            if (CurrentTimestamp != null)
+            {
+                float tickTime = (float)(packetTicks - CurrentTimestamp.Ticks) / 10000;
+                if (OutputTickRate > 0)
+                {
+                    tickTime -= 500 / OutputTickRate;
+                    if (tickTime < 0)
+                    {
+                        tickTime = 0;
+                    }
+                }
+               tickTimeBuffer.Add(tickTime);
+            }
+        }
         public List<float> tickrateGraph = new List<float>();
         
         protected DateTime timeStamp;
@@ -278,7 +299,7 @@ namespace tickMeter
 
             public int PingSocket()
             {
-                Socket sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)
+                Socket sock = new Socket(System.Net.Sockets.AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)
                 {
                     Blocking = true,
                     ReceiveTimeout = PingLimit

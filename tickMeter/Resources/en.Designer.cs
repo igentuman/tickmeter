@@ -169,6 +169,15 @@ namespace tickMeter.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Send anonymous data.
+        /// </summary>
+        internal static string settings_data_send {
+            get {
+                return ResourceManager.GetString("settings_data_send", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Display IP.
         /// </summary>
         internal static string settings_ip_checkbox {

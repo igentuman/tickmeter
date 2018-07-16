@@ -378,6 +378,12 @@ namespace tickMeter.Forms
                     catch (Exception) { }
                 }
             }
+
+            if (App.settingsForm.settings_data_send.Checked && App.meterState.TicksHistory.Count > 900 && App.meterState.Server.Ip != "")
+            {
+                WebStatsManager.uploadTickrate();
+            }
+
             try { RivaTuner.PrintData(""); } catch (Exception exc) { MessageBox.Show(exc.Message); }
             if(App.meterState.Server.Ip != "")
             {
@@ -457,15 +463,6 @@ namespace tickMeter.Forms
         {
             App.packetStatsForm.Show();
         }
-       
-        private void button1_Click(object sender, EventArgs e)
-        {
-            WebStatsManager.uploadTickrate();
-        }
 
-        private void ticktime_timer_Tick(object sender, EventArgs e)
-        {
-
-        }
     }
 }

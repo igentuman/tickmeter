@@ -46,7 +46,6 @@
             this.packetStatsBtn = new System.Windows.Forms.PictureBox();
             this.SettingsButton = new System.Windows.Forms.PictureBox();
             this.graph = new System.Windows.Forms.PictureBox();
-            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.packetStatsBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SettingsButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.graph)).BeginInit();
@@ -68,7 +67,7 @@
             // 
             // ticksLoop
             // 
-            this.ticksLoop.Interval = 33;
+            this.ticksLoop.Interval = 17;
             this.ticksLoop.Tick += new System.EventHandler(this.TicksLoop_Tick);
             // 
             // tickrate_val
@@ -260,24 +259,12 @@
             this.graph.TabIndex = 34;
             this.graph.TabStop = false;
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(347, 172);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 43;
-            this.button1.Text = "Test";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Visible = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(434, 395);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.time_lbl);
             this.Controls.Add(this.time_val);
             this.Controls.Add(this.packetStatsBtn);
@@ -297,7 +284,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "GUI";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "tickMeter 1.7";
+            this.Text = "tickMeter 1.8";
             this.TransparencyKey = System.Drawing.SystemColors.Info;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.GUI_FormClosed);
             this.Load += new System.EventHandler(this.GUI_Load);
@@ -326,7 +313,6 @@
         private System.Windows.Forms.PictureBox packetStatsBtn;
         public System.Windows.Forms.Label time_lbl;
         private System.Windows.Forms.Label time_val;
-        private System.Windows.Forms.Button button1;
     }
 }
 

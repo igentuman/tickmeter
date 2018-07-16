@@ -153,6 +153,9 @@
   <data name="settings_chart_checkbox" xml:space="preserve">
     <value>Tickrate graph</value>
   </data>
+  <data name="settings_data_send" xml:space="preserve">
+    <value>Send anonymous data</value>
+  </data>
   <data name="settings_ip_checkbox" xml:space="preserve">
     <value>Display IP</value>
   </data>

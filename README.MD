@@ -22,11 +22,21 @@ P.S. С VPN не дружит. Такие дела. Попробую когда-
  - Логгирование всех подключений с указанием IP, Location, Ping, avg Tickrate. Вы просили - я сделал
  - Настройка собственных профилей для отслеживания под любое приложение или игру. Настроил фильтр и мониторишь
  - Вывод данных в оверлее. Без оверлея мониторить не получится жеж
+ - Волшебные графики тикрейта и тиктайма
+ - Отправка анонимных данных на сервер для анализа и статистики https://it-man.website/tickmeter/stats
+
 ## SCREENS
 [![main window|N](https://it-man.website/tickmeter/screens/1-1.jpg =250x)](https://it-man.website/tickmeter/screens/1.jpg)   [![main window|N](https://it-man.website/tickmeter/screens/2-1.jpg =250x)](https://it-man.website/tickmeter/screens/2.jpg)
 [![main window](https://it-man.website/tickmeter/screens/3-1.jpg =250x)](https://it-man.website/tickmeter/screens/3.jpg)   [![main window](https://it-man.website/tickmeter/screens/4-1.jpg =250x)](https://it-man.website/tickmeter/screens/4.jpg)
 
 ## CHANGELOG
+### v1.8
+https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.8.zip
+https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.8-installer.exe
+
+- Фиксы стабильности графиков
+- Функционал отправки данных
+
 ### v1.7
 https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.7.zip
 https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.7-installer.exe
@@ -108,6 +118,13 @@ P.S. It doesn't support VPN atm. But, i hope, i will add it soon
 
 
 ## CHANGELOG
+### v1.8
+https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.8.zip
+https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.8-installer.exe
+
+- Charts stability fixes
+- Data reports functionality
+
 ### v1.7
 https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.7.zip
 https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.7-installer.exe

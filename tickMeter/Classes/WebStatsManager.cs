@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using EasyHttp;
+using System.Diagnostics;
+using System.Threading;
 using EasyHttp.Http;
-using JsonFx.Json;
 
 namespace tickMeter.Classes
 {
@@ -14,21 +9,19 @@ namespace tickMeter.Classes
     {
         public static void uploadTickrate()
         {
-            
+            Object data = new {
+                tickrate = App.meterState.TicksHistory.ToArray(),
+                ip = App.meterState.Server.Ip,
+                location = App.meterState.Server.Location,
+                game = App.meterState.Game,
+                ping = App.meterState.Server.AvgPing
+            };
             var http = new HttpClient();
-            var tickrate = new Tickrate();
-            http.Post("https://it-man.website/tickmeter/stats/upload", new { Genus = "1,2,3,4,5,6,1,2,3,4,5,6" }, HttpContentTypes.ApplicationJson);
-            MessageBox.Show(http.Response.RawText);
+            http.Post("https://it-man.website/tickmeter/stats/upload", data, HttpContentTypes.ApplicationJson);
+            Debug.Print(http.Response.RawText);
+            Thread.Sleep(100);
         }
 
-        private class Tickrate : Object
-        {
-            public Tickrate()
-            {
-                
-            }
-            [JsonName("tickrate")]
-            public string tickrate = "sdfsdfsdf";
-        }
+
     }
 }

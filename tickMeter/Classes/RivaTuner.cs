@@ -222,7 +222,7 @@ namespace tickMeter.Classes
             if (App.settingsForm.settings_ticktime_chart.Checked)
             {
                 output += Environment.NewLine + "<S0><C4>Ticktime" + Environment.NewLine;
-                output += DrawChart(App.meterState.tickTimeBuffer.ToArray(),8,100);
+                output += DrawChart(App.meterState.tickTimeBuffer.ToArray(),0,100);
             }
             PrintData(output, true);
         }

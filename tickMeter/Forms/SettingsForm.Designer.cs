@@ -57,6 +57,7 @@ namespace tickMeter.Forms
             this.ColorChart = new System.Windows.Forms.Label();
             this.settings_tickrate_show = new System.Windows.Forms.CheckBox();
             this.donate_lbl = new System.Windows.Forms.Label();
+            this.settings_data_send = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // settings_netstats_checkbox
@@ -274,10 +275,18 @@ namespace tickMeter.Forms
             this.donate_lbl.Name = "donate_lbl";
             this.donate_lbl.Click += new System.EventHandler(this.donate_lbl_Click);
             // 
+            // settings_data_send
+            // 
+            resources.ApplyResources(this.settings_data_send, "settings_data_send");
+            this.settings_data_send.ForeColor = System.Drawing.Color.Black;
+            this.settings_data_send.Name = "settings_data_send";
+            this.settings_data_send.UseVisualStyleBackColor = true;
+            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.settings_data_send);
             this.Controls.Add(this.donate_lbl);
             this.Controls.Add(this.settings_tickrate_show);
             this.Controls.Add(this.ColorChart);
@@ -339,5 +348,6 @@ namespace tickMeter.Forms
         public Label ColorChart;
         public CheckBox settings_tickrate_show;
         public Label donate_lbl;
+        public CheckBox settings_data_send;
     }
 }

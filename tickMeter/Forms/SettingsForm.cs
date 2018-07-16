@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Resources;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace tickMeter.Forms
 {
     public partial class SettingsForm : Form
     {
-        public const string CURRENT_VERSION = "1.7";
+        public const float CURRENT_VERSION = 1.8f;
 
         public string verInfo;
         TagCollection TagsInfo;
@@ -26,7 +27,7 @@ namespace tickMeter.Forms
         private class TagInfo
         {
             [JsonProperty("name")]
-            public string Version { get; set; }
+            public float Version { get; set; }
         }
 
         private class TagCollection
@@ -43,16 +44,24 @@ namespace tickMeter.Forms
                 {
                     verInfo = new WebClient().DownloadString("https://api.bitbucket.org/2.0/repositories/dvman8bit/tickmeter/refs/tags");
                     TagsInfo = JsonConvert.DeserializeObject<TagCollection>(verInfo);
-                    if(CURRENT_VERSION != TagsInfo.Tags[TagsInfo.Tags.Count - 1].Version)
+                    float lastVersion = 1;
+                    foreach(TagInfo ver in TagsInfo.Tags)
+                    {
+                        if(lastVersion < ver.Version)
+                        {
+                            lastVersion = ver.Version;
+                        }
+                    }
+                    if(CURRENT_VERSION < lastVersion)
                     {
                         updateLbl.Text += TagsInfo.Tags[TagsInfo.Tags.Count - 1].Version;
                         updateLbl.Visible = true;
-                        if(App.settingsManager.GetOption("last_checked_version") != TagsInfo.Tags[TagsInfo.Tags.Count - 1].Version)
+                        if(App.settingsManager.GetOption("last_checked_version") != TagsInfo.Tags[TagsInfo.Tags.Count - 1].Version.ToString())
                         {
                             MessageBox.Show(updateLbl.Text, "Update", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             Process.Start("https://bitbucket.org/dvman8bit/tickmeter/downloads/");
                         }
-                        App.settingsManager.SetOption("last_checked_version", TagsInfo.Tags[TagsInfo.Tags.Count - 1].Version);
+                        App.settingsManager.SetOption("last_checked_version", TagsInfo.Tags[TagsInfo.Tags.Count - 1].Version.ToString());
                     }
                 }
                 catch (Exception) { }
@@ -109,8 +118,11 @@ namespace tickMeter.Forms
             settings_netstats_checkbox.Checked = App.settingsManager.GetOption("netstats") == "True";
             settings_traffic_checkbox.Checked = App.settingsManager.GetOption("traffic") == "True";
             settings_rtss_output.Checked = App.settingsManager.GetOption("rtss") == "True";
+            settings_tickrate_show.Checked = App.settingsManager.GetOption("tickrate") == "True";
             rememberAdapter.Checked = App.settingsManager.GetOption("remember_adapter") == "True";
+            settings_data_send.Checked = App.settingsManager.GetOption("data_send") == "True";
             settings_session_time_checkbox.Checked = App.settingsManager.GetOption("session_time") == "True";
+            settings_ticktime_chart.Checked = App.settingsManager.GetOption("ticktime") == "True";
             if (rememberAdapter.Checked)
             {
                 try
@@ -143,6 +155,8 @@ namespace tickMeter.Forms
         {
             App.settingsManager.SetOption("chart", settings_chart_checkbox.Checked.ToString());
             App.settingsManager.SetOption("ip", settings_ip_checkbox.Checked.ToString());
+            App.settingsManager.SetOption("tickrate", settings_tickrate_show.Checked.ToString());
+            App.settingsManager.SetOption("ticktime", settings_ticktime_chart.Checked.ToString());
             App.settingsManager.SetOption("ping", settings_ping_checkbox.Checked.ToString());
             App.settingsManager.SetOption("netstats", settings_netstats_checkbox.Checked.ToString());
             App.settingsManager.SetOption("traffic", settings_traffic_checkbox.Checked.ToString());
@@ -152,6 +166,7 @@ namespace tickMeter.Forms
             App.settingsManager.SetOption("color_good", HexConverter(ColorGood.ForeColor));
             App.settingsManager.SetOption("color_chart", HexConverter(ColorChart.ForeColor));
             App.settingsManager.SetOption("rtss", settings_rtss_output.Checked.ToString());
+            App.settingsManager.SetOption("data_send", settings_data_send.Checked.ToString());
             App.settingsManager.SetOption("remember_adapter", rememberAdapter.Checked.ToString());
             App.settingsManager.SetOption("session_time", settings_session_time_checkbox.Checked.ToString());
             App.settingsManager.SetOption("last_selected_adapter_id", adapters_list.SelectedIndex.ToString());
@@ -183,6 +198,7 @@ namespace tickMeter.Forms
             updateLbl.Text = eng.GetString(updateLbl.Name);
             game_profiles.Text = eng.GetString(game_profiles.Name);
             donate_lbl.Text = eng.GetString(donate_lbl.Name);
+            settings_data_send.Text = eng.GetString(settings_data_send.Name);
         }
 
         private void LabelsColor_Click(object sender, EventArgs e)
