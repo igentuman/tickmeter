@@ -17,6 +17,7 @@ namespace tickMeter.Classes
         public static PacketFilterForm packetFilterForm;
         public static ProfileEditForm profileEditForm;
         public static SettingsForm settingsForm;
+        public static TickrateStatistics tickrateStatisticsForm;
         public static PacketStats packetStatsForm;
         public static ProfilesForm profilesForm;
         public static TickMeterState meterState;
@@ -26,6 +27,7 @@ namespace tickMeter.Classes
 
         public static void Init()
         {
+            tickrateStatisticsForm = new TickrateStatistics();
             packetFilterForm = new PacketFilterForm();
             settingsForm = new SettingsForm();
             packetStatsForm = new PacketStats();

@@ -102,6 +102,8 @@ namespace tickMeter.Forms
             time_lbl.Visible = 
             time_val.Visible = 
             SettingsButton.Visible =
+            gameProfilesButton.Visible =
+            webStatsButton.Visible =
             packetStatsBtn.Visible = true;
         }
 
@@ -134,7 +136,9 @@ namespace tickMeter.Forms
                 BackColor = SystemColors.WindowFrame;
                 TransparencyKey = SystemColors.WindowFrame;
                 FormBorderStyle = FormBorderStyle.None;
-                SettingsButton.Visible = false;
+                SettingsButton.Visible =
+                gameProfilesButton.Visible =
+                webStatsButton.Visible =
                 packetStatsBtn.Visible = false;
                 if (App.settingsForm.settings_rtss_output.Checked)
                 {
@@ -464,5 +468,14 @@ namespace tickMeter.Forms
             App.packetStatsForm.Show();
         }
 
+        private void pictureBox1_Click_1(object sender, EventArgs e)
+        {
+            App.profilesForm.Show();
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            App.tickrateStatisticsForm.Show();
+        }
     }
 }

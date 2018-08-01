@@ -84,8 +84,10 @@ namespace RTSS {
 		return EmbedGraph(dwOffset, &lpBuffer, dwBufferPos, dwBufferSize, dwWidth, dwHeight, dwMargin, fltMin, fltMax, dwFlags);
 	}
 
+
 	/////////////////////////////////////////////////////////////////////////////
-	DWORD OSD::EmbedGraph(DWORD dwOffset, FLOAT* lpBuffer, DWORD dwBufferPos, DWORD dwBufferSize, LONG dwWidth, LONG dwHeight, LONG dwMargin, FLOAT fltMin, FLOAT fltMax, DWORD dwFlags)
+
+	inline DWORD OSD::EmbedGraph(DWORD dwOffset, FLOAT * lpBuffer, DWORD dwBufferPos, DWORD dwBufferSize, LONG dwWidth, LONG dwHeight, LONG dwMargin, FLOAT fltMin, FLOAT fltMax, DWORD dwFlags)
 	{
 		DWORD dwResult = 0;
 
@@ -100,84 +102,74 @@ namespace RTSS {
 
 			if (pMem)
 			{
-					for (DWORD dwPass = 0; dwPass<2; dwPass++)
-						//1st pass : find previously captured OSD slot
-						//2nd pass : otherwise find the first unused OSD slot and capture it
+				for (DWORD i = (m_osdSlot == 0 ? 1 : m_osdSlot); i < pMem->dwOSDArrSize; i++)
+				{
+					auto pEntry = (RTSS_SHARED_MEMORY::LPRTSS_SHARED_MEMORY_OSD_ENTRY)((LPBYTE)pMem + pMem->dwOSDArrOffset + (i * pMem->dwOSDEntrySize));
+
+
+
+					if (!strcmp(pEntry->szOSDOwner, m_entryName))
 					{
-						for (DWORD dwEntry = 1; dwEntry<pMem->dwOSDArrSize; dwEntry++)
-							//allow primary OSD clients (i.e. EVGA Precision / MSI Afterburner) to use the first slot exclusively, so third party
-							//applications start scanning the slots from the second one
+						if (pMem->dwVersion >= 0x0002000c)
+							//embedded graphs are supported for v2.12 and higher shared memory
 						{
-							auto pEntry = (RTSS_SHARED_MEMORY::LPRTSS_SHARED_MEMORY_OSD_ENTRY)((LPBYTE)pMem + pMem->dwOSDArrOffset + (dwEntry * pMem->dwOSDEntrySize));
-
-							if (dwPass)
+							if (dwOffset + sizeof(RTSS_EMBEDDED_OBJECT_GRAPH) + dwBufferSize * sizeof(FLOAT) > sizeof(pEntry->buffer))
+								//validate embedded object offset and size and ensure that we don't overrun the buffer
 							{
-								if (!strlen(pEntry->szOSDOwner))
-									strcpy_s(pEntry->szOSDOwner, sizeof(pEntry->szOSDOwner), m_entryName);
+								UnmapViewOfFile(pMapAddr);
+
+								CloseHandle(hMapFile);
+
+								return 0;
 							}
 
-							if (!strcmp(pEntry->szOSDOwner, m_entryName))
+							LPRTSS_EMBEDDED_OBJECT_GRAPH lpGraph = (LPRTSS_EMBEDDED_OBJECT_GRAPH)(pEntry->buffer + dwOffset);
+							//get pointer to object in buffer
+
+							lpGraph->header.dwSignature = RTSS_EMBEDDED_OBJECT_GRAPH_SIGNATURE;
+							lpGraph->header.dwSize = sizeof(RTSS_EMBEDDED_OBJECT_GRAPH) + dwBufferSize * sizeof(FLOAT);
+							lpGraph->header.dwWidth = dwWidth;
+							lpGraph->header.dwHeight = dwHeight;
+							lpGraph->header.dwMargin = dwMargin;
+							lpGraph->dwFlags = dwFlags;
+							lpGraph->fltMin = fltMin;
+							lpGraph->fltMax = fltMax;
+							lpGraph->dwDataCount = dwBufferSize;
+
+							if (lpBuffer && dwBufferSize)
 							{
-								if (pMem->dwVersion >= 0x0002000c)
-									//embedded graphs are supported for v2.12 and higher shared memory
+								for (DWORD dwPos = 0; dwPos < dwBufferSize; dwPos++)
 								{
-									if (dwOffset + sizeof(RTSS_EMBEDDED_OBJECT_GRAPH) + dwBufferSize * sizeof(FLOAT) > sizeof(pEntry->buffer))
-										//validate embedded object offset and size and ensure that we don't overrun the buffer
-									{
-										UnmapViewOfFile(pMapAddr);
+									FLOAT fltData = lpBuffer[dwBufferPos];
 
-										CloseHandle(hMapFile);
+									lpGraph->fltData[dwPos] = (fltData == 120) ? 0 : fltData;
 
-										return 0;
-									}
-
-									LPRTSS_EMBEDDED_OBJECT_GRAPH lpGraph = (LPRTSS_EMBEDDED_OBJECT_GRAPH)(pEntry->buffer + dwOffset);
-									//get pointer to object in buffer
-
-									lpGraph->header.dwSignature = RTSS_EMBEDDED_OBJECT_GRAPH_SIGNATURE;
-									lpGraph->header.dwSize = sizeof(RTSS_EMBEDDED_OBJECT_GRAPH) + dwBufferSize * sizeof(FLOAT);
-									lpGraph->header.dwWidth = dwWidth;
-									lpGraph->header.dwHeight = dwHeight;
-									lpGraph->header.dwMargin = dwMargin;
-									lpGraph->dwFlags = dwFlags;
-									lpGraph->fltMin = fltMin;
-									lpGraph->fltMax = fltMax;
-									lpGraph->dwDataCount = dwBufferSize;
-
-									if (lpBuffer && dwBufferSize)
-									{
-										for (DWORD dwPos = 0; dwPos<dwBufferSize; dwPos++)
-										{
-											FLOAT fltData = lpBuffer[dwBufferPos];
-
-											lpGraph->fltData[dwPos] = (fltData == 120) ? 0 : fltData;
-
-											dwBufferPos = (dwBufferPos + 1) & (dwBufferSize - 1);
-										}
-									}
-
-									dwResult = lpGraph->header.dwSize;
+									dwBufferPos = (dwBufferPos + 1) & (dwBufferSize - 1);
 								}
-
-								break;
 							}
+
+							dwResult = lpGraph->header.dwSize;
 						}
 
-						if (dwResult)
-							break;
+						break;
 					}
-				
+
+				}
+
+
+
 
 				UnmapViewOfFile(pMapAddr);
-			}
-			
-			closeSharedMemory(hMapFile, pMem);
-			
-		}
 
+
+				closeSharedMemory(hMapFile, pMem);
+				
+			}
+		}
 		return dwResult;
 	}
-    ///<summary>
+
+	///<summary>
     ///Text should be no longer than 4095 chars once converted to ANSI. Lower case looks awful.
     ///</summary>
     void OSD::Update(String^ text)

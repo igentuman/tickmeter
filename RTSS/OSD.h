@@ -28,6 +28,7 @@ namespace RTSS {
 
 		DWORD EmbedGraphArray(DWORD dwOffset, FLOAT lpBuffer, DWORD dwBufferPos, DWORD dwBufferSize, LONG dwWidth, LONG dwHeight, LONG dwMargin, FLOAT fltMin, FLOAT fltMax, DWORD dwFlags);
 
+		/////////////////////////////////////////////////////////////////////////////
 		DWORD EmbedGraph(DWORD dwOffset, FLOAT * lpBuffer, DWORD dwBufferPos, DWORD dwBufferSize, LONG dwWidth, LONG dwHeight, LONG dwMargin, FLOAT fltMin, FLOAT fltMax, DWORD dwFlags);
 
 		void Update(String^ text);

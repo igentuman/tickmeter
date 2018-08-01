@@ -43,9 +43,13 @@
             this.traffic_val = new System.Windows.Forms.Label();
             this.time_lbl = new System.Windows.Forms.Label();
             this.time_val = new System.Windows.Forms.Label();
+            this.webStatsButton = new System.Windows.Forms.PictureBox();
+            this.gameProfilesButton = new System.Windows.Forms.PictureBox();
             this.packetStatsBtn = new System.Windows.Forms.PictureBox();
             this.SettingsButton = new System.Windows.Forms.PictureBox();
             this.graph = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.webStatsButton)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gameProfilesButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.packetStatsBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SettingsButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.graph)).BeginInit();
@@ -222,6 +226,30 @@
             this.time_val.UseCompatibleTextRendering = true;
             this.time_val.UseMnemonic = false;
             // 
+            // webStatsButton
+            // 
+            this.webStatsButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.webStatsButton.Image = global::tickMeter.Properties.Resources.bar;
+            this.webStatsButton.Location = new System.Drawing.Point(217, 2);
+            this.webStatsButton.Name = "webStatsButton";
+            this.webStatsButton.Size = new System.Drawing.Size(48, 48);
+            this.webStatsButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.webStatsButton.TabIndex = 44;
+            this.webStatsButton.TabStop = false;
+            this.webStatsButton.Click += new System.EventHandler(this.pictureBox2_Click);
+            // 
+            // gameProfilesButton
+            // 
+            this.gameProfilesButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.gameProfilesButton.Image = global::tickMeter.Properties.Resources.Board_Games_red;
+            this.gameProfilesButton.Location = new System.Drawing.Point(271, 2);
+            this.gameProfilesButton.Name = "gameProfilesButton";
+            this.gameProfilesButton.Size = new System.Drawing.Size(48, 48);
+            this.gameProfilesButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.gameProfilesButton.TabIndex = 43;
+            this.gameProfilesButton.TabStop = false;
+            this.gameProfilesButton.Click += new System.EventHandler(this.pictureBox1_Click_1);
+            // 
             // packetStatsBtn
             // 
             this.packetStatsBtn.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -265,6 +293,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(434, 395);
+            this.Controls.Add(this.webStatsButton);
+            this.Controls.Add(this.gameProfilesButton);
             this.Controls.Add(this.time_lbl);
             this.Controls.Add(this.time_val);
             this.Controls.Add(this.packetStatsBtn);
@@ -288,6 +318,8 @@
             this.TransparencyKey = System.Drawing.SystemColors.Info;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.GUI_FormClosed);
             this.Load += new System.EventHandler(this.GUI_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.webStatsButton)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gameProfilesButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.packetStatsBtn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SettingsButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.graph)).EndInit();
@@ -313,6 +345,8 @@
         private System.Windows.Forms.PictureBox packetStatsBtn;
         public System.Windows.Forms.Label time_lbl;
         private System.Windows.Forms.Label time_val;
+        private System.Windows.Forms.PictureBox gameProfilesButton;
+        private System.Windows.Forms.PictureBox webStatsButton;
     }
 }
 
