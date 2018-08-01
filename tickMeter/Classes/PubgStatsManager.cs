@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
-
+using System.Windows.Forms;
 
 namespace tickMeter.Classes
 {
@@ -14,8 +14,9 @@ namespace tickMeter.Classes
         int StartPort = 6999;
         int EndPort = 7999;
         string ProcessName = "tslGame";
+        public int  ProcessId = 0;
         public const string GameCode = "PUBG";
-        Timer GameInfoTimer;
+        System.Timers.Timer GameInfoTimer;
         public bool GameRunningFlag = false;
         public List<int> openPorts = new List<int>();
         public List<int> openPorts2 = new List<int>();
@@ -33,9 +34,9 @@ namespace tickMeter.Classes
         {
             if (GameInfoTimer == null)
             {
-                GameInfoTimer = new Timer
+                GameInfoTimer = new System.Timers.Timer
                 {
-                    Interval = 5000
+                    Interval = 500
                 };
                 GameInfoTimer.Elapsed += GameInfoTimerTick;
                 GameInfoTimer.AutoReset = true;
@@ -64,7 +65,7 @@ namespace tickMeter.Classes
             if (!GameRunningFlag) return;
             if(App.meterState.ConnectionsManagerFlag)
             {
-                int ProcessId = Process.GetProcessesByName(ProcessName).First().Id;
+                ProcessId = Process.GetProcessesByName(ProcessName).First().Id;
                 List<UdpProcessRecord> gamePorts = App.connMngr.UdpActiveConnections;
                 foreach (UdpProcessRecord gamePort in gamePorts)
                 {
@@ -82,6 +83,7 @@ namespace tickMeter.Classes
             }
             NetworkActivityFlag = false;
         }
+        public bool firstPacket = true;
 
         public void ProcessPacket(Packet packet)
         {
@@ -91,6 +93,12 @@ namespace tickMeter.Classes
             //search within port range and destination (local) port we fetched from connections manager
             if (packet.Ethernet.IpV4.Udp.SourcePort > StartPort && packet.Ethernet.IpV4.Udp.SourcePort < EndPort && packet.Ethernet.IpV4.Destination.ToString() == App.meterState.LocalIP)
             {
+                if(firstPacket)
+                {
+                    firstPacket = false;
+
+                    MessageBox.Show(packet.Ethernet.IpV4.Udp.Payload.ToHexadecimalString());
+                }
                 if (App.meterState.ConnectionsManagerFlag && !openPorts.Contains(packet.Ethernet.IpV4.Udp.DestinationPort)) return;
                 App.meterState.updateTicktimeBuffer(packet.Timestamp.Ticks);
                 App.meterState.CurrentTimestamp = packet.Timestamp;

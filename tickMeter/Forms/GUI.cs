@@ -361,6 +361,7 @@ namespace tickMeter.Forms
 
             ticksLoop.Enabled = false;
             if (App.meterState == null) return;
+            GameProfileManager.PubgMngr.firstPacket = true;
             Debug.Print("StopTracking");
             tickrate_val.ForeColor = App.settingsForm.ColorBad.ForeColor;
             ping_val.ForeColor = App.settingsForm.ColorMid.ForeColor;

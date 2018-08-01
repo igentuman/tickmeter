@@ -21,7 +21,7 @@ namespace tickMeter
         // The version of IP used by the TCP/UDP endpoint. AF_INET is used for IPv4.
         private const int AF_INET = 2;
         public const string dllFile = "iphlpapi.dll";
-        public int timerInterval = 5000;
+        public int timerInterval = 500;
         public List<TcpProcessRecord> TcpActiveConnections = new List<TcpProcessRecord>();
 
         public List<UdpProcessRecord> UdpActiveConnections = new List<UdpProcessRecord>();
