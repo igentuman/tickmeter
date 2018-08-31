@@ -135,10 +135,12 @@ namespace tickMeter
             {
                 return;
             }
+
             List<Packet> tmpPackets = PacketBuffer.ToList();
             PacketBuffer.Clear();
             
             ListViewItem[] items = new ListViewItem[tmpPackets.Count];
+            List<ListViewItem> procItems = new List<ListViewItem>();
             Int32 iKey = 0;
             foreach (Packet packet in tmpPackets) {
                 IpV4Datagram ip;
@@ -150,8 +152,6 @@ namespace tickMeter
 
                 UdpDatagram udp = ip.Udp;
                 TcpDatagram tcp = ip.Tcp;
-
-
 
                 string from_ip = ip.Source.ToString();
                 string to_ip = ip.Destination.ToString();
@@ -216,7 +216,9 @@ namespace tickMeter
                     to_port = tcp.DestinationPort.ToString();
                 }
                 if (!packetFilter.ValidateProcess(processName)) continue;
+
                 ListViewItem item = new ListViewItem(packet.Timestamp.ToString("HH:mm:ss.fff"));
+
                 packet_id++;
                 string id = packet_id.ToString();
                 item.SubItems.Add(id);
@@ -231,6 +233,7 @@ namespace tickMeter
                 items[iKey] = item;
                 iKey++;
 
+                AutoDetectMngr.ProcessRecord(to_ip, from_ip, processName, int.Parse(to_port), int.Parse(from_port),protocol);
 
             }
             int realItems = items.Where(id => id != null).Count();
@@ -243,8 +246,9 @@ namespace tickMeter
             {
                 return;
             }
-            
-            await Task.Run(() =>
+            procItems = AutoDetectMngr.getActiveProccesses(procItems);
+
+           await Task.Run(() =>
             {
             listView1.Invoke(new Action(() => {
                 listView1.BeginUpdate();
@@ -263,6 +267,22 @@ namespace tickMeter
                 }
                 listView1.EndUpdate();
             }));
+                listView2.Invoke(new Action(() => {
+
+                    listView2.BeginUpdate();
+                    ListView.ListViewItemCollection lvic = new ListView.ListViewItemCollection(listView2);
+                    lvic.Clear();
+                    try
+                    {
+                        lvic.AddRange(procItems.ToArray());
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+
+                    listView2.EndUpdate();
+                }));
             });
             
 

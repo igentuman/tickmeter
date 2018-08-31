@@ -54,7 +54,8 @@ namespace tickMeter
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.ColumnHeader from_ip;
             System.Windows.Forms.ColumnHeader from_port;
-            this.listView1 = new ListViewNF();
+            System.Windows.Forms.ColumnHeader columnHeader3;
+            this.listView1 = new System.Windows.Forms.ListView();
             this.time = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.to_ip = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -76,8 +77,16 @@ namespace tickMeter
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.avgStats = new System.Windows.Forms.Timer(this.components);
+            this.listView2 = new System.Windows.Forms.ListView();
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             from_ip = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             from_port = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -110,11 +119,11 @@ namespace tickMeter
             this.listView1.FullRowSelect = true;
             this.listView1.GridLines = true;
             this.listView1.HoverSelection = true;
-            this.listView1.Location = new System.Drawing.Point(0, 78);
+            this.listView1.Location = new System.Drawing.Point(0, 278);
             this.listView1.Margin = new System.Windows.Forms.Padding(4);
-            this.listView1.MinimumSize = new System.Drawing.Size(781, 590);
+            this.listView1.MinimumSize = new System.Drawing.Size(781, 390);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(905, 590);
+            this.listView1.Size = new System.Drawing.Size(905, 390);
             this.listView1.TabIndex = 15;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -285,11 +294,73 @@ namespace tickMeter
             this.avgStats.Interval = 1000;
             this.avgStats.Tick += new System.EventHandler(this.avgStats_Tick);
             // 
+            // listView2
+            // 
+            this.listView2.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.listView2.AllowColumnReorder = true;
+            this.listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            columnHeader3,
+            this.columnHeader5,
+            this.columnHeader6,
+            this.columnHeader7,
+            this.columnHeader8,
+            this.columnHeader9,
+            this.columnHeader10});
+            this.listView2.FullRowSelect = true;
+            this.listView2.GridLines = true;
+            this.listView2.HoverSelection = true;
+            this.listView2.Location = new System.Drawing.Point(5, 81);
+            this.listView2.Margin = new System.Windows.Forms.Padding(4);
+            this.listView2.MinimumSize = new System.Drawing.Size(781, 190);
+            this.listView2.Name = "listView2";
+            this.listView2.Size = new System.Drawing.Size(905, 190);
+            this.listView2.TabIndex = 23;
+            this.listView2.UseCompatibleStateImageBehavior = false;
+            this.listView2.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader3
+            // 
+            columnHeader3.Text = "Remote IP";
+            columnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            columnHeader3.Width = 125;
+            // 
+            // columnHeader5
+            // 
+            this.columnHeader5.Text = "Remote Port";
+            this.columnHeader5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader5.Width = 125;
+            // 
+            // columnHeader6
+            // 
+            this.columnHeader6.Text = "Local Port";
+            this.columnHeader6.Width = 90;
+            // 
+            // columnHeader7
+            // 
+            this.columnHeader7.Text = "AVG Tickrate IN";
+            this.columnHeader7.Width = 108;
+            // 
+            // columnHeader8
+            // 
+            this.columnHeader8.Text = "AVG ticrate OUT";
+            this.columnHeader8.Width = 115;
+            // 
+            // columnHeader9
+            // 
+            this.columnHeader9.Text = "Protocol";
+            this.columnHeader9.Width = 120;
+            // 
+            // columnHeader10
+            // 
+            this.columnHeader10.Text = "Process";
+            this.columnHeader10.Width = 160;
+            // 
             // PacketStats
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(910, 694);
+            this.Controls.Add(this.listView2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.filter);
             this.Controls.Add(this.statusStrip1);
@@ -327,7 +398,7 @@ namespace tickMeter
         private Button stop;
         private Button clear;
         private StatusStrip statusStrip1;
-        public ListViewNF listView1;
+        public ListView listView1;
         private Timer RefreshTimer;
         private Button filter;
         private GroupBox groupBox1;
@@ -338,5 +409,12 @@ namespace tickMeter
         private Timer avgStats;
         private Label label5;
         private ColumnHeader process;
+        public ListView listView2;
+        private ColumnHeader columnHeader5;
+        private ColumnHeader columnHeader6;
+        private ColumnHeader columnHeader7;
+        private ColumnHeader columnHeader8;
+        private ColumnHeader columnHeader9;
+        private ColumnHeader columnHeader10;
     }
 }

@@ -94,21 +94,26 @@ namespace RTSS {
 		HANDLE hMapFile = NULL;
 		LPRTSS_SHARED_MEMORY pMem = NULL;
 		openSharedMemory(&hMapFile, &pMem);
+		LPVOID pMapAddr = MapViewOfFile(hMapFile, FILE_MAP_ALL_ACCESS, 0, 0, 0);
 
 		if (hMapFile)
 		{
-			LPVOID pMapAddr = MapViewOfFile(hMapFile, FILE_MAP_ALL_ACCESS, 0, 0, 0);
-			LPRTSS_SHARED_MEMORY pMem = (LPRTSS_SHARED_MEMORY)pMapAddr;
+			
 
 			if (pMem)
 			{
 				for (DWORD i = (m_osdSlot == 0 ? 1 : m_osdSlot); i < pMem->dwOSDArrSize; i++)
 				{
 					auto pEntry = (RTSS_SHARED_MEMORY::LPRTSS_SHARED_MEMORY_OSD_ENTRY)((LPBYTE)pMem + pMem->dwOSDArrOffset + (i * pMem->dwOSDEntrySize));
+					//if we need a new slot and this one is unused, claim it
+					if (m_osdSlot == 0 && !strlen(pEntry->szOSDOwner))
+					{
+						m_osdSlot = i;
+						strcpy_s(pEntry->szOSDOwner, m_entryName);
+					}
 
 
-
-					if (!strcmp(pEntry->szOSDOwner, m_entryName))
+					if (STRMATCHES(strcmp(pEntry->szOSDOwner, m_entryName)))
 					{
 						if (pMem->dwVersion >= 0x0002000c)
 							//embedded graphs are supported for v2.12 and higher shared memory

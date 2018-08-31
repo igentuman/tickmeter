@@ -97,7 +97,7 @@ namespace tickMeter.Classes
                 {
                     firstPacket = false;
 
-                    MessageBox.Show(packet.Ethernet.IpV4.Udp.Payload.ToHexadecimalString());
+                    //MessageBox.Show(packet.Ethernet.IpV4.Udp.Payload.ToHexadecimalString());
                 }
                 if (App.meterState.ConnectionsManagerFlag && !openPorts.Contains(packet.Ethernet.IpV4.Udp.DestinationPort)) return;
                 App.meterState.updateTicktimeBuffer(packet.Timestamp.Ticks);

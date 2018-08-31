@@ -85,7 +85,7 @@ namespace tickMeter
             }
             NetworkActivityFlag = false;
         }
-
+        public bool firstPacket = true;
         public void ProcessPacket(Packet packet)
         {
 
@@ -96,10 +96,16 @@ namespace tickMeter
             //search within port range and destination (local) port we fetched from connections manager
             if (packet.Ethernet.IpV4.Udp.SourcePort > StartPort && packet.Ethernet.IpV4.Udp.SourcePort < EndPort && packet.Ethernet.IpV4.Destination.ToString() == App.meterState.LocalIP)
             {
+                if (firstPacket)
+                {
+                    firstPacket = false;
+                    Debug.Print(packet.Ethernet.IpV4.Udp.Payload.ToHexadecimalString());
+                }
                 if (App.meterState.ConnectionsManagerFlag && !openPorts.Contains(packet.Ethernet.IpV4.Udp.DestinationPort)) return;
                 App.meterState.updateTicktimeBuffer(packet.Timestamp.Ticks);
                 App.meterState.CurrentTimestamp = packet.Timestamp;
                 App.meterState.Game = GameCode;
+                App.meterState.Server.GamePort = packet.Ethernet.IpV4.Udp.SourcePort;
                 App.meterState.Server.Ip = packet.Ethernet.IpV4.Source.ToString();
                 App.meterState.DownloadTraffic += packet.Ethernet.IpV4.Udp.TotalLength;
                 App.meterState.TickRate++;
