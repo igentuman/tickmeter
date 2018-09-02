@@ -7,6 +7,7 @@
 
 P.S. С VPN не дружит. Такие дела. Попробую когда-нибудь сделать.
 
+## Актуальная версия 1.9
 
 **Пубжисты, которые боятся, что их забанят читают** [это.](https://bitbucket.org/dvman8bit/tickmeter/wiki/%D0%92%D0%BE%D0%B7%D0%BC%D0%BE%D0%B6%D0%BD%D1%8B%D0%B5%20%D1%80%D0%B8%D1%81%D0%BA%D0%B8%20%7C%20Possible%20risks)
 
@@ -30,6 +31,19 @@ P.S. С VPN не дружит. Такие дела. Попробую когда-
 [![main window](https://it-man.website/tickmeter/screens/3-1.jpg =250x)](https://it-man.website/tickmeter/screens/3.jpg)   [![main window](https://it-man.website/tickmeter/screens/4-1.jpg =250x)](https://it-man.website/tickmeter/screens/4.jpg)
 
 ## CHANGELOG
+### v1.9
+https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.8.zip
+
+https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.8-installer.exe
+
+
+- Исправлены краши RTSS оверлея
+- Настройка портов для пинга
+- Автодетект запущеной сетевой игры
+- Статистика по тикрейту (анонимная аналитика)
+- Небольшие фиксы
+
+
 ### v1.8
 https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.8.zip
 https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.8-installer.exe
@@ -118,6 +132,16 @@ P.S. It doesn't support VPN atm. But, i hope, i will add it soon
 
 
 ## CHANGELOG
+### v1.9
+https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.9.zip
+https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.9-installer.exe
+
+- RTSS crashes fix
+- Ping ports settings
+- Network game autodetect
+- Tickrate charts
+- Other fixes
+
 ### v1.8
 https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.8.zip
 https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.8-installer.exe
