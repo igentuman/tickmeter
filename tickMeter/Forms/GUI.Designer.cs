@@ -230,7 +230,7 @@
             // 
             this.webStatsButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.webStatsButton.Image = global::tickMeter.Properties.Resources.bar;
-            this.webStatsButton.Location = new System.Drawing.Point(217, 2);
+            this.webStatsButton.Location = new System.Drawing.Point(226, 2);
             this.webStatsButton.Name = "webStatsButton";
             this.webStatsButton.Size = new System.Drawing.Size(48, 48);
             this.webStatsButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -242,7 +242,7 @@
             // 
             this.gameProfilesButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.gameProfilesButton.Image = global::tickMeter.Properties.Resources.Board_Games_red;
-            this.gameProfilesButton.Location = new System.Drawing.Point(271, 2);
+            this.gameProfilesButton.Location = new System.Drawing.Point(277, 2);
             this.gameProfilesButton.Name = "gameProfilesButton";
             this.gameProfilesButton.Size = new System.Drawing.Size(48, 48);
             this.gameProfilesButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -254,7 +254,7 @@
             // 
             this.packetStatsBtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.packetStatsBtn.Image = global::tickMeter.Properties.Resources._switch;
-            this.packetStatsBtn.Location = new System.Drawing.Point(325, 2);
+            this.packetStatsBtn.Location = new System.Drawing.Point(328, 2);
             this.packetStatsBtn.Name = "packetStatsBtn";
             this.packetStatsBtn.Size = new System.Drawing.Size(48, 48);
             this.packetStatsBtn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -314,7 +314,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "GUI";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "tickMeter 1.8";
+            this.Text = "tickMeter 1.9";
             this.TransparencyKey = System.Drawing.SystemColors.Info;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.GUI_FormClosed);
             this.Load += new System.EventHandler(this.GUI_Load);

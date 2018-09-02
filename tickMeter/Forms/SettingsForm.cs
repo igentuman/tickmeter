@@ -16,7 +16,7 @@ namespace tickMeter.Forms
 {
     public partial class SettingsForm : Form
     {
-        public const float CURRENT_VERSION = 1.8f;
+        public const float CURRENT_VERSION = 1.9f;
 
         public string verInfo;
         TagCollection TagsInfo;
