@@ -105,7 +105,7 @@ namespace tickMeter.Classes
                         activeProcesses.RemoveAt(indx);
                     }
                 }
-                if(procNet.LastUpdateDelta() > 5)
+                if(procNet.LastUpdateDelta() > 5 && activeProcesses.Count-1 >= indx)
                 {
                     activeProcesses.RemoveAt(indx);
                 }
