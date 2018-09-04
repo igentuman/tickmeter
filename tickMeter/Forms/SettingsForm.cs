@@ -123,6 +123,8 @@ namespace tickMeter.Forms
             settings_data_send.Checked = App.settingsManager.GetOption("data_send") == "True";
             settings_session_time_checkbox.Checked = App.settingsManager.GetOption("session_time") == "True";
             settings_ticktime_chart.Checked = App.settingsManager.GetOption("ticktime") == "True";
+            ping_ports.Text = App.settingsManager.GetOption("ping_ports");
+            ping_interval.Value = int.Parse(App.settingsManager.GetOption("ping_interval"));
             if (rememberAdapter.Checked)
             {
                 try
@@ -158,6 +160,8 @@ namespace tickMeter.Forms
             App.settingsManager.SetOption("tickrate", settings_tickrate_show.Checked.ToString());
             App.settingsManager.SetOption("ticktime", settings_ticktime_chart.Checked.ToString());
             App.settingsManager.SetOption("ping", settings_ping_checkbox.Checked.ToString());
+            App.settingsManager.SetOption("ping_interval", ping_interval.Value.ToString());
+            App.settingsManager.SetOption("ping_ports", ping_ports.Text);
             App.settingsManager.SetOption("netstats", settings_netstats_checkbox.Checked.ToString());
             App.settingsManager.SetOption("traffic", settings_traffic_checkbox.Checked.ToString());
             App.settingsManager.SetOption("color_label", HexConverter(ColorLabel.ForeColor));
@@ -196,7 +200,7 @@ namespace tickMeter.Forms
             settings_tickrate_show.Text = eng.GetString(settings_tickrate_show.Name);
             rememberAdapter.Text = eng.GetString(rememberAdapter.Name);
             updateLbl.Text = eng.GetString(updateLbl.Name);
-            game_profiles.Text = eng.GetString(game_profiles.Name);
+           
             donate_lbl.Text = eng.GetString(donate_lbl.Name);
             settings_data_send.Text = eng.GetString(settings_data_send.Name);
         }
