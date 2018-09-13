@@ -32,9 +32,9 @@ P.S. С VPN не дружит. Такие дела. Попробую когда-
 
 ## CHANGELOG
 ### v1.9
-https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.8.zip
+https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.9.zip
 
-https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.8-installer.exe
+https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.9-installer.exe
 
 
 - Исправлены краши RTSS оверлея
