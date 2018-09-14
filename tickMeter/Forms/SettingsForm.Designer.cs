@@ -31,14 +31,12 @@ namespace tickMeter.Forms
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
-            this.settings_netstats_checkbox = new System.Windows.Forms.CheckBox();
             this.settings_log_checkbox = new System.Windows.Forms.CheckBox();
             this.network_connection_lbl = new System.Windows.Forms.Label();
             this.adapters_list = new System.Windows.Forms.ComboBox();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.label8 = new System.Windows.Forms.Label();
             this.possible_risks_lbl = new System.Windows.Forms.Label();
-            this.netInfo = new System.Windows.Forms.Label();
             this.rememberAdapter = new System.Windows.Forms.CheckBox();
             this.updateLbl = new System.Windows.Forms.Label();
             this.rtss_dialog = new System.Windows.Forms.OpenFileDialog();
@@ -51,6 +49,7 @@ namespace tickMeter.Forms
             this.ColorBad = new System.Windows.Forms.Label();
             this.ColorLabel = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.settings_ping_chart = new System.Windows.Forms.CheckBox();
             this.settings_tickrate_show = new System.Windows.Forms.CheckBox();
             this.settings_ticktime_chart = new System.Windows.Forms.CheckBox();
             this.settings_session_time_checkbox = new System.Windows.Forms.CheckBox();
@@ -63,18 +62,11 @@ namespace tickMeter.Forms
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.ping_ports = new System.Windows.Forms.TextBox();
+            this.settings_autodetect_checkbox = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ping_interval)).BeginInit();
             this.SuspendLayout();
-            // 
-            // settings_netstats_checkbox
-            // 
-            resources.ApplyResources(this.settings_netstats_checkbox, "settings_netstats_checkbox");
-            this.settings_netstats_checkbox.ForeColor = System.Drawing.Color.Black;
-            this.settings_netstats_checkbox.Name = "settings_netstats_checkbox";
-            this.settings_netstats_checkbox.UseVisualStyleBackColor = true;
-            this.settings_netstats_checkbox.CheckedChanged += new System.EventHandler(this.settings_netstats_checkbox_CheckedChanged);
             // 
             // settings_log_checkbox
             // 
@@ -115,14 +107,6 @@ namespace tickMeter.Forms
             this.possible_risks_lbl.ForeColor = System.Drawing.Color.DarkRed;
             this.possible_risks_lbl.Name = "possible_risks_lbl";
             this.possible_risks_lbl.Click += new System.EventHandler(this.possible_risks_lbl_Click);
-            // 
-            // netInfo
-            // 
-            resources.ApplyResources(this.netInfo, "netInfo");
-            this.netInfo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.netInfo.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.netInfo.Name = "netInfo";
-            this.netInfo.Click += new System.EventHandler(this.netInfo_Click);
             // 
             // rememberAdapter
             // 
@@ -216,6 +200,7 @@ namespace tickMeter.Forms
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.settings_ping_chart);
             this.groupBox2.Controls.Add(this.settings_tickrate_show);
             this.groupBox2.Controls.Add(this.settings_ticktime_chart);
             this.groupBox2.Controls.Add(this.settings_session_time_checkbox);
@@ -227,6 +212,15 @@ namespace tickMeter.Forms
             resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
+            // 
+            // settings_ping_chart
+            // 
+            resources.ApplyResources(this.settings_ping_chart, "settings_ping_chart");
+            this.settings_ping_chart.Checked = true;
+            this.settings_ping_chart.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.settings_ping_chart.ForeColor = System.Drawing.Color.Black;
+            this.settings_ping_chart.Name = "settings_ping_chart";
+            this.settings_ping_chart.UseVisualStyleBackColor = true;
             // 
             // settings_tickrate_show
             // 
@@ -340,10 +334,19 @@ namespace tickMeter.Forms
             resources.ApplyResources(this.ping_ports, "ping_ports");
             this.ping_ports.Name = "ping_ports";
             // 
+            // settings_autodetect_checkbox
+            // 
+            resources.ApplyResources(this.settings_autodetect_checkbox, "settings_autodetect_checkbox");
+            this.settings_autodetect_checkbox.ForeColor = System.Drawing.Color.Black;
+            this.settings_autodetect_checkbox.Name = "settings_autodetect_checkbox";
+            this.settings_autodetect_checkbox.UseVisualStyleBackColor = true;
+            this.settings_autodetect_checkbox.CheckedChanged += new System.EventHandler(this.settings_autodetect_checkbox_CheckedChanged);
+            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.settings_autodetect_checkbox);
             this.Controls.Add(this.ping_ports);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -354,9 +357,7 @@ namespace tickMeter.Forms
             this.Controls.Add(this.donate_lbl);
             this.Controls.Add(this.updateLbl);
             this.Controls.Add(this.rememberAdapter);
-            this.Controls.Add(this.netInfo);
             this.Controls.Add(this.possible_risks_lbl);
-            this.Controls.Add(this.settings_netstats_checkbox);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.settings_log_checkbox);
             this.Controls.Add(this.network_connection_lbl);
@@ -379,12 +380,10 @@ namespace tickMeter.Forms
         #endregion
         public System.Windows.Forms.ComboBox adapters_list;
         private System.Windows.Forms.ColorDialog colorDialog1;
-        public System.Windows.Forms.CheckBox settings_netstats_checkbox;
         public System.Windows.Forms.CheckBox settings_log_checkbox;
         public System.Windows.Forms.Label network_connection_lbl;
         public System.Windows.Forms.Label label8;
         public System.Windows.Forms.Label possible_risks_lbl;
-        private System.Windows.Forms.Label netInfo;
         public System.Windows.Forms.CheckBox rememberAdapter;
         public System.Windows.Forms.Label updateLbl;
         private System.Windows.Forms.OpenFileDialog rtss_dialog;
@@ -409,5 +408,7 @@ namespace tickMeter.Forms
         private Label label1;
         private Label label2;
         private TextBox ping_ports;
+        public CheckBox settings_autodetect_checkbox;
+        public CheckBox settings_ping_chart;
     }
 }

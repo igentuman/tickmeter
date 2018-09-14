@@ -41,6 +41,14 @@ namespace tickMeter.Classes
                 {
                     max = 120;
                 }
+                if (graphData.Max() > 132)
+                {
+                    max = 180;
+                }
+                if (graphData.Max() > 192)
+                {
+                    max = 250;
+                }
             }
             
             unsafe
@@ -223,6 +231,11 @@ namespace tickMeter.Classes
             {
                 output += Environment.NewLine + "<S0><C4>Ticktime" + Environment.NewLine;
                 output += DrawChart(App.meterState.tickTimeBuffer.ToArray(),0,100);
+            }
+            if(App.settingsForm.settings_ping_chart.Checked && App.meterState.pingBuffer.Count() > 1)
+            {
+                output += Environment.NewLine + "<S0><C4>Ping" + Environment.NewLine;
+                output += DrawChart(App.meterState.pingBuffer.ToArray());
             }
             PrintData(output, true);
         }

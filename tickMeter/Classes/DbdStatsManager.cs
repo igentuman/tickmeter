@@ -11,7 +11,7 @@ namespace tickMeter
 {
     public class DbdStatsManager
     {
-        int StartPort = 20000;
+        int StartPort = 1000;
         int EndPort = 65000;
         string ProcessName = "Steam";
         string GameName = "DeadByDaylight-Win64-Shipping";
@@ -111,6 +111,7 @@ namespace tickMeter
                 App.meterState.TickRate++;
                 NetworkActivityFlag = true;
             }
+            Debug.Print(App.meterState.TickRate.ToString());
             if (packet.Ethernet.IpV4.Udp.DestinationPort > StartPort && packet.Ethernet.IpV4.Udp.DestinationPort < EndPort && packet.Ethernet.IpV4.Source.ToString() == App.meterState.LocalIP)
             {
                 if (App.meterState.ConnectionsManagerFlag && !openPorts.Contains(packet.Ethernet.IpV4.Udp.SourcePort)) return;

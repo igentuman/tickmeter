@@ -84,6 +84,7 @@ namespace tickMeter
             this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.active_refresh = new System.Windows.Forms.Timer(this.components);
             from_ip = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             from_port = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -102,6 +103,12 @@ namespace tickMeter
             from_port.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             from_port.Width = 90;
             // 
+            // columnHeader3
+            // 
+            columnHeader3.Text = "Remote IP";
+            columnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            columnHeader3.Width = 125;
+            // 
             // listView1
             // 
             this.listView1.Activation = System.Windows.Forms.ItemActivation.OneClick;
@@ -119,11 +126,11 @@ namespace tickMeter
             this.listView1.FullRowSelect = true;
             this.listView1.GridLines = true;
             this.listView1.HoverSelection = true;
-            this.listView1.Location = new System.Drawing.Point(0, 278);
+            this.listView1.Location = new System.Drawing.Point(5, 239);
             this.listView1.Margin = new System.Windows.Forms.Padding(4);
             this.listView1.MinimumSize = new System.Drawing.Size(781, 390);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(905, 390);
+            this.listView1.Size = new System.Drawing.Size(905, 429);
             this.listView1.TabIndex = 15;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -311,18 +318,12 @@ namespace tickMeter
             this.listView2.HoverSelection = true;
             this.listView2.Location = new System.Drawing.Point(5, 81);
             this.listView2.Margin = new System.Windows.Forms.Padding(4);
-            this.listView2.MinimumSize = new System.Drawing.Size(781, 190);
+            this.listView2.MinimumSize = new System.Drawing.Size(781, 150);
             this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(905, 190);
+            this.listView2.Size = new System.Drawing.Size(905, 150);
             this.listView2.TabIndex = 23;
             this.listView2.UseCompatibleStateImageBehavior = false;
             this.listView2.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeader3
-            // 
-            columnHeader3.Text = "Remote IP";
-            columnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            columnHeader3.Width = 125;
             // 
             // columnHeader5
             // 
@@ -354,6 +355,11 @@ namespace tickMeter
             // 
             this.columnHeader10.Text = "Process";
             this.columnHeader10.Width = 160;
+            // 
+            // active_refresh
+            // 
+            this.active_refresh.Interval = 1000;
+            this.active_refresh.Tick += new System.EventHandler(this.active_refresh_Tick);
             // 
             // PacketStats
             // 
@@ -416,5 +422,6 @@ namespace tickMeter
         private ColumnHeader columnHeader8;
         private ColumnHeader columnHeader9;
         private ColumnHeader columnHeader10;
+        private Timer active_refresh;
     }
 }

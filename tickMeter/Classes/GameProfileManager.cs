@@ -25,7 +25,8 @@ namespace tickMeter.Classes
             DbdMngr.ProcessPacket(packet);
             PubgMngr.ProcessPacket(packet);
             IonMngr.ProcessPacket(packet);
-
+            QCMngr.ProcessPacket(packet);
+            
         }
 
         public static void CallCustomProfiles(Packet packet)

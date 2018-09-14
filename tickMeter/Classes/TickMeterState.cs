@@ -32,11 +32,15 @@ namespace tickMeter
         public int AvgTickrate;
         public List<int> TicksHistory { get; set; }
         public List<float> tickTimeBuffer = new List<float>();
+        public List<float> pingBuffer = new List<float>();
         public List<float> tickrateGraph = new List<float>();
         
         public int TickRate {
             get { return _tickrate; }
-            set { _tickrate = value; SetMeterTimer(); }
+            set {
+                _tickrate = value;
+                SetMeterTimer();
+            }
         }
 
         public void updateTicktimeBuffer(long packetTicks)
@@ -78,6 +82,7 @@ namespace tickMeter
             {
                 tickTimeBuffer.Add(0);
                 tickrateGraph.Add(0);
+                pingBuffer.Add(0);
             }
             
             Reset();
@@ -110,6 +115,7 @@ namespace tickMeter
                     {
                         tickrateGraph.RemoveAt(0);
                         tickrateGraph.RemoveAt(0);
+                        
                     }
                     tickrateGraph.Add(OutputTickRate);
                     tickrateGraph.Add(OutputTickRate);
@@ -190,6 +196,8 @@ namespace tickMeter
                 get { return _ping; }
                 set {
                     _ping = value;
+                    App.meterState.pingBuffer.Add(_ping);
+                    App.meterState.pingBuffer.RemoveAt(0);
                     AvgPing = (AvgPing + _ping) / 2;
                 }
             }
@@ -362,6 +370,7 @@ namespace tickMeter
                 sock.Close();
                 return (int)stopwatch.ElapsedMilliseconds;
             }
+
             int ICMPfails = 0;
             private async void PingServer()
             {

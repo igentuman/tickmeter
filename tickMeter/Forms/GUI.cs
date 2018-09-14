@@ -87,7 +87,7 @@ namespace tickMeter.Forms
             Debug.Print("InitMeterState");
             if (App.meterState != null) App.meterState.KillTimers();
             App.meterState = new TickMeterState();
-            App.meterState.ConnectionsManagerFlag = !App.settingsForm.settings_netstats_checkbox.Checked;
+            App.meterState.ConnectionsManagerFlag = true;
         }
 
         protected void ShowAll()
@@ -184,7 +184,8 @@ namespace tickMeter.Forms
             if (!App.meterState.IsTracking) return;
             GameProfileManager.CallBuitInProfiles(packet);
             GameProfileManager.CallCustomProfiles(packet);
-
+            AutoDetectMngr.AnalyzePacket(packet);
+            AutoDetectMngr.ProcessPacket(packet);
         }
 
         
@@ -365,7 +366,8 @@ namespace tickMeter.Forms
             Debug.Print("StopTracking");
             tickrate_val.ForeColor = App.settingsForm.ColorBad.ForeColor;
             ping_val.ForeColor = App.settingsForm.ColorMid.ForeColor;
-            graph.Image = graph.InitialImage;
+            try { graph.Image = graph.InitialImage; } catch(Exception) {  }
+            
             
             
             if (App.settingsForm.settings_log_checkbox.Checked)

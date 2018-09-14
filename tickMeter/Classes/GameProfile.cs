@@ -33,7 +33,7 @@ namespace tickMeter.Classes
                     App.meterState.TickRate++;
                     App.meterState.Server.PingPort = packet.Ethernet.IpV4.Udp.SourcePort;
                     return;
-                } 
+                }
             }
             // validate packet sending
             if(profileFilter.ValidateForOutputPacket())

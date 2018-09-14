@@ -49,7 +49,7 @@ namespace tickMeter.Classes
 
         protected bool ValidateProtocol()
         {
-            switch (ProtocolFilter)
+            switch (ProtocolFilter.ToLower())
             {
                 case "udp":
                     if (ip.Protocol == IpV4Protocol.Udp) return true;

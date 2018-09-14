@@ -50,7 +50,8 @@
             this.ClientSize = new System.Drawing.Size(1103, 1149);
             this.Controls.Add(this.webBrowser1);
             this.Name = "TickrateStatistics";
-            this.Text = "6";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Stats";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TickrateStatistics_FormClosing);
             this.ResumeLayout(false);
 

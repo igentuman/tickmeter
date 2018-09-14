@@ -66,6 +66,7 @@ namespace tickMeter
             
             App.meterState.LocalIP = App.GetAdapterAddress((LivePacketDevice)App.gui.selectedAdapter);
             RefreshTimer.Enabled = true;
+            active_refresh.Enabled = true;
             avgStats.Enabled = true;
             tracking = true;
 
@@ -126,7 +127,7 @@ namespace tickMeter
                 inTraffic += ip.TotalLength;
             }
         }
-
+        public List<ListViewItem> procItems = new List<ListViewItem>();
         Int32 packet_id;
         private async void RefreshTick(object sender, EventArgs e)
         {
@@ -135,12 +136,15 @@ namespace tickMeter
             {
                 return;
             }
-
-            List<Packet> tmpPackets = PacketBuffer.ToList();
+            List<Packet> tmpPackets;
+            try
+            {
+                tmpPackets = PacketBuffer.ToList();
+            } catch(Exception) { return; }
             PacketBuffer.Clear();
             
             ListViewItem[] items = new ListViewItem[tmpPackets.Count];
-            List<ListViewItem> procItems = new List<ListViewItem>();
+            
             Int32 iKey = 0;
             foreach (Packet packet in tmpPackets) {
                 IpV4Datagram ip;
@@ -148,7 +152,7 @@ namespace tickMeter
                 {
                     ip = packet.Ethernet.IpV4;
                 }
-                catch (Exception) { Debug.Print("IpV4Datagram"); return; }
+                catch (Exception) { return; }
 
                 UdpDatagram udp = ip.Udp;
                 TcpDatagram tcp = ip.Tcp;
@@ -186,7 +190,7 @@ namespace tickMeter
                                 processName = record.ProcessName;
                             }
                         }
-                    } catch(Exception) { Debug.Print("UdpProcessRecord"); processName = @"n\a"; }
+                    } catch(Exception) { processName = @"n\a"; }
                     
                 }
                 else
@@ -211,7 +215,7 @@ namespace tickMeter
                             }
                         }
                         
-                    } catch (Exception) { Debug.Print("TcpProcessRecord"); processName = @"n\a"; }
+                    } catch (Exception) { processName = @"n\a"; }
                 from_port = tcp.SourcePort.ToString();
                     to_port = tcp.DestinationPort.ToString();
                 }
@@ -233,7 +237,7 @@ namespace tickMeter
                 items[iKey] = item;
                 iKey++;
 
-                AutoDetectMngr.ProcessRecord(to_ip, from_ip, processName, int.Parse(to_port), int.Parse(from_port),protocol);
+                AutoDetectMngr.AnalyzePacket(packet);
 
             }
             int realItems = items.Where(id => id != null).Count();
@@ -241,25 +245,18 @@ namespace tickMeter
             if (realItems > 0)
             {
                 items =  items.Where(id => id != null).ToArray();
-               
-            } else
-            {
+            } else {
                 return;
             }
-            procItems = AutoDetectMngr.getActiveProccesses(procItems);
-
+            procItems.Clear();
+            procItems = AutoDetectMngr.GetActiveProccessesList(procItems);
+            if(items.Length > 0)
            await Task.Run(() =>
             {
             listView1.Invoke(new Action(() => {
                 listView1.BeginUpdate();
                 ListView.ListViewItemCollection lvic = new ListView.ListViewItemCollection(listView1);
-                try
-                {
-                    lvic.AddRange(items);
-                } catch(Exception)
-                {
-                    
-                }
+                try { lvic.AddRange(items); } catch(Exception) {  }
                 
                 if (autoscroll.Checked)
                 {
@@ -267,22 +264,7 @@ namespace tickMeter
                 }
                 listView1.EndUpdate();
             }));
-                listView2.Invoke(new Action(() => {
-
-                    listView2.BeginUpdate();
-                    ListView.ListViewItemCollection lvic = new ListView.ListViewItemCollection(listView2);
-                    lvic.Clear();
-                    try
-                    {
-                        lvic.AddRange(procItems.ToArray());
-                    }
-                    catch (Exception)
-                    {
-
-                    }
-
-                    listView2.EndUpdate();
-                }));
+                
             });
             
 
@@ -351,6 +333,30 @@ namespace tickMeter
                     label5.Text = "Local IP: " + App.meterState.LocalIP;
                 }));
                 inPackets = outPackets = inTraffic = outTraffic = 0;
+            });
+        }
+
+        private async void active_refresh_Tick(object sender, EventArgs e)
+        {
+            await Task.Run(() =>
+            {
+
+                listView2.Invoke(new Action(() => {
+
+                    listView2.BeginUpdate();
+                    ListView.ListViewItemCollection lvic = new ListView.ListViewItemCollection(listView2);
+                    lvic.Clear();
+                    try
+                    {
+                        lvic.AddRange(procItems.ToArray());
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+
+                    listView2.EndUpdate();
+                }));
             });
         }
     }

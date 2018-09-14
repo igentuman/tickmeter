@@ -115,14 +115,16 @@ namespace tickMeter.Forms
             settings_chart_checkbox.Checked = App.settingsManager.GetOption("chart") == "True";
             settings_ip_checkbox.Checked = App.settingsManager.GetOption("ip") == "True";
             settings_ping_checkbox.Checked = App.settingsManager.GetOption("ping") == "True";
-            settings_netstats_checkbox.Checked = App.settingsManager.GetOption("netstats") == "True";
+
             settings_traffic_checkbox.Checked = App.settingsManager.GetOption("traffic") == "True";
             settings_rtss_output.Checked = App.settingsManager.GetOption("rtss") == "True";
             settings_tickrate_show.Checked = App.settingsManager.GetOption("tickrate") == "True";
+            settings_autodetect_checkbox.Checked = App.settingsManager.GetOption("autodetect") == "True";
             rememberAdapter.Checked = App.settingsManager.GetOption("remember_adapter") == "True";
             settings_data_send.Checked = App.settingsManager.GetOption("data_send") == "True";
             settings_session_time_checkbox.Checked = App.settingsManager.GetOption("session_time") == "True";
             settings_ticktime_chart.Checked = App.settingsManager.GetOption("ticktime") == "True";
+            settings_ping_chart.Checked = App.settingsManager.GetOption("ping_chart") == "True";
             ping_ports.Text = App.settingsManager.GetOption("ping_ports");
             ping_interval.Value = int.Parse(App.settingsManager.GetOption("ping_interval"));
             if (rememberAdapter.Checked)
@@ -159,10 +161,10 @@ namespace tickMeter.Forms
             App.settingsManager.SetOption("ip", settings_ip_checkbox.Checked.ToString());
             App.settingsManager.SetOption("tickrate", settings_tickrate_show.Checked.ToString());
             App.settingsManager.SetOption("ticktime", settings_ticktime_chart.Checked.ToString());
+            App.settingsManager.SetOption("ping_chart", settings_ping_chart.Checked.ToString());
             App.settingsManager.SetOption("ping", settings_ping_checkbox.Checked.ToString());
             App.settingsManager.SetOption("ping_interval", ping_interval.Value.ToString());
             App.settingsManager.SetOption("ping_ports", ping_ports.Text);
-            App.settingsManager.SetOption("netstats", settings_netstats_checkbox.Checked.ToString());
             App.settingsManager.SetOption("traffic", settings_traffic_checkbox.Checked.ToString());
             App.settingsManager.SetOption("color_label", HexConverter(ColorLabel.ForeColor));
             App.settingsManager.SetOption("color_bad", HexConverter(ColorBad.ForeColor));
@@ -170,6 +172,7 @@ namespace tickMeter.Forms
             App.settingsManager.SetOption("color_good", HexConverter(ColorGood.ForeColor));
             App.settingsManager.SetOption("color_chart", HexConverter(ColorChart.ForeColor));
             App.settingsManager.SetOption("rtss", settings_rtss_output.Checked.ToString());
+            App.settingsManager.SetOption("autodetect", settings_autodetect_checkbox.Checked.ToString());
             App.settingsManager.SetOption("data_send", settings_data_send.Checked.ToString());
             App.settingsManager.SetOption("remember_adapter", rememberAdapter.Checked.ToString());
             App.settingsManager.SetOption("session_time", settings_session_time_checkbox.Checked.ToString());
@@ -186,7 +189,6 @@ namespace tickMeter.Forms
             settings_ip_checkbox.Text = eng.GetString(settings_ip_checkbox.Name);
             settings_ping_checkbox.Text = eng.GetString(settings_ping_checkbox.Name);
             settings_traffic_checkbox.Text = eng.GetString(settings_traffic_checkbox.Name);
-            settings_netstats_checkbox.Text = eng.GetString(settings_netstats_checkbox.Name);
             settings_chart_checkbox.Text = eng.GetString(settings_chart_checkbox.Name);
             settings_session_time_checkbox.Text = eng.GetString(settings_session_time_checkbox.Name);
             possible_risks_lbl.Text = eng.GetString(possible_risks_lbl.Name);
@@ -264,14 +266,6 @@ namespace tickMeter.Forms
             App.gui.UpdateStyle(settings_rtss_output.Checked);
         }
 
-        private void settings_netstats_checkbox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (App.meterState != null)
-            {
-                App.meterState.ConnectionsManagerFlag = !settings_netstats_checkbox.Checked;
-            }
-        }
-
         private void adapters_list_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (adapters_list.SelectedIndex > -1)
@@ -309,6 +303,11 @@ namespace tickMeter.Forms
         private void donate_lbl_Click(object sender, EventArgs e)
         {
             Process.Start("http://www.donationalerts.ru/r/gen2man");
+        }
+
+        private void settings_autodetect_checkbox_CheckedChanged(object sender, EventArgs e)
+        {
+            App.settingsManager.SetOption("autodetect", settings_autodetect_checkbox.Checked.ToString());
         }
     }
 }
