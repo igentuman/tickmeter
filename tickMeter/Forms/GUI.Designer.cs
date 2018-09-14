@@ -314,7 +314,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "GUI";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "tickMeter 1.9";
+            this.Text = "tickMeter 2.0";
             this.TransparencyKey = System.Drawing.SystemColors.Info;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.GUI_FormClosed);
             this.Load += new System.EventHandler(this.GUI_Load);
