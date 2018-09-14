@@ -82,7 +82,7 @@ namespace tickMeter
             {
                 tickTimeBuffer.Add(0);
                 tickrateGraph.Add(0);
-                pingBuffer.Add(0);
+                pingBuffer.Add(30);
             }
             
             Reset();

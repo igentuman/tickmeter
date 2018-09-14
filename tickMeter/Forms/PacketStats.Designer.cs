@@ -1,30 +1,13 @@
 ﻿using System.Windows.Forms;
+using tickMeter.Classes;
 
 namespace tickMeter
 {
+    
+
     partial class PacketStats
     {
-        public class ListViewNF : ListView
-        {
-            public ListViewNF()
-            {
-                //Activate double buffering
-                this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
-
-                //Enable the OnNotifyMessage event so we get a chance to filter out 
-                // Windows messages before they get to the form's WndProc
-                this.SetStyle(ControlStyles.EnableNotifyMessage, true);
-            }
-
-            protected override void OnNotifyMessage(Message m)
-            {
-                //Filter out the WM_ERASEBKGND message
-                if (m.Msg != 0x14)
-                {
-                    base.OnNotifyMessage(m);
-                }
-            }
-        }
+        
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -55,7 +38,7 @@ namespace tickMeter
             System.Windows.Forms.ColumnHeader from_ip;
             System.Windows.Forms.ColumnHeader from_port;
             System.Windows.Forms.ColumnHeader columnHeader3;
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.listView1 = new ListViewNF();
             this.time = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.to_ip = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -85,6 +68,7 @@ namespace tickMeter
             this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.active_refresh = new System.Windows.Forms.Timer(this.components);
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             from_ip = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             from_port = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -312,7 +296,8 @@ namespace tickMeter
             this.columnHeader7,
             this.columnHeader8,
             this.columnHeader9,
-            this.columnHeader10});
+            this.columnHeader10,
+            this.columnHeader1});
             this.listView2.FullRowSelect = true;
             this.listView2.GridLines = true;
             this.listView2.HoverSelection = true;
@@ -349,7 +334,7 @@ namespace tickMeter
             // columnHeader9
             // 
             this.columnHeader9.Text = "Protocol";
-            this.columnHeader9.Width = 120;
+            this.columnHeader9.Width = 81;
             // 
             // columnHeader10
             // 
@@ -360,6 +345,11 @@ namespace tickMeter
             // 
             this.active_refresh.Interval = 1000;
             this.active_refresh.Tick += new System.EventHandler(this.active_refresh_Tick);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "";
+            this.columnHeader1.Width = 94;
             // 
             // PacketStats
             // 
@@ -404,7 +394,7 @@ namespace tickMeter
         private Button stop;
         private Button clear;
         private StatusStrip statusStrip1;
-        public ListView listView1;
+        public ListViewNF listView1;
         private Timer RefreshTimer;
         private Button filter;
         private GroupBox groupBox1;
@@ -423,5 +413,6 @@ namespace tickMeter
         private ColumnHeader columnHeader9;
         private ColumnHeader columnHeader10;
         private Timer active_refresh;
+        private ColumnHeader columnHeader1;
     }
 }

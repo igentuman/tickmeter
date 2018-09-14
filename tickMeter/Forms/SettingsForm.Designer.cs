@@ -59,8 +59,8 @@ namespace tickMeter.Forms
             this.settings_chart_checkbox = new System.Windows.Forms.CheckBox();
             this.settings_rtss_output = new System.Windows.Forms.CheckBox();
             this.ping_interval = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.settings_ping_interval_lbl = new System.Windows.Forms.Label();
+            this.settings_ping_ports_lbl = new System.Windows.Forms.Label();
             this.ping_ports = new System.Windows.Forms.TextBox();
             this.settings_autodetect_checkbox = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
@@ -319,15 +319,15 @@ namespace tickMeter.Forms
             0,
             0});
             // 
-            // label1
+            // settings_ping_interval_lbl
             // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
+            resources.ApplyResources(this.settings_ping_interval_lbl, "settings_ping_interval_lbl");
+            this.settings_ping_interval_lbl.Name = "settings_ping_interval_lbl";
             // 
-            // label2
+            // settings_ping_ports_lbl
             // 
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.Name = "label2";
+            resources.ApplyResources(this.settings_ping_ports_lbl, "settings_ping_ports_lbl");
+            this.settings_ping_ports_lbl.Name = "settings_ping_ports_lbl";
             // 
             // ping_ports
             // 
@@ -348,8 +348,8 @@ namespace tickMeter.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.settings_autodetect_checkbox);
             this.Controls.Add(this.ping_ports);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.settings_ping_ports_lbl);
+            this.Controls.Add(this.settings_ping_interval_lbl);
             this.Controls.Add(this.ping_interval);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -405,8 +405,8 @@ namespace tickMeter.Forms
         public CheckBox settings_chart_checkbox;
         public CheckBox settings_rtss_output;
         private NumericUpDown ping_interval;
-        private Label label1;
-        private Label label2;
+        private Label settings_ping_interval_lbl;
+        private Label settings_ping_ports_lbl;
         private TextBox ping_ports;
         public CheckBox settings_autodetect_checkbox;
         public CheckBox settings_ping_chart;

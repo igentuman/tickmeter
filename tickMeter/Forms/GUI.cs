@@ -136,12 +136,15 @@ namespace tickMeter.Forms
                 BackColor = SystemColors.WindowFrame;
                 TransparencyKey = SystemColors.WindowFrame;
                 FormBorderStyle = FormBorderStyle.None;
+                
                 SettingsButton.Visible =
                 gameProfilesButton.Visible =
                 webStatsButton.Visible =
                 packetStatsBtn.Visible = false;
+                TopMost = true;
                 if (App.settingsForm.settings_rtss_output.Checked)
                 {
+                    TopMost = false;
                     OnScreen = false;
                 }
                 if (!App.settingsForm.settings_chart_checkbox.Checked)
@@ -454,7 +457,7 @@ namespace tickMeter.Forms
             App.settingsForm.CheckNewVersion();
 
             CultureInfo ci = CultureInfo.InstalledUICulture;
-            if (ci.TwoLetterISOLanguageName != "ru")
+            if (ci.TwoLetterISOLanguageName != "en")
             {
                 App.settingsForm.SwitchToEnglish();
             }

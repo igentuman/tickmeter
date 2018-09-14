@@ -160,6 +160,15 @@ namespace tickMeter.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Autodetect game network activity.
+        /// </summary>
+        internal static string settings_autodetect_checkbox {
+            get {
+                return ResourceManager.GetString("settings_autodetect_checkbox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Tickrate graph.
         /// </summary>
         internal static string settings_chart_checkbox {
@@ -189,19 +198,18 @@ namespace tickMeter.Resources {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Log tickrate to CSV.
         /// </summary>
-        internal static string settings_log_checkobx {
+        internal static string settings_log_checkbox {
             get {
-                return ResourceManager.GetString("settings_log_checkobx", resourceCulture);
+                return ResourceManager.GetString("settings_log_checkbox", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Disable network analyze
-        ///(if tickMeter crashes).
+        ///   Ищет локализованную строку, похожую на Ping Chart.
         /// </summary>
-        internal static string settings_netstats_checkbox {
+        internal static string settings_ping_chart {
             get {
-                return ResourceManager.GetString("settings_netstats_checkbox", resourceCulture);
+                return ResourceManager.GetString("settings_ping_chart", resourceCulture);
             }
         }
         
@@ -211,6 +219,24 @@ namespace tickMeter.Resources {
         internal static string settings_ping_checkbox {
             get {
                 return ResourceManager.GetString("settings_ping_checkbox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Ping Interval (ms).
+        /// </summary>
+        internal static string settings_ping_interval_lbl {
+            get {
+                return ResourceManager.GetString("settings_ping_interval_lbl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Ping Ports.
+        /// </summary>
+        internal static string settings_ping_ports_lbl {
+            get {
+                return ResourceManager.GetString("settings_ping_ports_lbl", resourceCulture);
             }
         }
         

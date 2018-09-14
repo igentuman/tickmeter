@@ -16,7 +16,7 @@ namespace tickMeter.Forms
 {
     public partial class SettingsForm : Form
     {
-        public const float CURRENT_VERSION = 1.9f;
+        public const float CURRENT_VERSION = 2.0f;
 
         public string verInfo;
         TagCollection TagsInfo;
@@ -186,6 +186,8 @@ namespace tickMeter.Forms
             Text = eng.GetString("settings");
             settings_rtss_output.Text = eng.GetString(settings_rtss_output.Name);
             settings_log_checkbox.Text = eng.GetString(settings_log_checkbox.Name);
+            settings_ping_ports_lbl.Text = eng.GetString(settings_ping_ports_lbl.Name);
+            settings_ping_interval_lbl.Text = eng.GetString(settings_ping_interval_lbl.Name);
             settings_ip_checkbox.Text = eng.GetString(settings_ip_checkbox.Name);
             settings_ping_checkbox.Text = eng.GetString(settings_ping_checkbox.Name);
             settings_traffic_checkbox.Text = eng.GetString(settings_traffic_checkbox.Name);
@@ -193,6 +195,8 @@ namespace tickMeter.Forms
             settings_session_time_checkbox.Text = eng.GetString(settings_session_time_checkbox.Name);
             possible_risks_lbl.Text = eng.GetString(possible_risks_lbl.Name);
             network_connection_lbl.Text = eng.GetString(network_connection_lbl.Name);
+            settings_ping_chart.Text = eng.GetString(settings_ping_chart.Name);
+            settings_autodetect_checkbox.Text = eng.GetString(settings_autodetect_checkbox.Name);
             ColorLabel.Text = eng.GetString(ColorLabel.Name);
             ColorBad.Text = eng.GetString(ColorBad.Name);
             ColorMid.Text = eng.GetString(ColorMid.Name);

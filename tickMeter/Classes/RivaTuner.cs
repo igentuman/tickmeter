@@ -235,7 +235,7 @@ namespace tickMeter.Classes
             if(App.settingsForm.settings_ping_chart.Checked && App.meterState.pingBuffer.Count() > 1)
             {
                 output += Environment.NewLine + "<S0><C4>Ping" + Environment.NewLine;
-                output += DrawChart(App.meterState.pingBuffer.ToArray());
+                output += DrawChart(App.meterState.pingBuffer.ToArray(), (int)App.meterState.pingBuffer.Min());
             }
             PrintData(output, true);
         }

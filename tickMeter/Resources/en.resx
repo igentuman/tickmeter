@@ -150,6 +150,9 @@
   <data name="settings" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="settings_autodetect_checkbox" xml:space="preserve">
+    <value>Autodetect game network activity</value>
+  </data>
   <data name="settings_chart_checkbox" xml:space="preserve">
     <value>Tickrate graph</value>
   </data>
@@ -159,15 +162,20 @@
   <data name="settings_ip_checkbox" xml:space="preserve">
     <value>Display IP</value>
   </data>
-  <data name="settings_log_checkobx" xml:space="preserve">
+  <data name="settings_log_checkbox" xml:space="preserve">
     <value>Log tickrate to CSV</value>
   </data>
-  <data name="settings_netstats_checkbox" xml:space="preserve">
-    <value>Disable network analyze
-(if tickMeter crashes)</value>
+  <data name="settings_ping_chart" xml:space="preserve">
+    <value>Ping Chart</value>
   </data>
   <data name="settings_ping_checkbox" xml:space="preserve">
     <value>Display Ping and country</value>
+  </data>
+  <data name="settings_ping_interval_lbl" xml:space="preserve">
+    <value>Ping Interval (ms)</value>
+  </data>
+  <data name="settings_ping_ports_lbl" xml:space="preserve">
+    <value>Ping Ports</value>
   </data>
   <data name="settings_rtss_output" xml:space="preserve">
     <value>Use RTSS output overlay</value>
