@@ -1,7 +1,7 @@
 # TickMeter - программа для измерения тикрейта, пинга и трафика в играх и приложениях.
 [ENG version vvvvvv](#eng)
 
-[![N|Solid](https://it-man.website/res/pics/ic-96.png)](https://it-man.website)[![N|Solid] (https://it-man.website/res/pics/yt.png)](https://www.youtube.com/watch?v=TxLZkME0mnY)  [![N|Solid](https://it-man.website/res/pics/ds.png)](https://discord.gg/ZuCn4UJ)
+[![N|Solid](https://itman.website/res/pics/website.png)](https://it-man.website)[![N|Solid] (https://it-man.website/res/pics/youtube.png)](https://www.youtube.com/watch?v=TxLZkME0mnY)  [![N|Solid](https://it-man.website/res/pics/discord.png)](https://discord.gg/ZuCn4UJ)
 
 Если очень любопытно какой в игре тикрейт и пинг на серваках (PUBG, Dead by Daylight, Quake Champions и тд), то это очень простое и удобное решение, да еще и с открытым кодом. 
 
@@ -27,8 +27,8 @@ P.S. С VPN не дружит. Такие дела. Попробую когда-
  - Отправка анонимных данных на сервер для анализа и статистики https://it-man.website/tickmeter/stats
 
 ## SCREENS
-[![main window|N](https://it-man.website/tickmeter/screens/1-1.jpg =250x)](https://it-man.website/tickmeter/screens/1.jpg)   [![main window|N](https://it-man.website/tickmeter/screens/2-1.jpg =250x)](https://it-man.website/tickmeter/screens/2.jpg)
-[![main window](https://it-man.website/tickmeter/screens/3-1.jpg =250x)](https://it-man.website/tickmeter/screens/3.jpg)   [![main window](https://it-man.website/tickmeter/screens/4-1.jpg =250x)](https://it-man.website/tickmeter/screens/4.jpg)
+[![main window|N](https://itman.website/tickmeter/screens/1-1.jpg =250x)](https://itman.website/tickmeter/screens/1.jpg)   [![main window|N](https://itman.website/tickmeter/screens/2-1.jpg =250x)](https://itman.website/tickmeter/screens/2.jpg)
+[![main window](https://itman.website/tickmeter/screens/3-1.jpg =250x)](https://itman.website/tickmeter/screens/3.jpg)   [![main window](https://itman.website/tickmeter/screens/4-1.jpg =250x)](https://itman.website/tickmeter/screens/4.jpg)
 
 ## CHANGELOG
 
