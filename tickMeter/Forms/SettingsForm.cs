@@ -313,5 +313,13 @@ namespace tickMeter.Forms
         {
             App.settingsManager.SetOption("autodetect", settings_autodetect_checkbox.Checked.ToString());
         }
+
+        private void ColorLabel_Click(object sender, EventArgs e)
+        {
+            colorDialog1.ShowDialog();
+            ColorLabel.ForeColor = colorDialog1.Color;
+            SaveToConfig();
+            ApplyFromConfig();
+        }
     }
 }

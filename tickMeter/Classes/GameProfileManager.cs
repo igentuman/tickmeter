@@ -17,16 +17,11 @@ namespace tickMeter.Classes
         static IniData data;
         public static DbdStatsManager DbdMngr = new DbdStatsManager();
         public static PubgStatsManager PubgMngr = new PubgStatsManager();
-        public static IoNStatsManager IonMngr = new IoNStatsManager();
-        public static QCStatsManager QCMngr = new QCStatsManager();
 
         public static void CallBuitInProfiles(Packet packet)
         {
             DbdMngr.ProcessPacket(packet);
             PubgMngr.ProcessPacket(packet);
-            IonMngr.ProcessPacket(packet);
-            QCMngr.ProcessPacket(packet);
-            
         }
 
         public static void CallCustomProfiles(Packet packet)

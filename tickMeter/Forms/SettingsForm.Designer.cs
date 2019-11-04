@@ -165,6 +165,7 @@ namespace tickMeter.Forms
             this.ColorChart.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ColorChart.ForeColor = System.Drawing.Color.DarkRed;
             this.ColorChart.Name = "ColorChart";
+            this.ColorChart.Click += new System.EventHandler(this.ColorChart_Click);
             // 
             // ColorGood
             // 
@@ -173,6 +174,7 @@ namespace tickMeter.Forms
             this.ColorGood.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ColorGood.ForeColor = System.Drawing.Color.DarkGreen;
             this.ColorGood.Name = "ColorGood";
+            this.ColorGood.Click += new System.EventHandler(this.ColorGood_Click);
             // 
             // ColorMid
             // 
@@ -181,6 +183,7 @@ namespace tickMeter.Forms
             this.ColorMid.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ColorMid.ForeColor = System.Drawing.Color.DarkOrange;
             this.ColorMid.Name = "ColorMid";
+            this.ColorMid.Click += new System.EventHandler(this.ColorMid_Click);
             // 
             // ColorBad
             // 
@@ -189,6 +192,7 @@ namespace tickMeter.Forms
             this.ColorBad.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ColorBad.ForeColor = System.Drawing.Color.DarkRed;
             this.ColorBad.Name = "ColorBad";
+            this.ColorBad.Click += new System.EventHandler(this.ColorBad_Click);
             // 
             // ColorLabel
             // 
@@ -197,6 +201,7 @@ namespace tickMeter.Forms
             this.ColorLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ColorLabel.ForeColor = System.Drawing.Color.DarkRed;
             this.ColorLabel.Name = "ColorLabel";
+            this.ColorLabel.Click += new System.EventHandler(this.ColorLabel_Click);
             // 
             // groupBox2
             // 

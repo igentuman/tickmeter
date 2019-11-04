@@ -208,14 +208,12 @@
     <Compile Include="Classes\ConnectionsManager.cs" />
     <Compile Include="Classes\GameProfile.cs" />
     <Compile Include="Classes\GameProfileManager.cs" />
-    <Compile Include="Classes\IoNStatsManager.cs" />
     <Compile Include="Classes\ListViewNF.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Classes\PacketFilter.cs" />
     <Compile Include="Classes\DbdStatsManager.cs" />
     <Compile Include="Classes\PubgStatsManager.cs" />
-    <Compile Include="Classes\QCStatsManager.cs" />
     <Compile Include="Classes\WebStatsManager.cs" />
     <Compile Include="Forms\GUI.cs">
       <SubType>Form</SubType>

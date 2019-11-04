@@ -11,9 +11,9 @@ namespace tickMeter
 {
     public class DbdStatsManager
     {
-        int StartPort = 1000;
-        int EndPort = 65000;
-        string ProcessName = "Steam";
+        int StartPort = 7000;
+        int EndPort = 8000;
+        string ProcessName = "DeadByDaylight-Win64-Shipping";
         string GameName = "DeadByDaylight-Win64-Shipping";
         public const string GameCode = "DEAD_BY_DAYLIGHT";
         Timer GameInfoTimer;

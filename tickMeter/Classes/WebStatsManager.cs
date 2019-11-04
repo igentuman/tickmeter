@@ -17,7 +17,7 @@ namespace tickMeter.Classes
                 ping = App.meterState.Server.AvgPing
             };
             var http = new HttpClient();
-            http.Post("https://it-man.website/tickmeter/stats/upload", data, HttpContentTypes.ApplicationJson);
+            http.Post("https://itman.website/tickmeter/stats/upload", data, HttpContentTypes.ApplicationJson);
             Debug.Print(http.Response.RawText);
             Thread.Sleep(100);
         }

@@ -457,7 +457,7 @@ namespace tickMeter.Forms
             App.settingsForm.CheckNewVersion();
 
             CultureInfo ci = CultureInfo.InstalledUICulture;
-            if (ci.TwoLetterISOLanguageName != "en")
+            if (ci.TwoLetterISOLanguageName != "ru")
             {
                 App.settingsForm.SwitchToEnglish();
             }

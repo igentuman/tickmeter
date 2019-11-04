@@ -41,7 +41,7 @@
             this.webBrowser1.ScriptErrorsSuppressed = true;
             this.webBrowser1.Size = new System.Drawing.Size(1103, 1149);
             this.webBrowser1.TabIndex = 0;
-            this.webBrowser1.Url = new System.Uri("https://it-man.website/tickmeter/stats/?partial=1&current_week=1", System.UriKind.Absolute);
+            this.webBrowser1.Url = new System.Uri("https://itman.website/tickmeter/stats/?partial=1&current_week=1", System.UriKind.Absolute);
             // 
             // TickrateStatistics
             // 
