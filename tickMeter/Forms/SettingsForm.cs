@@ -125,22 +125,23 @@ namespace tickMeter.Forms
             settings_session_time_checkbox.Checked = App.settingsManager.GetOption("session_time") == "True";
             settings_ticktime_chart.Checked = App.settingsManager.GetOption("ticktime") == "True";
             settings_ping_chart.Checked = App.settingsManager.GetOption("ping_chart") == "True";
+            run_minimized.Checked = App.settingsManager.GetOption("run_minimized") == "True";
             ping_ports.Text = App.settingsManager.GetOption("ping_ports");
-            ping_interval.Value = int.Parse(App.settingsManager.GetOption("ping_interval"));
+            ping_interval.Value = App.settingsManager.GetIntOption("ping_interval", 400);
             if (rememberAdapter.Checked)
             {
                 try
                 {
-                    adapters_list.SelectedIndex = int.Parse(App.settingsManager.GetOption("last_selected_adapter_id"));
+                    adapters_list.SelectedIndex = App.settingsManager.GetIntOption("last_selected_adapter_id");
                 }
                 catch (Exception) { }
                 
             }
-            ColorLabel.ForeColor = ColorTranslator.FromHtml("#"+ App.settingsManager.GetOption("color_label"));
-            ColorBad.ForeColor = ColorTranslator.FromHtml("#"+ App.settingsManager.GetOption("color_bad"));
-            ColorMid.ForeColor = ColorTranslator.FromHtml("#"+ App.settingsManager.GetOption("color_mid"));
-            ColorGood.ForeColor = ColorTranslator.FromHtml("#"+ App.settingsManager.GetOption("color_good"));
-            ColorChart.ForeColor = ColorTranslator.FromHtml("#"+ App.settingsManager.GetOption("color_chart"));
+            ColorLabel.ForeColor = ColorTranslator.FromHtml("#"+ App.settingsManager.GetIntOption("color_label"));
+            ColorBad.ForeColor = ColorTranslator.FromHtml("#"+ App.settingsManager.GetIntOption("color_bad"));
+            ColorMid.ForeColor = ColorTranslator.FromHtml("#"+ App.settingsManager.GetIntOption("color_mid"));
+            ColorGood.ForeColor = ColorTranslator.FromHtml("#"+ App.settingsManager.GetIntOption("color_good"));
+            ColorChart.ForeColor = ColorTranslator.FromHtml("#"+ App.settingsManager.GetIntOption("color_chart"));
             RivaTuner.LabelColor = App.settingsManager.GetOption("color_label");
             RivaTuner.ColorBad = App.settingsManager.GetOption("color_bad");
             RivaTuner.ColorMid = App.settingsManager.GetOption("color_mid");
@@ -177,6 +178,7 @@ namespace tickMeter.Forms
             App.settingsManager.SetOption("remember_adapter", rememberAdapter.Checked.ToString());
             App.settingsManager.SetOption("session_time", settings_session_time_checkbox.Checked.ToString());
             App.settingsManager.SetOption("last_selected_adapter_id", adapters_list.SelectedIndex.ToString());
+            App.settingsManager.SetOption("run_minimized", run_minimized.Checked.ToString());
             App.settingsManager.SaveConfig();
         }
 
@@ -193,7 +195,6 @@ namespace tickMeter.Forms
             settings_traffic_checkbox.Text = eng.GetString(settings_traffic_checkbox.Name);
             settings_chart_checkbox.Text = eng.GetString(settings_chart_checkbox.Name);
             settings_session_time_checkbox.Text = eng.GetString(settings_session_time_checkbox.Name);
-            possible_risks_lbl.Text = eng.GetString(possible_risks_lbl.Name);
             network_connection_lbl.Text = eng.GetString(network_connection_lbl.Name);
             settings_ping_chart.Text = eng.GetString(settings_ping_chart.Name);
             settings_autodetect_checkbox.Text = eng.GetString(settings_autodetect_checkbox.Name);
@@ -320,6 +321,11 @@ namespace tickMeter.Forms
             ColorLabel.ForeColor = colorDialog1.Color;
             SaveToConfig();
             ApplyFromConfig();
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

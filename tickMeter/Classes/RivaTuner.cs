@@ -108,6 +108,7 @@ namespace tickMeter.Classes
                 {
                     RtssInstance = Process.Start(f.FullName);
                     Thread.Sleep(2000);
+                    hasToKillRtssFlag = true;
                 }
                 catch (Exception)
                 {
@@ -116,9 +117,11 @@ namespace tickMeter.Classes
             }
         }
 
+        public static Boolean hasToKillRtssFlag = false;
+
         public static void KillRtss()
         {
-            if (RtssInstance == null) return;
+            if (RtssInstance == null || !hasToKillRtssFlag) return;
             try
             {
                 RtssInstance.Kill();

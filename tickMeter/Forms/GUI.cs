@@ -103,7 +103,6 @@ namespace tickMeter.Forms
             time_val.Visible = 
             SettingsButton.Visible =
             gameProfilesButton.Visible =
-            webStatsButton.Visible =
             packetStatsBtn.Visible = true;
         }
 
@@ -189,13 +188,12 @@ namespace tickMeter.Forms
             GameProfileManager.CallCustomProfiles(packet);
             AutoDetectMngr.AnalyzePacket(packet);
             AutoDetectMngr.ProcessPacket(packet);
+    
         }
 
         
         private async void TicksLoop_Tick(object sender, EventArgs e)
         {
-
-
             if (App.settingsForm.settings_rtss_output.Checked)
             {
                 await Task.Run(() => {
@@ -365,12 +363,17 @@ namespace tickMeter.Forms
 
             ticksLoop.Enabled = false;
             if (App.meterState == null) return;
-            GameProfileManager.PubgMngr.firstPacket = true;
+            try
+            {
+                GameProfileManager.PubgMngr.firstPacket = true;
+            } catch (TypeInitializationException e) {
+
+            }
+            
             Debug.Print("StopTracking");
             tickrate_val.ForeColor = App.settingsForm.ColorBad.ForeColor;
             ping_val.ForeColor = App.settingsForm.ColorMid.ForeColor;
             try { graph.Image = graph.InitialImage; } catch(Exception) {  }
-            
             
             
             if (App.settingsForm.settings_log_checkbox.Checked)
@@ -391,7 +394,7 @@ namespace tickMeter.Forms
 
             if (App.settingsForm.settings_data_send.Checked && App.meterState.TicksHistory.Count > 900 && App.meterState.Server.Ip != "")
             {
-                WebStatsManager.uploadTickrate();
+               // WebStatsManager.uploadTickrate(); //no no no. not today
             }
 
             try { RivaTuner.PrintData(""); } catch (Exception exc) { MessageBox.Show(exc.Message); }
@@ -460,6 +463,10 @@ namespace tickMeter.Forms
             if (ci.TwoLetterISOLanguageName != "ru")
             {
                 App.settingsForm.SwitchToEnglish();
+            }
+            if(App.settingsForm.run_minimized.Checked)
+            {
+                WindowState = FormWindowState.Minimized;
             }
 
         }

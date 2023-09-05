@@ -22,10 +22,27 @@ namespace tickMeter
             data = parser.ReadFile("settings.ini");
         }
 
+        public int GetIntOption(string optionName, int defaultValue)
+        {
+            return GetIntOption(optionName, "SETTINGS", defaultValue);
+        }
+
+        public int GetIntOption(string optionName, string scope = "SETTINGS", int defaultValue = 0)
+        {
+            String rawValue = GetOption(optionName, scope);
+            int val = defaultValue;
+            try
+            {
+                val = int.Parse(rawValue);
+            } catch (FormatException ex) {
+            }
+            return val;
+        }
+
         public string GetOption(string optionName,string scope = "SETTINGS")
         {
 
-            if (data[scope] != null && data[scope][optionName] != "")
+            if (data[scope] != null && data[scope][optionName] != null)
             {
                 return data[scope][optionName];
             }

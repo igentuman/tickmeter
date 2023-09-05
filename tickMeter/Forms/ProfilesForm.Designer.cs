@@ -46,8 +46,7 @@
             this.built_in_profiles.Items.AddRange(new object[] {
             "PUBG",
             "Dead By Daylight",
-            "Quake Champions",
-            "Islands of Nyne"});
+            "Quake Champions"});
             this.built_in_profiles.Location = new System.Drawing.Point(12, 36);
             this.built_in_profiles.Name = "built_in_profiles";
             this.built_in_profiles.Size = new System.Drawing.Size(236, 130);
@@ -122,7 +121,7 @@
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label3.Location = new System.Drawing.Point(232, 174);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(16, 16);
+            this.label3.Size = new System.Drawing.Size(15, 16);
             this.label3.TabIndex = 48;
             this.label3.Text = "?";
             this.label3.Click += new System.EventHandler(this.label3_Click);

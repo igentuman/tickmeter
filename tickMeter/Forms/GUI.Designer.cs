@@ -229,6 +229,7 @@
             // webStatsButton
             // 
             this.webStatsButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.webStatsButton.Enabled = false;
             this.webStatsButton.Image = global::tickMeter.Properties.Resources.bar;
             this.webStatsButton.Location = new System.Drawing.Point(226, 2);
             this.webStatsButton.Name = "webStatsButton";
@@ -236,6 +237,7 @@
             this.webStatsButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.webStatsButton.TabIndex = 44;
             this.webStatsButton.TabStop = false;
+            this.webStatsButton.Visible = false;
             this.webStatsButton.Click += new System.EventHandler(this.pictureBox2_Click);
             // 
             // gameProfilesButton

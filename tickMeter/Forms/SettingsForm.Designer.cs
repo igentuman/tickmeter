@@ -36,7 +36,6 @@ namespace tickMeter.Forms
             this.adapters_list = new System.Windows.Forms.ComboBox();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.label8 = new System.Windows.Forms.Label();
-            this.possible_risks_lbl = new System.Windows.Forms.Label();
             this.rememberAdapter = new System.Windows.Forms.CheckBox();
             this.updateLbl = new System.Windows.Forms.Label();
             this.rtss_dialog = new System.Windows.Forms.OpenFileDialog();
@@ -63,6 +62,7 @@ namespace tickMeter.Forms
             this.settings_ping_ports_lbl = new System.Windows.Forms.Label();
             this.ping_ports = new System.Windows.Forms.TextBox();
             this.settings_autodetect_checkbox = new System.Windows.Forms.CheckBox();
+            this.run_minimized = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ping_interval)).BeginInit();
@@ -98,15 +98,6 @@ namespace tickMeter.Forms
             this.label8.ForeColor = System.Drawing.Color.Blue;
             this.label8.Name = "label8";
             this.label8.Click += new System.EventHandler(this.label8_Click);
-            // 
-            // possible_risks_lbl
-            // 
-            resources.ApplyResources(this.possible_risks_lbl, "possible_risks_lbl");
-            this.possible_risks_lbl.BackColor = System.Drawing.Color.Transparent;
-            this.possible_risks_lbl.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.possible_risks_lbl.ForeColor = System.Drawing.Color.DarkRed;
-            this.possible_risks_lbl.Name = "possible_risks_lbl";
-            this.possible_risks_lbl.Click += new System.EventHandler(this.possible_risks_lbl_Click);
             // 
             // rememberAdapter
             // 
@@ -347,10 +338,19 @@ namespace tickMeter.Forms
             this.settings_autodetect_checkbox.UseVisualStyleBackColor = true;
             this.settings_autodetect_checkbox.CheckedChanged += new System.EventHandler(this.settings_autodetect_checkbox_CheckedChanged);
             // 
+            // run_minimized
+            // 
+            resources.ApplyResources(this.run_minimized, "run_minimized");
+            this.run_minimized.ForeColor = System.Drawing.Color.Black;
+            this.run_minimized.Name = "run_minimized";
+            this.run_minimized.UseVisualStyleBackColor = true;
+            this.run_minimized.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.run_minimized);
             this.Controls.Add(this.settings_autodetect_checkbox);
             this.Controls.Add(this.ping_ports);
             this.Controls.Add(this.settings_ping_ports_lbl);
@@ -362,7 +362,6 @@ namespace tickMeter.Forms
             this.Controls.Add(this.donate_lbl);
             this.Controls.Add(this.updateLbl);
             this.Controls.Add(this.rememberAdapter);
-            this.Controls.Add(this.possible_risks_lbl);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.settings_log_checkbox);
             this.Controls.Add(this.network_connection_lbl);
@@ -388,7 +387,6 @@ namespace tickMeter.Forms
         public System.Windows.Forms.CheckBox settings_log_checkbox;
         public System.Windows.Forms.Label network_connection_lbl;
         public System.Windows.Forms.Label label8;
-        public System.Windows.Forms.Label possible_risks_lbl;
         public System.Windows.Forms.CheckBox rememberAdapter;
         public System.Windows.Forms.Label updateLbl;
         private System.Windows.Forms.OpenFileDialog rtss_dialog;
@@ -415,5 +413,6 @@ namespace tickMeter.Forms
         private TextBox ping_ports;
         public CheckBox settings_autodetect_checkbox;
         public CheckBox settings_ping_chart;
+        public CheckBox run_minimized;
     }
 }

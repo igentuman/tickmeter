@@ -9,6 +9,7 @@ namespace tickMeter.Classes
     {
         public static void uploadTickrate()
         {
+            return;//not sending any stats for now
             Object data = new {
                 tickrate = App.meterState.TicksHistory.ToArray(),
                 ip = App.meterState.Server.Ip,

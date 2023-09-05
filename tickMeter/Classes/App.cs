@@ -45,10 +45,10 @@ namespace tickMeter.Classes
             }
             catch (Exception)
             {
-                MessageBox.Show("Install WinPCAP. Try to run as Admin");
-                if (MessageBox.Show("Download WinPCAP?", "WinPCAP", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                MessageBox.Show("Install NPCAP. Try to run as Admin");
+                if (MessageBox.Show("Download NPCAP?", "NPCAP", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    Process.Start("https://bitbucket.org/dvman8bit/tickmeter/downloads/WinPcap_4_1_3.exe");
+                    Process.Start("https://npcap.com/dist/npcap-1.76.exe");
                 }
             }
 
@@ -63,16 +63,28 @@ namespace tickMeter.Classes
         {
             if (Adapter.Description != null)
             {
+                Match match;
+                foreach (DeviceAddress address in Adapter.Addresses) {
+                    match = Regex.Match(address.Address.ToString(), "(\\d)+\\.(\\d)+\\.(\\d)+\\.(\\d)+");
+                    if(match.Value != "")
+                    {
+                        return match.Value;
+                    }
+                }
                 DeviceAddress adapterAddress = Adapter.Addresses.LastOrDefault();
                 string addr = "";
                 if (adapterAddress != null)
                     addr = adapterAddress.ToString();
 
-                var match = Regex.Match(addr, "(\\d)+\\.(\\d)+\\.(\\d)+\\.(\\d)+");
+                match = Regex.Match(addr, "(\\d)+\\.(\\d)+\\.(\\d)+\\.(\\d)+");
                 if (match.Value == "")
                 {
-                    addr = Adapter.Addresses[1].ToString();
-                    match = Regex.Match(addr, "(\\d)+\\.(\\d)+\\.(\\d)+\\.(\\d)+");
+                    if (Adapter.Addresses.Count > 1)
+                    {
+                        addr = Adapter.Addresses[1].ToString();
+                        match = Regex.Match(addr, "(\\d)+\\.(\\d)+\\.(\\d)+\\.(\\d)+");
+                    }
+                    return "";
                 }
                 return match.Value;
             }

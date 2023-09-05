@@ -38,7 +38,7 @@ namespace tickMeter
             System.Windows.Forms.ColumnHeader from_ip;
             System.Windows.Forms.ColumnHeader from_port;
             System.Windows.Forms.ColumnHeader columnHeader3;
-            this.listView1 = new ListViewNF();
+            this.listView1 = new tickMeter.Classes.ListViewNF();
             this.time = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.to_ip = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -67,8 +67,9 @@ namespace tickMeter
             this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.active_refresh = new System.Windows.Forms.Timer(this.components);
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.active_refresh = new System.Windows.Forms.Timer(this.components);
+            this.top_process_name = new System.Windows.Forms.Label();
             from_ip = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             from_port = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -109,6 +110,7 @@ namespace tickMeter
             this.process});
             this.listView1.FullRowSelect = true;
             this.listView1.GridLines = true;
+            this.listView1.HideSelection = false;
             this.listView1.HoverSelection = true;
             this.listView1.Location = new System.Drawing.Point(5, 239);
             this.listView1.Margin = new System.Windows.Forms.Padding(4);
@@ -220,6 +222,7 @@ namespace tickMeter
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.top_process_name);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label3);
@@ -300,6 +303,7 @@ namespace tickMeter
             this.columnHeader1});
             this.listView2.FullRowSelect = true;
             this.listView2.GridLines = true;
+            this.listView2.HideSelection = false;
             this.listView2.HoverSelection = true;
             this.listView2.Location = new System.Drawing.Point(5, 81);
             this.listView2.Margin = new System.Windows.Forms.Padding(4);
@@ -341,15 +345,25 @@ namespace tickMeter
             this.columnHeader10.Text = "Process";
             this.columnHeader10.Width = 160;
             // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "";
+            this.columnHeader1.Width = 94;
+            // 
             // active_refresh
             // 
             this.active_refresh.Interval = 1000;
             this.active_refresh.Tick += new System.EventHandler(this.active_refresh_Tick);
             // 
-            // columnHeader1
+            // top_process_name
             // 
-            this.columnHeader1.Text = "";
-            this.columnHeader1.Width = 94;
+            this.top_process_name.AutoSize = true;
+            this.top_process_name.Location = new System.Drawing.Point(358, 16);
+            this.top_process_name.Name = "top_process_name";
+            this.top_process_name.Size = new System.Drawing.Size(67, 13);
+            this.top_process_name.TabIndex = 17;
+            this.top_process_name.Text = "Top Process";
+            this.top_process_name.UseMnemonic = false;
             // 
             // PacketStats
             // 
@@ -414,5 +428,6 @@ namespace tickMeter
         private ColumnHeader columnHeader10;
         private Timer active_refresh;
         private ColumnHeader columnHeader1;
+        private Label top_process_name;
     }
 }

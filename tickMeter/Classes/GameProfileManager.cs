@@ -54,6 +54,10 @@ namespace tickMeter.Classes
         public static void LoadProfiles()
         {
             gameProfs.Clear();
+            if(! Directory.Exists("profiles"))
+            {
+                Directory.CreateDirectory("profiles");
+            }
             string[] files = Directory.GetFiles("profiles", "*.ini");
             foreach (string pFile in files)
             {

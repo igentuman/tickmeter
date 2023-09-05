@@ -61,7 +61,7 @@ namespace tickMeter
                 
             } catch (Exception)
             {
-                MessageBox.Show("PCAP Thread init error");
+                MessageBox.Show("NPCAP Thread init error");
             }
             
             App.meterState.LocalIP = App.GetAdapterAddress((LivePacketDevice)App.gui.selectedAdapter);
@@ -131,7 +131,7 @@ namespace tickMeter
         Int32 packet_id;
         private async void RefreshTick(object sender, EventArgs e)
         {
-            
+            AutoDetectMngr.GetActiveProcessName(true);
             if (PacketBuffer.Count < 1)
             {
                 return;
@@ -188,6 +188,10 @@ namespace tickMeter
                             if (record != null)
                             {
                                 processName = record.ProcessName;
+                                if(processName == null)
+                                {
+                                    processName = record.ProcessId.ToString();
+                                }
                             }
                         }
                     } catch(Exception) { processName = @"n\a"; }
@@ -212,6 +216,10 @@ namespace tickMeter
                             if (record != null)
                             {
                                 processName = record.ProcessName;
+                                if (processName == null)
+                                {
+                                    processName = record.ProcessId.ToString();
+                                }
                             }
                         }
                         
@@ -238,6 +246,7 @@ namespace tickMeter
                 iKey++;
 
                 AutoDetectMngr.AnalyzePacket(packet);
+                
 
             }
             int realItems = items.Where(id => id != null).Count();
@@ -253,6 +262,7 @@ namespace tickMeter
             if(items.Length > 0)
            await Task.Run(() =>
             {
+                
             listView1.Invoke(new Action(() => {
                 listView1.BeginUpdate();
                 ListView.ListViewItemCollection lvic = new ListView.ListViewItemCollection(listView1);
@@ -323,9 +333,12 @@ namespace tickMeter
         {
             await Task.Run(() =>
             {
-            label3.Invoke( new Action(() =>{
-                    label3.Text = "IN " + inPackets.ToString() + " | OUT " + outPackets.ToString();
-            }));
+                top_process_name.Invoke(new Action(() => {
+                    top_process_name.Text = AutoDetectMngr.GetActiveProcessName();
+                }));
+                label3.Invoke( new Action(() =>{
+                        label3.Text = "IN " + inPackets.ToString() + " | OUT " + outPackets.ToString();
+                }));
                 label4.Invoke(new Action(() => {
                     label4.Text = "DL " + (inTraffic / 1024).ToString() + " | UP " + (outTraffic/ 1024).ToString();
                 }));

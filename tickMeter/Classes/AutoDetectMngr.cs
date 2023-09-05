@@ -4,6 +4,7 @@ using PcapDotNet.Packets.Transport;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -39,6 +40,40 @@ namespace tickMeter.Classes
 
     public static class AutoDetectMngr
     {
+
+        [Serializable]
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct WINDOWPLACEMENT
+        {
+            public int length;
+            public int flags;
+            public ShowWindowCommands showCmd;
+            public Point ptMinPosition;
+            public Point ptMaxPosition;
+            public Rectangle rcNormalPosition;
+        }
+
+        internal enum ShowWindowCommands : int
+        {
+            Hide = 0,
+            Normal = 1,
+            Minimized = 2,
+            Maximized = 3,
+        }
+
+        private static WINDOWPLACEMENT GetPlacement(IntPtr hwnd)
+        {
+            WINDOWPLACEMENT placement = new WINDOWPLACEMENT();
+            placement.length = Marshal.SizeOf(placement);
+            GetWindowPlacement(hwnd, ref placement);
+            return placement;
+        }
+
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool GetWindowPlacement(IntPtr hWnd, ref WINDOWPLACEMENT lpwndpl);
+
+
         public static PacketFilter profileFilter = new PacketFilter();
         public static string GameName;
         public static string RequireProcess;
@@ -87,7 +122,8 @@ namespace tickMeter.Classes
 
                         if (record != null)
                         {
-                            processName = record.ProcessName;
+                            processName = record.ProcessName != null ? record.ProcessName : record.ProcessId.ToString();
+                            
                         }
                     }
                 }
@@ -167,13 +203,16 @@ namespace tickMeter.Classes
         [DllImport("user32.dll")]
         private static extern IntPtr GetForegroundWindow();
 
-        public static string GetActiveProcessName()
+        public static string activeProcess = "";
+        public static string GetActiveProcessName(Boolean refresh = false)
         {
+            if(!refresh) return activeProcess;
             IntPtr hwnd = GetForegroundWindow();
             uint pid;
             GetWindowThreadProcessId(hwnd, out pid);
             Process p = Process.GetProcessById((int)pid);
-            return p.ProcessName;
+            activeProcess = p.ProcessName != null ? p.ProcessName : pid.ToString();
+            return activeProcess;
         }
 
         public static bool IsEnabled()
