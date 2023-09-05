@@ -314,6 +314,8 @@
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximumSize = new System.Drawing.Size(454, 438);
+            this.MinimumSize = new System.Drawing.Size(454, 438);
             this.Name = "GUI";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "tickMeter 2.0";

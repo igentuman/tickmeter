@@ -42,7 +42,7 @@ namespace tickMeter.Forms
             {
                 try
                 {
-                    verInfo = new WebClient().DownloadString("https://api.bitbucket.org/2.0/repositories/dvman8bit/tickmeter/refs/tags");
+                    verInfo = new WebClient().DownloadString("https://api.github.com/repos/igentuman/tickmeter/releases/latest");
                     TagsInfo = JsonConvert.DeserializeObject<TagCollection>(verInfo);
                     float lastVersion = 1;
                     foreach(TagInfo ver in TagsInfo.Tags)
@@ -59,7 +59,7 @@ namespace tickMeter.Forms
                         if(App.settingsManager.GetOption("last_checked_version") != TagsInfo.Tags[TagsInfo.Tags.Count - 1].Version.ToString())
                         {
                             MessageBox.Show(updateLbl.Text, "Update", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            Process.Start("https://bitbucket.org/dvman8bit/tickmeter/downloads/");
+                            Process.Start("https://api.github.com/repos/igentuman/tickmeter/releases/latest");
                         }
                         App.settingsManager.SetOption("last_checked_version", TagsInfo.Tags[TagsInfo.Tags.Count - 1].Version.ToString());
                     }
@@ -137,6 +137,11 @@ namespace tickMeter.Forms
                 catch (Exception) { }
                 
             }
+            string localIp = App.settingsManager.GetOption("local_ip");
+            if(localIp != null && localIp != "")
+            {
+                local_ip_textbox.Text = localIp;
+            }
             ColorLabel.ForeColor = ColorTranslator.FromHtml("#"+ App.settingsManager.GetIntOption("color_label"));
             ColorBad.ForeColor = ColorTranslator.FromHtml("#"+ App.settingsManager.GetIntOption("color_bad"));
             ColorMid.ForeColor = ColorTranslator.FromHtml("#"+ App.settingsManager.GetIntOption("color_mid"));
@@ -179,6 +184,7 @@ namespace tickMeter.Forms
             App.settingsManager.SetOption("session_time", settings_session_time_checkbox.Checked.ToString());
             App.settingsManager.SetOption("last_selected_adapter_id", adapters_list.SelectedIndex.ToString());
             App.settingsManager.SetOption("run_minimized", run_minimized.Checked.ToString());
+            App.settingsManager.SetOption("local_ip", local_ip_textbox.Text);
             App.settingsManager.SaveConfig();
         }
 
@@ -274,7 +280,8 @@ namespace tickMeter.Forms
         private void adapters_list_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (adapters_list.SelectedIndex > -1)
-            { 
+            {
+                App.settingsForm.local_ip_textbox.Text = App.GetAdapterAddress(App.GetAdapters()[adapters_list.SelectedIndex]);
                 App.gui.StartTracking();
             }
         }
@@ -287,7 +294,7 @@ namespace tickMeter.Forms
 
         private void updateLbl_Click(object sender, EventArgs e)
         {
-            Process.Start("https://bitbucket.org/dvman8bit/tickmeter/downloads/");
+            Process.Start("https://github.org/igentuman/tickmeter/downloads/");
         }
 
 
@@ -326,6 +333,11 @@ namespace tickMeter.Forms
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void local_ip_textbox_TextChanged(object sender, EventArgs e)
+        {
+            App.gui.StartTracking();
         }
     }
 }

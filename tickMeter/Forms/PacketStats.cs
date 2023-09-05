@@ -64,7 +64,7 @@ namespace tickMeter
                 MessageBox.Show("NPCAP Thread init error");
             }
             
-            App.meterState.LocalIP = App.GetAdapterAddress((LivePacketDevice)App.gui.selectedAdapter);
+            App.meterState.LocalIP = App.settingsForm.local_ip_textbox.Text;
             RefreshTimer.Enabled = true;
             active_refresh.Enabled = true;
             avgStats.Enabled = true;

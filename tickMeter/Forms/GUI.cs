@@ -288,7 +288,7 @@ namespace tickMeter.Forms
             App.meterState.IsTracking = true;
             ticksLoop.Enabled = true;
             selectedAdapter = App.GetAdapters()[App.settingsForm.adapters_list.SelectedIndex];
-            App.meterState.LocalIP = App.GetAdapterAddress(App.GetAdapters()[App.settingsForm.adapters_list.SelectedIndex]);
+            App.meterState.LocalIP = App.settingsForm.local_ip_textbox.Text;
             lastSelectedAdapterID = App.settingsForm.adapters_list.SelectedIndex;
             try
             {

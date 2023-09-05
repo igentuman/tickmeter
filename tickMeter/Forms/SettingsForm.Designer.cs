@@ -63,6 +63,8 @@ namespace tickMeter.Forms
             this.ping_ports = new System.Windows.Forms.TextBox();
             this.settings_autodetect_checkbox = new System.Windows.Forms.CheckBox();
             this.run_minimized = new System.Windows.Forms.CheckBox();
+            this.local_ip_lbl = new System.Windows.Forms.Label();
+            this.local_ip_textbox = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ping_interval)).BeginInit();
@@ -346,10 +348,23 @@ namespace tickMeter.Forms
             this.run_minimized.UseVisualStyleBackColor = true;
             this.run_minimized.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
+            // local_ip_lbl
+            // 
+            resources.ApplyResources(this.local_ip_lbl, "local_ip_lbl");
+            this.local_ip_lbl.Name = "local_ip_lbl";
+            // 
+            // local_ip_textbox
+            // 
+            resources.ApplyResources(this.local_ip_textbox, "local_ip_textbox");
+            this.local_ip_textbox.Name = "local_ip_textbox";
+            this.local_ip_textbox.TextChanged += new System.EventHandler(this.local_ip_textbox_TextChanged);
+            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.local_ip_textbox);
+            this.Controls.Add(this.local_ip_lbl);
             this.Controls.Add(this.run_minimized);
             this.Controls.Add(this.settings_autodetect_checkbox);
             this.Controls.Add(this.ping_ports);
@@ -414,5 +429,7 @@ namespace tickMeter.Forms
         public CheckBox settings_autodetect_checkbox;
         public CheckBox settings_ping_chart;
         public CheckBox run_minimized;
+        private Label local_ip_lbl;
+        public TextBox local_ip_textbox;
     }
 }
