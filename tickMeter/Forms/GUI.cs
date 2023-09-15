@@ -184,6 +184,10 @@ namespace tickMeter.Forms
         {
 
             if (!App.meterState.IsTracking) return;
+            if (
+                !packet.IsValid
+                || !packet.IpV4.IsValid
+            ) return;
             GameProfileManager.CallBuitInProfiles(packet);
             GameProfileManager.CallCustomProfiles(packet);
             AutoDetectMngr.AnalyzePacket(packet);
@@ -420,9 +424,7 @@ namespace tickMeter.Forms
 
         private void GUI_FormClosed(object sender, FormClosedEventArgs e)
         {
-            StopTracking();
-            App.settingsForm.SaveToConfig();
-            RivaTuner.KillRtss();
+
         }
 
         private void ServerLbl_Click(object sender, EventArgs e)
@@ -466,8 +468,9 @@ namespace tickMeter.Forms
             }
             if(App.settingsForm.run_minimized.Checked)
             {
-                WindowState = FormWindowState.Minimized;
+                Hide();
             }
+            ETW.init();
 
         }
 
@@ -489,6 +492,38 @@ namespace tickMeter.Forms
         private void pictureBox2_Click(object sender, EventArgs e)
         {
             App.tickrateStatisticsForm.Show();
+        }
+
+        private void GUI_Resize(object sender, EventArgs e)
+        {
+        }
+
+        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            Show();
+            this.WindowState = FormWindowState.Normal;
+        }
+
+        private void icon_menu_MouseClick(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void GUI_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                Hide();
+                e.Cancel = true;
+            }
+        }
+
+        private void icon_menu_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            StopTracking();
+            App.settingsForm.SaveToConfig();
+            RivaTuner.KillRtss();
+            Application.Exit();
         }
     }
 }

@@ -60,6 +60,12 @@ namespace tickMeter
                     if(proccArray.Length > 0)
                     {
                         TcpActiveConnections[i].ProcessName = proccArray.First().ProcessName;
+                    } else {
+                        ETW.ProcessNetworkData procData = ETW.processes.Where(processData => TcpActiveConnections[i].ProcessId == processData.Value.pId).First().Value;
+                        if (procData != null)
+                        {
+                            TcpActiveConnections[i].ProcessName = procData.pName;
+                        }
                     }
                 }
 
@@ -69,6 +75,12 @@ namespace tickMeter
                     if (proccArray.Length > 0)
                     {
                         UdpActiveConnections[i].ProcessName = proccArray.First().ProcessName;
+                    } else {
+                        ETW.ProcessNetworkData procData = ETW.processes.Where(processData => UdpActiveConnections[i].ProcessId == processData.Value.pId).First().Value;
+                        if (procData != null)
+                        {
+                            UdpActiveConnections[i].ProcessName = procData.pName;
+                        }
                     }
                 }
             });

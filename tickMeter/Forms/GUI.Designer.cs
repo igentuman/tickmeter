@@ -48,11 +48,15 @@
             this.packetStatsBtn = new System.Windows.Forms.PictureBox();
             this.SettingsButton = new System.Windows.Forms.PictureBox();
             this.graph = new System.Windows.Forms.PictureBox();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.icon_menu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.exit = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.webStatsButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gameProfilesButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.packetStatsBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SettingsButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.graph)).BeginInit();
+            this.icon_menu.SuspendLayout();
             this.SuspendLayout();
             // 
             // tickrate_lbl
@@ -289,6 +293,30 @@
             this.graph.TabIndex = 34;
             this.graph.TabStop = false;
             // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.ContextMenuStrip = this.icon_menu;
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "TickMeter";
+            this.notifyIcon1.Visible = true;
+            this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
+            // 
+            // icon_menu
+            // 
+            this.icon_menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exit});
+            this.icon_menu.Name = "icon_menu";
+            this.icon_menu.Size = new System.Drawing.Size(181, 48);
+            this.icon_menu.Text = "TickMeter";
+            this.icon_menu.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.icon_menu_ItemClicked);
+            this.icon_menu.MouseClick += new System.Windows.Forms.MouseEventHandler(this.icon_menu_MouseClick);
+            // 
+            // exit
+            // 
+            this.exit.Name = "exit";
+            this.exit.Size = new System.Drawing.Size(180, 22);
+            this.exit.Text = "Exit";
+            // 
             // GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -320,13 +348,16 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "tickMeter 2.0";
             this.TransparencyKey = System.Drawing.SystemColors.Info;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GUI_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.GUI_FormClosed);
             this.Load += new System.EventHandler(this.GUI_Load);
+            this.Resize += new System.EventHandler(this.GUI_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.webStatsButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gameProfilesButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.packetStatsBtn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SettingsButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.graph)).EndInit();
+            this.icon_menu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -351,6 +382,9 @@
         private System.Windows.Forms.Label time_val;
         private System.Windows.Forms.PictureBox gameProfilesButton;
         private System.Windows.Forms.PictureBox webStatsButton;
+        public System.Windows.Forms.NotifyIcon notifyIcon1;
+        private System.Windows.Forms.ContextMenuStrip icon_menu;
+        private System.Windows.Forms.ToolStripMenuItem exit;
     }
 }
 

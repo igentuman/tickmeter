@@ -113,11 +113,11 @@ namespace tickMeter.Classes
                     {
                         if (from_ip == App.meterState.LocalIP)
                         {
-                            record = UdpConnections.Where(procReq => procReq.LocalPort.ToString() == from_port).First();
+                            record = UdpConnections.First(procReq => procReq.LocalPort.ToString() == from_port);
                         }
                         else
                         {
-                            record = UdpConnections.Where(procReq => procReq.LocalPort.ToString() == to_port).First();
+                            record = UdpConnections.First(procReq => procReq.LocalPort.ToString() == to_port);
                         }
 
                         if (record != null)
@@ -140,11 +140,11 @@ namespace tickMeter.Classes
                     {
                         if (from_ip == App.meterState.LocalIP)
                         {
-                            record = TcpConnections.Where(procReq => procReq.LocalPort.ToString() == from_port && procReq.RemotePort.ToString() == to_port).First();
+                            record = TcpConnections.First(procReq => procReq.LocalPort.ToString() == from_port && procReq.RemotePort.ToString() == to_port);
                         }
                         else
                         {
-                            record = TcpConnections.Where(procReq => procReq.LocalPort.ToString() == to_port && procReq.RemotePort.ToString() == from_port).First();
+                            record = TcpConnections.First(procReq => procReq.LocalPort.ToString() == to_port && procReq.RemotePort.ToString() == from_port);
                         }
                         if (record != null)
                         {
@@ -157,6 +157,12 @@ namespace tickMeter.Classes
                 from_port = tcp.SourcePort.ToString();
                 to_port = tcp.DestinationPort.ToString();
             }
+
+            if (processName == @"n\a")
+            {
+                processName = ETW.resolveProcessname(from_ip, to_ip, from_port, to_port);
+            }
+
 
             int i = -1;
             if (activeProcesses.Count > 0)
@@ -262,6 +268,7 @@ namespace tickMeter.Classes
         public static void ProcessPacket(Packet packet)
         {
             if (!IsEnabled()) return;
+
             string pName = GetActiveProcessName();
             if (GetActiveProcesses().Count() == 0) return;
             if (App.meterState.Game != "" && GetActiveProcesses().Where(process => App.meterState.Game == process.processName).Count() == 0) return;

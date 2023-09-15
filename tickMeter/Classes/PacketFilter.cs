@@ -68,7 +68,9 @@ namespace tickMeter.Classes
 
         protected bool ValidatePort(string port, string portToCheck)
         {
-            if (port == "" || portToCheck == "") return true;
+            if (portToCheck == "0" || portToCheck == "") return false;
+
+            if (port == "") return true;
 
             string[] portParts = port.Split('-');
             if (portParts.Length == 2)
@@ -174,16 +176,18 @@ namespace tickMeter.Classes
             string SourcePort = "";
             string DestPort = "";
             
-            if (ip.Protocol == IpV4Protocol.Udp)
+            switch(ip.Protocol)
             {
-                SourcePort = ip.Udp.SourcePort.ToString();
-                DestPort = ip.Udp.DestinationPort.ToString();
+                case IpV4Protocol.Udp:
+                    SourcePort = ip.Udp.SourcePort.ToString();
+                    DestPort = ip.Udp.DestinationPort.ToString();
+                    break;
+                case IpV4Protocol.Tcp:
+                    SourcePort = ip.Tcp.SourcePort.ToString();
+                    DestPort = ip.Tcp.DestinationPort.ToString();
+                    break;
             }
-            else if (ip.Protocol == IpV4Protocol.Tcp)
-            {
-                SourcePort = ip.Tcp.SourcePort.ToString();
-                DestPort = ip.Tcp.DestinationPort.ToString();
-            }
+
             
             if (!ValidatePort(SourcePortFilter, SourcePort)) return false;
 

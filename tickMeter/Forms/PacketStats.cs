@@ -194,7 +194,9 @@ namespace tickMeter
                                 }
                             }
                         }
-                    } catch(Exception) { processName = @"n\a"; }
+                    } catch(Exception) { 
+                        processName = @"n\a"; 
+                    }
                     
                 }
                 else
@@ -223,10 +225,17 @@ namespace tickMeter
                             }
                         }
                         
-                    } catch (Exception) { processName = @"n\a"; }
+                    } catch (Exception ex) { 
+                        processName = @"n\a"; 
+                    }
                 from_port = tcp.SourcePort.ToString();
                     to_port = tcp.DestinationPort.ToString();
                 }
+                if(processName == @"n\a")
+                {
+                    processName = ETW.resolveProcessname(from_ip, to_ip, from_port, to_port);
+                }
+                
                 if (!packetFilter.ValidateProcess(processName)) continue;
 
                 ListViewItem item = new ListViewItem(packet.Timestamp.ToString("HH:mm:ss.fff"));
