@@ -86,13 +86,13 @@ namespace tickMeter
             NetworkActivityFlag = false;
         }
         public bool firstPacket = true;
-        public void ProcessPacket(Packet packet)
+        public bool ProcessPacket(Packet packet)
         {
-
-            if (!GameRunningFlag || App.settingsManager.GetOption(GameCode) != "True") return;
-            if (packet.Ethernet.IpV4.Protocol != PcapDotNet.Packets.IpV4.IpV4Protocol.Udp) return;
-            if (packet.Ethernet.IpV4.Udp.SourcePort < ignorePortTo && packet.Ethernet.IpV4.Udp.SourcePort > ignorePortFrom) return;
-            if (packet.Ethernet.IpV4.Udp.DestinationPort < ignorePortTo && packet.Ethernet.IpV4.Udp.DestinationPort > ignorePortFrom) return;
+            bool isTracking = false;
+            if (!GameRunningFlag || App.settingsManager.GetOption(GameCode) != "True") return false;
+            if (packet.Ethernet.IpV4.Protocol != PcapDotNet.Packets.IpV4.IpV4Protocol.Udp) return false;
+            if (packet.Ethernet.IpV4.Udp.SourcePort < ignorePortTo && packet.Ethernet.IpV4.Udp.SourcePort > ignorePortFrom) return false;
+            if (packet.Ethernet.IpV4.Udp.DestinationPort < ignorePortTo && packet.Ethernet.IpV4.Udp.DestinationPort > ignorePortFrom) return false;
             //search within port range and destination (local) port we fetched from connections manager
             if (packet.Ethernet.IpV4.Udp.SourcePort > StartPort && packet.Ethernet.IpV4.Udp.SourcePort < EndPort && packet.Ethernet.IpV4.Destination.ToString() == App.meterState.LocalIP)
             {
@@ -101,7 +101,7 @@ namespace tickMeter
                     firstPacket = false;
                     Debug.Print(packet.Ethernet.IpV4.Udp.Payload.ToHexadecimalString());
                 }
-                if (App.meterState.ConnectionsManagerFlag && !openPorts.Contains(packet.Ethernet.IpV4.Udp.DestinationPort)) return;
+                if (App.meterState.ConnectionsManagerFlag && !openPorts.Contains(packet.Ethernet.IpV4.Udp.DestinationPort)) return false;
                 App.meterState.updateTicktimeBuffer(packet.Timestamp.Ticks);
                 App.meterState.CurrentTimestamp = packet.Timestamp;
                 App.meterState.Game = GameCode;
@@ -110,14 +110,19 @@ namespace tickMeter
                 App.meterState.DownloadTraffic += packet.Ethernet.IpV4.Udp.TotalLength;
                 App.meterState.TickRate++;
                 NetworkActivityFlag = true;
+                isTracking = true;
+                App.meterState.isBuiltInProfileActive = true;
             }
-            Debug.Print(App.meterState.TickRate.ToString());
+            //Debug.Print(App.meterState.TickRate.ToString());
             if (packet.Ethernet.IpV4.Udp.DestinationPort > StartPort && packet.Ethernet.IpV4.Udp.DestinationPort < EndPort && packet.Ethernet.IpV4.Source.ToString() == App.meterState.LocalIP)
             {
-                if (App.meterState.ConnectionsManagerFlag && !openPorts.Contains(packet.Ethernet.IpV4.Udp.SourcePort)) return;
+                if (App.meterState.ConnectionsManagerFlag && !openPorts.Contains(packet.Ethernet.IpV4.Udp.SourcePort)) return false;
                 NetworkActivityFlag = true;
                 App.meterState.UploadTraffic += packet.Ethernet.IpV4.Udp.TotalLength;
+                isTracking = true;
+                App.meterState.isBuiltInProfileActive = true;
             }
+            return isTracking;
         }
     }
 }

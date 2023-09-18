@@ -7,37 +7,10 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace tickMeter.Classes
 {
-
-    public class ProcessNetInstance
-    {
-        public string processName;
-        public int processID;
-        public DateTime startTrack;
-        public int ticksIn;
-        public int ticksOut;
-        public DateTime lastUpdate;
-        public int remotePort;
-        public int localPort;
-        public string remoteIP;
-        public string protocol;
-
-        public int TrackingDelta()
-        {
-            return (int)(TimeSpan.FromTicks(DateTime.Now.Ticks - startTrack.Ticks).TotalSeconds);
-        }
-
-        public int LastUpdateDelta()
-        {
-            return (int)(TimeSpan.FromTicks(DateTime.Now.Ticks - lastUpdate.Ticks).TotalSeconds);
-        }
-    }
-
     public static class AutoDetectMngr
     {
 
@@ -77,7 +50,7 @@ namespace tickMeter.Classes
         public static PacketFilter profileFilter = new PacketFilter();
         public static string GameName;
         public static string RequireProcess;
-        public static List<ProcessNetInstance> activeProcesses = new List<ProcessNetInstance>();
+        public static List<ProcessNetworkStats> activeProcesses = new List<ProcessNetworkStats>();
 
         public static void AnalyzePacket(Packet packet)
         {
@@ -92,33 +65,26 @@ namespace tickMeter.Classes
             UdpDatagram udp = ip.Udp;
             TcpDatagram tcp = ip.Tcp;
 
-            string from_ip = ip.Source.ToString();
-            string to_ip = ip.Destination.ToString();
+            string fromIp = ip.Source.ToString();
+            string toIp = ip.Destination.ToString();
 
-            string packet_size = ip.TotalLength.ToString();
+            uint packetSize = (uint)ip.TotalLength;
 
             string protocol = ip.Protocol.ToString();
-            string from_port = "";
-            string to_port = "";
+            uint fromPort = 0;
+            uint toPort = 0;
             string processName = @"n\a";
             if (protocol == IpV4Protocol.Udp.ToString())
             {
-                from_port = udp.SourcePort.ToString();
-                to_port = udp.DestinationPort.ToString();
+                fromPort = udp.SourcePort;
+                toPort = udp.DestinationPort;
                 try
                 {
                     UdpProcessRecord record;
                     List<UdpProcessRecord> UdpConnections = App.connMngr.UdpActiveConnections;
                     if (UdpConnections.Count > 0)
                     {
-                        if (from_ip == App.meterState.LocalIP)
-                        {
-                            record = UdpConnections.First(procReq => procReq.LocalPort.ToString() == from_port);
-                        }
-                        else
-                        {
-                            record = UdpConnections.First(procReq => procReq.LocalPort.ToString() == to_port);
-                        }
+                        record = UdpConnections.First(procReq => procReq.LocalPort== fromPort || procReq.LocalPort == toPort);
 
                         if (record != null)
                         {
@@ -132,35 +98,31 @@ namespace tickMeter.Classes
             }
             else
             {
+                fromPort = tcp.SourcePort;
+                toPort = tcp.DestinationPort;
                 try
                 {
                     TcpProcessRecord record;
                     List<TcpProcessRecord> TcpConnections = App.connMngr.TcpActiveConnections;
                     if (TcpConnections.Count > 0)
                     {
-                        if (from_ip == App.meterState.LocalIP)
-                        {
-                            record = TcpConnections.First(procReq => procReq.LocalPort.ToString() == from_port && procReq.RemotePort.ToString() == to_port);
-                        }
-                        else
-                        {
-                            record = TcpConnections.First(procReq => procReq.LocalPort.ToString() == to_port && procReq.RemotePort.ToString() == from_port);
-                        }
+                       record = TcpConnections.First(procReq => 
+                       (procReq.LocalPort == fromPort && procReq.RemotePort == toPort)
+                       || (procReq.LocalPort == fromPort && procReq.RemotePort == toPort)
+                       );
+                        
                         if (record != null)
                         {
                             processName = record.ProcessName;
                         }
                     }
-
                 }
                 catch (Exception) {processName = @"n\a"; }
-                from_port = tcp.SourcePort.ToString();
-                to_port = tcp.DestinationPort.ToString();
             }
 
             if (processName == @"n\a")
             {
-                processName = ETW.resolveProcessname(from_ip, to_ip, from_port, to_port);
+                processName = ETW.resolveProcessname(fromIp, toIp, fromPort, toPort);
             }
 
 
@@ -168,7 +130,7 @@ namespace tickMeter.Classes
             if (activeProcesses.Count > 0)
                 for (i = 0; i < activeProcesses.Count; i++)
                 {
-                    if (activeProcesses[i].processName == processName)
+                    if (activeProcesses[i].name == processName)
                     {
                         break;
                     }
@@ -176,12 +138,12 @@ namespace tickMeter.Classes
 
             if (i == -1 && processName != @"n\a")
             {
-                ProcessNetInstance tmpProc = new ProcessNetInstance()
+                ProcessNetworkStats tmpProc = new ProcessNetworkStats()
                 {
-                    processName = processName,
-                    remoteIP = to_ip != App.meterState.LocalIP ? to_ip : from_ip,
-                    remotePort = to_ip != App.meterState.LocalIP ? int.Parse(to_port) : int.Parse(from_port),
-                    localPort = to_ip == App.meterState.LocalIP ? int.Parse(to_port) : int.Parse(from_port),
+                    name = processName,
+                    remoteIp = toIp != App.meterState.LocalIP ? toIp : fromIp,
+                    remotePort = toIp != App.meterState.LocalIP ? toPort : fromPort,
+                    localPort = toIp == App.meterState.LocalIP ? toPort : fromPort,
                     startTrack = DateTime.Now,
                     protocol = protocol,
 
@@ -191,7 +153,7 @@ namespace tickMeter.Classes
             }
             if (i > -1 && activeProcesses.Count > i)
             {
-                if (to_ip == App.meterState.LocalIP)
+                if (toIp == App.meterState.LocalIP)
                 {
                     activeProcesses[i].ticksIn++;
                 }
@@ -199,7 +161,7 @@ namespace tickMeter.Classes
                 {
                     activeProcesses[i].ticksOut++;
                 }
-                activeProcesses[i].lastUpdate = DateTime.Now;
+               // activeProcesses[i].lastUpdate = DateTime.Now;
             }
         }
 
@@ -223,21 +185,21 @@ namespace tickMeter.Classes
 
         public static bool IsEnabled()
         {
-            return App.settingsManager.GetOption("autodetect") == "True";
+            return false;//temporary disable this
         }
 
-        public static void InitFilter(ProcessNetInstance proc)
+        public static void InitFilter(ProcessNetworkStats proc)
         {
             profileFilter.DestIpFilter = App.meterState.LocalIP;
             profileFilter.DestPortFilter = proc.localPort.ToString();
-            profileFilter.SourceIpFilter = proc.remoteIP;
+            profileFilter.SourceIpFilter = proc.remoteIp;
             profileFilter.SourcePortFilter = proc.remotePort.ToString();
-            profileFilter.ProcessFilter = proc.processName;
+            profileFilter.ProcessFilter = proc.name;
             profileFilter.ProtocolFilter = proc.protocol;
-            RequireProcess = proc.processName;
+            RequireProcess = proc.name;
         }
 
-        public static bool ValidateProc(Packet packet, ProcessNetInstance proc)
+        public static bool ValidateProc(Packet packet, ProcessNetworkStats proc)
         {
             InitFilter(proc);
             if (profileFilter.Validate() && packet.Ethernet.IpV4.Destination.ToString() == App.meterState.LocalIP)
@@ -268,31 +230,31 @@ namespace tickMeter.Classes
         public static void ProcessPacket(Packet packet)
         {
             if (!IsEnabled()) return;
-
+            List<ProcessNetworkStats> activeProcesses = GetActiveProcesses();
             string pName = GetActiveProcessName();
-            if (GetActiveProcesses().Count() == 0) return;
-            if (App.meterState.Game != "" && GetActiveProcesses().Where(process => App.meterState.Game == process.processName).Count() == 0) return;
+            if (activeProcesses.Count() == 0) return;
+            if (App.meterState.Game != "" && activeProcesses.Where(process => App.meterState.Game == process.name).Count() == 0) return;
             profileFilter.ip = packet.Ethernet.IpV4;
-            if (GetActiveProcesses().Where(process => pName == process.processName).Count() > 0)
+            if (activeProcesses.Where(process => pName == process.name).Count() > 0)
             {
-                ProcessNetInstance activeProc = GetActiveProcesses().Where(process => pName == process.processName).FirstOrDefault();
+                ProcessNetworkStats activeProc = activeProcesses.First(process => pName == process.name);
                 if (ValidateProc(packet, activeProc)) return;
             }
 
-            foreach(ProcessNetInstance proc in GetActiveProcesses())
+            foreach(ProcessNetworkStats proc in activeProcesses)
             {
                 if (ValidateProc(packet, proc)) return;
             }
 
         }
 
-        public static List<ProcessNetInstance> GetActiveProcesses()
+        public static List<ProcessNetworkStats> GetActiveProcesses()
         {
-            List<ProcessNetInstance> tmpList = new List<ProcessNetInstance>();
+            List<ProcessNetworkStats> tmpList = new List<ProcessNetworkStats>();
             foreach (var procNet in activeProcesses)
             {
                 if (procNet.TrackingDelta() == 0) continue;
-                if (procNet.ticksIn / procNet.TrackingDelta() > 10 && procNet.ticksOut / procNet.TrackingDelta() > 10 && procNet.TrackingDelta() > 3)
+                if (procNet.ticksIn / procNet.TrackingDelta() > 2 && procNet.ticksOut / procNet.TrackingDelta() > 2 && procNet.TrackingDelta() > 3)
                 {
                     tmpList.Add(procNet);
                 }
@@ -304,25 +266,25 @@ namespace tickMeter.Classes
         {
             procItems.Clear();
             int indx = 0;
-            List<ProcessNetInstance> tmpList = activeProcesses.ToList();
+            List<ProcessNetworkStats> tmpList = activeProcesses.ToList();
             foreach (var procNet in tmpList)
             {
 
                 if (procNet.TrackingDelta() == 0) continue;
-                if (procNet.ticksIn / procNet.TrackingDelta() > 10 && procNet.ticksOut / procNet.TrackingDelta() > 10 && procNet.TrackingDelta() > 3)
+                if (procNet.ticksIn / procNet.TrackingDelta() > 2 && procNet.ticksOut / procNet.TrackingDelta() > 2 && procNet.TrackingDelta() > 3)
                 {
-                    ListViewItem procItem = new ListViewItem(procNet.remoteIP);
+                    ListViewItem procItem = new ListViewItem(procNet.remoteIp);
                     procItem.SubItems.Add(procNet.remotePort.ToString());
                     procItem.SubItems.Add(procNet.localPort.ToString());
                     procItem.SubItems.Add((procNet.ticksIn / procNet.TrackingDelta()).ToString());
                     procItem.SubItems.Add((procNet.ticksOut / procNet.TrackingDelta()).ToString());
                     procItem.SubItems.Add(procNet.protocol.ToString());
-                    procItem.SubItems.Add(procNet.processName);
+                    procItem.SubItems.Add(procNet.name);
                     procItems.Add(procItem);
                 }
                 else
                 {
-                    if (procNet.TrackingDelta() > 3 && procNet.ticksIn / procNet.TrackingDelta() < 10 && procNet.ticksOut / procNet.TrackingDelta() < 10)
+                    if (procNet.TrackingDelta() > 3 && procNet.ticksIn / procNet.TrackingDelta() < 4 && procNet.ticksOut / procNet.TrackingDelta() < 4)
                     {
                         activeProcesses.RemoveAt(indx);
                     }

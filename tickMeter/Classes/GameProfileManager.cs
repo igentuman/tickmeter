@@ -20,15 +20,16 @@ namespace tickMeter.Classes
 
         public static void CallBuitInProfiles(Packet packet)
         {
-            DbdMngr.ProcessPacket(packet);
-            PubgMngr.ProcessPacket(packet);
+            App.meterState.isBuiltInProfileActive = false;
+            bool result = DbdMngr.ProcessPacket(packet);
+            if (!result) { PubgMngr.ProcessPacket(packet); }
         }
 
         public static void CallCustomProfiles(Packet packet)
         {
             foreach(GameProfile gProf in gameProfs)
             {
-                gProf.ProcessPacket(packet);
+                if (gProf.ProcessPacket(packet)) continue;
             }
         }
 

@@ -308,6 +308,7 @@
             this.icon_menu.Name = "icon_menu";
             this.icon_menu.Size = new System.Drawing.Size(181, 48);
             this.icon_menu.Text = "TickMeter";
+            this.icon_menu.Opening += new System.ComponentModel.CancelEventHandler(this.icon_menu_Opening);
             this.icon_menu.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.icon_menu_ItemClicked);
             this.icon_menu.MouseClick += new System.Windows.Forms.MouseEventHandler(this.icon_menu_MouseClick);
             // 

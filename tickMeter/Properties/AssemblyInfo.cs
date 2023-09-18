@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("tickMeter")]
 [assembly: AssemblyDescription("Tickrate and ping meter")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("it-man.website")]
+[assembly: AssemblyCompany("itman.website")]
 [assembly: AssemblyProduct("tickMeter")]
-[assembly: AssemblyCopyright("it-man.website ©  2018")]
+[assembly: AssemblyCopyright("itman.website ©  2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("2.0.0.0")]
+[assembly: AssemblyVersion("2.1.0.0")]
+[assembly: AssemblyFileVersion("2.1.0.0")]

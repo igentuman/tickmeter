@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -16,26 +17,26 @@ namespace tickMeter.Classes
         {
             public string pName;
             public int pId;
-            public string in_ip;
-            public string out_ip;
-            public int in_port;
-            public int out_port;
+            public string toIp;
+            public string fromIp;
+            public uint toPort;
+            public uint fromPort;
 
-            public ProcessNetworkData(string name, int pId, string in_ip, string out_ip, int in_port, int out_port)
+            public ProcessNetworkData(string name, int pId, string toIp, string fromIp, uint toPort, uint fromPort)
             {
                 this.pName = name;
                 this.pId = pId;
-                this.in_ip = in_ip;
-                this.out_ip = out_ip;
-                this.in_port = in_port;
-                this.out_port = out_port;
+                this.toIp = toIp;
+                this.fromIp = fromIp;
+                this.toPort = toPort;
+                this.fromPort = fromPort;
             }
 
-            public static string Hash(string name, int pId, string in_ip, string out_ip, int in_port, int out_port)
+            public static string Hash(string name, int pId, string toIp, string fromIp, int toPort, int fromPort)
             {
                 using (MD5 md5 = MD5.Create())
                 {
-                    byte[] inputBytes = new UTF8Encoding().GetBytes(name + pId.ToString() + in_ip + out_ip + in_port.ToString() + out_port.ToString());
+                    byte[] inputBytes = new UTF8Encoding().GetBytes(name + pId.ToString() + toIp + fromIp + toPort.ToString() + fromPort.ToString());
                     byte[] hashBytes = md5.ComputeHash(inputBytes);
 
                     return BitConverter.ToString(hashBytes).Replace("-", string.Empty).ToLower();
@@ -48,10 +49,10 @@ namespace tickMeter.Classes
                 if (
                     processes.ContainsKey(hash) && (
                         processes[hash].pName != processName
-                        || processes[hash].in_ip != daddr
-                        || processes[hash].out_ip != saddr
-                        || processes[hash].in_port != dport
-                        || processes[hash].out_port != sport
+                        || processes[hash].toIp != daddr
+                        || processes[hash].fromIp != saddr
+                        || processes[hash].toPort != dport
+                        || processes[hash].fromPort != sport
                     )
                 )
                 {
@@ -59,7 +60,7 @@ namespace tickMeter.Classes
                 }
                 if (!processes.ContainsKey(hash))
                 {
-                    processes.Add(hash, new ProcessNetworkData(processName, processID, saddr, daddr, sport, dport));
+                    processes.Add(hash, new ProcessNetworkData(processName, processID, saddr, daddr, (uint)sport, (uint)dport));
                 }
             }
         }
@@ -136,28 +137,28 @@ namespace tickMeter.Classes
             ProcessNetworkData.processEventData(session.ProcessName, session.ProcessID, session.saddr.ToString(), session.daddr.ToString(), session.sport, session.dport);
         }
 
-        public static string resolveProcessname(string from_ip, string to_ip, string from_port, string to_port)
+        public static string resolveProcessname(string fromIp, string toIp, uint fromPort, uint toPort)
         {
-            ProcessNetworkData data = null;
             try
             {
-                data = processes.First(procData =>
-                        (procData.Value.in_port.ToString() == to_port
-                        && procData.Value.out_port.ToString() == from_port
-                        && procData.Value.in_ip == to_ip
-                        && procData.Value.out_ip == from_ip)
+                foreach (ProcessNetworkData procData in processes.Values)
+                {
+                    if(procData == null) continue;
+                    if (
+                            (procData.toPort == toPort
+                        && procData.fromPort == fromPort
+                        && procData.toIp == toIp
+                        && procData.fromIp == fromIp)
                         ||
-                        (procData.Value.in_port.ToString() == from_port
-                        && procData.Value.out_port.ToString() == to_port
-                        && procData.Value.in_ip == from_ip
-                        && procData.Value.out_ip == to_ip)
-                    ).Value;
-            } catch (InvalidOperationException exception)
-            { }
-            if(data != null )
-            {
-                return data.pName;
-            }
+                        (procData.toPort == fromPort
+                        && procData.fromPort == toPort
+                        && procData.toIp == fromIp
+                        && procData.fromIp == toIp))
+                    {
+                        return procData.pName;
+                    }
+                }
+            } catch { }
             return @"n\a";
         }
     }

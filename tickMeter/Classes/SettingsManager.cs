@@ -34,7 +34,7 @@ namespace tickMeter
             try
             {
                 val = int.Parse(rawValue);
-            } catch (FormatException ex) {
+            } catch (FormatException ignored) {
             }
             return val;
         }

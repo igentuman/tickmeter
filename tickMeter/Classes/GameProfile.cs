@@ -17,9 +17,11 @@ namespace tickMeter.Classes
         public IniData data;
         public FileIniDataParser parser;
 
-        public void ProcessPacket(Packet packet)
+        public bool ProcessPacket(Packet packet)
         {
-            if (!isEnabled) return;
+            if(App.meterState.isBuiltInProfileActive) { return false; }
+            App.meterState.isCustomProfileActive = false;
+            if (!isEnabled) return false;
             profileFilter.ip = packet.Ethernet.IpV4;
             if (profileFilter.Validate())
             {
@@ -32,7 +34,8 @@ namespace tickMeter.Classes
                     App.meterState.DownloadTraffic += packet.Ethernet.IpV4.TotalLength;
                     App.meterState.TickRate++;
                     App.meterState.Server.PingPort = packet.Ethernet.IpV4.Udp.SourcePort;
-                    return;
+                    App.meterState.isCustomProfileActive = true;
+                    return true;
                 }
             }
             // validate packet sending
@@ -41,8 +44,11 @@ namespace tickMeter.Classes
                 if (packet.Ethernet.IpV4.Source.ToString() == App.meterState.LocalIP)
                 {
                     App.meterState.UploadTraffic += packet.Ethernet.IpV4.TotalLength;
+                    App.meterState.isCustomProfileActive = true;
+                    return true;
                 }
             }
+            return false;
         }
 
         public void Save()

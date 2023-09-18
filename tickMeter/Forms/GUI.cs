@@ -13,6 +13,7 @@ using System.Globalization;
 using System.Diagnostics;
 using tickMeter.Classes;
 using System.Threading;
+using System.Net.Sockets;
 
 
 namespace tickMeter.Forms
@@ -24,6 +25,7 @@ namespace tickMeter.Forms
         public Thread PcapThread;
 
         public BackgroundWorker pcapWorker;
+        public Boolean allowClose = false;
         int restarts = 0;
         int restartLimit = 1;
         int lastSelectedAdapterID = -1;
@@ -182,26 +184,31 @@ namespace tickMeter.Forms
 
         private void PacketHandler(Packet packet)
         {
-
             if (!App.meterState.IsTracking) return;
-            if (
-                !packet.IsValid
-                || !packet.IpV4.IsValid
-            ) return;
             GameProfileManager.CallBuitInProfiles(packet);
             GameProfileManager.CallCustomProfiles(packet);
-            AutoDetectMngr.AnalyzePacket(packet);
-            AutoDetectMngr.ProcessPacket(packet);
-    
+            ActiveWindowTracker.AnalyzePacket(packet);
         }
 
+        bool RTSS_Failed = false;
         
         private async void TicksLoop_Tick(object sender, EventArgs e)
         {
+            AutoDetectMngr.GetActiveProcessName(true);
+            if(!App.meterState.isBuiltInProfileActive && !App.meterState.isCustomProfileActive)
+            {
+                updateMetherStateFromActiveWindow();
+            }
             if (App.settingsForm.settings_rtss_output.Checked)
             {
                 await Task.Run(() => {
-                    try { RivaTuner.BuildRivaOutput(); } catch (Exception exc) { MessageBox.Show(exc.Message); }
+                    try { RivaTuner.BuildRivaOutput(); } catch (Exception exc) {
+                        if(!RTSS_Failed)
+                        {
+                            MessageBox.Show(exc.Message);
+                            RTSS_Failed = true;
+                        }
+                    }
                 });
             }
 
@@ -259,6 +266,38 @@ namespace tickMeter.Forms
             if (!App.meterState.IsTracking)
             {
                 StopTracking();
+            }
+        }
+
+        private void updateMetherStateFromActiveWindow()
+        {
+            int maxTicks = 0;
+            string targetKey = "";
+            string activeProcess = AutoDetectMngr.GetActiveProcessName();
+            int maxDuration = 0;
+
+            foreach(string procKey in ActiveWindowTracker.connections.Keys)
+            {
+                if (ActiveWindowTracker.connections[procKey].name != activeProcess) continue;
+                if(ActiveWindowTracker.connections[procKey].ticksIn > maxTicks)
+                {
+                    maxTicks = ActiveWindowTracker.connections[procKey].ticksIn;
+                    targetKey = procKey;
+                    maxDuration = ActiveWindowTracker.connections[procKey].TrackingDelta();
+                }
+            }
+            if(targetKey != "" && maxDuration > 3)
+            {
+                ProcessNetworkStats procStats = ActiveWindowTracker.connections[targetKey];
+                App.meterState.tickTimeBuffer = procStats.tickTimeBuffer;
+                App.meterState.CurrentTimestamp = DateTime.Now;
+                App.meterState.Game = procStats.name;
+                App.meterState.Server.Ip = procStats.remoteIp.ToString();
+                App.meterState.DownloadTraffic = procStats.downloaded;
+                App.meterState.TickRate = procStats.getTicksIn();
+                App.meterState.Server.PingPort = (int)procStats.remotePort;
+                App.meterState.SessionStart = procStats.startTrack;
+                App.meterState.IsTracking = true;
             }
         }
 
@@ -511,7 +550,7 @@ namespace tickMeter.Forms
 
         private void GUI_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (e.CloseReason == CloseReason.UserClosing)
+            if (e.CloseReason == CloseReason.UserClosing && !allowClose)
             {
                 Hide();
                 e.Cancel = true;
@@ -523,7 +562,13 @@ namespace tickMeter.Forms
             StopTracking();
             App.settingsForm.SaveToConfig();
             RivaTuner.KillRtss();
+            allowClose = true;
             Application.Exit();
+        }
+
+        private void icon_menu_Opening(object sender, CancelEventArgs e)
+        {
+
         }
     }
 }

@@ -14,6 +14,9 @@
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>false</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -25,13 +28,10 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.5.0.0</ApplicationVersion>
+    <ApplicationVersion>2.1.0.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x64</PlatformTarget>
@@ -225,6 +225,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\App.cs" />
+    <Compile Include="Classes\ActiveWinowTracker.cs" />
     <Compile Include="Classes\AutoDetectMngr.cs" />
     <Compile Include="Classes\ConnectionsManager.cs" />
     <Compile Include="Classes\ETW.cs" />
@@ -235,6 +236,7 @@
     </Compile>
     <Compile Include="Classes\PacketFilter.cs" />
     <Compile Include="Classes\DbdStatsManager.cs" />
+    <Compile Include="Classes\ProcessNetworkStats.cs" />
     <Compile Include="Classes\PubgStatsManager.cs" />
     <Compile Include="Classes\WebStatsManager.cs" />
     <Compile Include="Forms\GUI.cs">

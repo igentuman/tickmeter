@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using PcapDotNet.Packets;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,7 +7,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using tickMeter.Classes;
 
 namespace tickMeter
@@ -28,6 +26,9 @@ namespace tickMeter
 
         public string LocalIP { get; set; }
         public string Game { get; set; } = "";
+
+        public bool isBuiltInProfileActive = false;
+        public bool isCustomProfileActive = false;
 
         public int AvgTickrate;
         public List<int> TicksHistory { get; set; }
@@ -245,6 +246,7 @@ namespace tickMeter
 
             public void SetPingTimer()
             {
+                ICMPfails = 0;
                 int PingInterval = 2000;
                 if(App.settingsManager.GetOption("ping_interval") != null && App.settingsManager.GetOption("ping_interval") != "")
                 {
@@ -346,7 +348,8 @@ namespace tickMeter
 
             public int PingSocket()
             {
-                Socket sock = new Socket(System.Net.Sockets.AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)
+                TcpClient tcpClient = new TcpClient();
+                Socket sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)
                 {
                     Blocking = true,
                     ReceiveTimeout = PingLimit
