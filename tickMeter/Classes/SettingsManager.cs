@@ -16,7 +16,6 @@ namespace tickMeter
             parser = new FileIniDataParser();
             if (!File.Exists("settings.ini"))
             {
-                File.Create("settings.ini");
                 File.WriteAllText("settings.ini", "[SETTINGS]"+Environment.NewLine);
             }
             data = parser.ReadFile("settings.ini");

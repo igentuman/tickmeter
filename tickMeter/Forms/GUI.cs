@@ -64,7 +64,13 @@ namespace tickMeter.Forms
         /// </summary>
         public GUI()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+            } catch(Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
             App.Init();
             App.gui = this;
 
@@ -498,7 +504,7 @@ namespace tickMeter.Forms
             appInitHeigh = Height;
             appInitWidth = Width;
             App.settingsForm.ApplyFromConfig();
-            App.settingsForm.CheckNewVersion();
+           // App.settingsForm.CheckNewVersion();
 
             CultureInfo ci = CultureInfo.InstalledUICulture;
             if (ci.TwoLetterISOLanguageName != "ru")
@@ -563,7 +569,7 @@ namespace tickMeter.Forms
             App.settingsForm.SaveToConfig();
             RivaTuner.KillRtss();
             allowClose = true;
-            Application.Exit();
+            Close();
         }
 
         private void icon_menu_Opening(object sender, CancelEventArgs e)

@@ -306,7 +306,7 @@
             this.icon_menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.exit});
             this.icon_menu.Name = "icon_menu";
-            this.icon_menu.Size = new System.Drawing.Size(181, 48);
+            this.icon_menu.Size = new System.Drawing.Size(93, 26);
             this.icon_menu.Text = "TickMeter";
             this.icon_menu.Opening += new System.ComponentModel.CancelEventHandler(this.icon_menu_Opening);
             this.icon_menu.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.icon_menu_ItemClicked);
@@ -315,7 +315,7 @@
             // exit
             // 
             this.exit.Name = "exit";
-            this.exit.Size = new System.Drawing.Size(180, 22);
+            this.exit.Size = new System.Drawing.Size(92, 22);
             this.exit.Text = "Exit";
             // 
             // GUI
@@ -347,7 +347,7 @@
             this.MinimumSize = new System.Drawing.Size(454, 438);
             this.Name = "GUI";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "tickMeter 2.0";
+            this.Text = "tickMeter 2.1";
             this.TransparencyKey = System.Drawing.SystemColors.Info;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GUI_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.GUI_FormClosed);

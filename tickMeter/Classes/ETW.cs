@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -73,6 +71,7 @@ namespace tickMeter.Classes
                 using (var kernelSession = new TraceEventSession(KernelTraceEventParser.KernelSessionName))
                 {
                     kernelSession.EnableKernelProvider(KernelTraceEventParser.Keywords.NetworkTCPIP);
+
 
                     kernelSession.Source.Kernel.TcpIpAccept += acceptTCPIP;
                     kernelSession.Source.Kernel.TcpIpPartACK += ackTCPIP;
