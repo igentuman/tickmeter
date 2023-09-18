@@ -1,16 +1,17 @@
 # TickMeter - программа для измерения тикрейта, пинга и трафика в играх и приложениях.
 [ENG version vvvvvv](#eng)
 
-[![N|Solid](https://itman.website/res/pics/website.png)](https://it-man.website)[![N|Solid] (https://it-man.website/res/pics/youtube.png)](https://www.youtube.com/watch?v=TxLZkME0mnY)  [![N|Solid](https://it-man.website/res/pics/discord.png)](https://discord.gg/ZuCn4UJ)
+
+[https://discord.gg/ZuCn4UJ](https://discord.gg/ZuCn4UJ)
+
+[https://www.youtube.com/watch?v=TxLZkME0mnY](https://www.youtube.com/watch?v=TxLZkME0mnY)
+
 
 Если очень любопытно какой в игре тикрейт и пинг на серваках (PUBG, Dead by Daylight, Quake Champions и тд), то это очень простое и удобное решение, да еще и с открытым кодом. 
 
-P.S. С VPN не дружит. Такие дела. Попробую когда-нибудь сделать.
+P.S. С VPN не дружит. VPNы делают так, что бы нельзя было трафик подслушивать.
 
-## Актуальная версия 2.0
-
-**Пубжисты, которые боятся, что их забанят читают** [это.](https://bitbucket.org/dvman8bit/tickmeter/wiki/%D0%92%D0%BE%D0%B7%D0%BC%D0%BE%D0%B6%D0%BD%D1%8B%D0%B5%20%D1%80%D0%B8%D1%81%D0%BA%D0%B8%20%7C%20Possible%20risks)
-
+## Актуальная версия 2.1
 
 ### Функционал
  - Мониторинг всех сетевых пакетов. Годно для анализа сетевой активности чего угодно
@@ -18,24 +19,26 @@ P.S. С VPN не дружит. Такие дела. Попробую когда-
  - Измерение пинга и определение локации IP адреса - вторая по главности фича
  - Мониторинг исходящего/входящего трафика
  - Время подключения - довольно полезная фича
- - График тикрейта. Пока только на формочке
+ - График тикрейта.
  - Экспорт тикрейта в CSV. Можно графики строить в экселе
  - Логгирование всех подключений с указанием IP, Location, Ping, avg Tickrate. Вы просили - я сделал
  - Настройка собственных профилей для отслеживания под любое приложение или игру. Настроил фильтр и мониторишь
  - Вывод данных в оверлее. Без оверлея мониторить не получится жеж
  - Волшебные графики тикрейта и тиктайма
- - Отправка анонимных данных на сервер для анализа и статистики https://it-man.website/tickmeter/stats
-
-## SCREENS
-[![main window|N](https://itman.website/tickmeter/screens/1-1.jpg =250x)](https://itman.website/tickmeter/screens/1.jpg)   [![main window|N](https://itman.website/tickmeter/screens/2-1.jpg =250x)](https://itman.website/tickmeter/screens/2.jpg)
-[![main window](https://itman.website/tickmeter/screens/3-1.jpg =250x)](https://itman.website/tickmeter/screens/3.jpg)   [![main window](https://itman.website/tickmeter/screens/4-1.jpg =250x)](https://itman.website/tickmeter/screens/4.jpg)
+ - Автоматический мониторинг активного окна (если включено в настройках)
 
 ## CHANGELOG
 
-### v2.0
-https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-2.0.zip
+### v2.1
+[https://github.com/igentuman/tickmeter/releases/tag/2.1](https://github.com/igentuman/tickmeter/releases/tag/2.1)
 
-https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-2.0-installer.exe
+ - Атоматическое отслеживание активного окна
+ - Обработки всяких исключений (улучшена стабильность)
+ - Улучшения производительности
+ - Более удачный маппинг пакетов к процессам с использованием ETW
+
+### v2.0
+[https://github.com/igentuman/tickmeter/releases/tag/2.0](https://github.com/igentuman/tickmeter/releases/tag/2.0)
 
 
 - Исправлен баг на странице статистики пакетов
@@ -46,9 +49,6 @@ https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-2.0-installer.exe
 
 
 ### v1.9
-https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.9.zip
-
-https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.9-installer.exe
 
 
 - Исправлены краши RTSS оверлея
@@ -59,23 +59,20 @@ https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.9-installer.exe
 
 
 ### v1.8
-https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.8.zip
-https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.8-installer.exe
+
 
 - Фиксы стабильности графиков
 - Функционал отправки данных
 
 ### v1.7
-https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.7.zip
-https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.7-installer.exe
+
 
 - Добавлены 2 встроенных профиля Islands of nyne и Quacke Champions
 - Вывод графика тикрейта и тик тайм через RTSS
 - Несколько багфиксов приводивших к крашам
 
 ### v1.6
-https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.6.zip
-https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.6-installer.exe
+
 
 - Окно мониторинга сетевых пакетов с поддержкой фильтрации
 - Создание и использование игровых профилей для мониторинга в оверлее
@@ -87,8 +84,7 @@ https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.6-installer.exe
 - Логгирование подключений в отдельном файле. Для статистики.
 
 ### v1.5
-https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.5.zip
-https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.5-installer.exe
+
 
 - Чтение/сохранение настроек
 - Отдельное окно настроек
@@ -98,24 +94,23 @@ https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.5-installer.exe
 - Исправлена куча ошибок
 
 ### v1.4
-https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.4.zip
+
 
 - Переписан код
 - Более стабильная и точная работа
 
 ### v1.3
-https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.3.zip
+
 
 - English translation
 - Список подключений с IP
 
 ### v1.2 
-https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.2.zip
 
 - вывод графика тикрейта
 
+
 ### v1.1 
-https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.1.zip
 
 - добавлена поддержка вывода в RTSS
 - учет трафика
@@ -127,9 +122,7 @@ https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.1.zip
 
 If you curious about ping and tickrate in games (PUBG, Dead by Daylight, Quake Champions, etc.), this is easy way to track this data. It has 2 built in game profiles for monitoring and easy way to create custom game profile to track any game.
 
-P.S. It doesn't support VPN atm. But, i hope, i will add it soon
-
-**PUBG players who wondering if Battleye can ban them ** [read this at first.](https://bitbucket.org/dvman8bit/tickmeter/wiki/%D0%92%D0%BE%D0%B7%D0%BC%D0%BE%D0%B6%D0%BD%D1%8B%D0%B5%20%D1%80%D0%B8%D1%81%D0%BA%D0%B8%20%7C%20Possible%20risks)
+P.S. It doesn't support VPN. And probably this won't change
 
 
 ### Functionality
@@ -144,12 +137,17 @@ P.S. It doesn't support VPN atm. But, i hope, i will add it soon
  - Custom game profiles
  - Overlay output
 
+### v2.1
+[https://github.com/igentuman/tickmeter/releases/tag/2.1](https://github.com/igentuman/tickmeter/releases/tag/2.1)
+
+ - Automatic Tracking for active window
+ - Stability improvements by handling some exceptions
+ - Better perfomance
+ - Better packet mapping to process logic with ETW
 
 ## CHANGELOG
 ### v2.0
-https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-2.0.zip
-
-https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-2.0-installer.exe
+[https://github.com/igentuman/tickmeter/releases/tag/2.1](https://github.com/igentuman/tickmeter/releases/tag/2.1)
 
 - Packet Stats grid crash fixed
 - Autodetection of active game network activity
@@ -158,9 +156,6 @@ https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-2.0-installer.exe
 - Bugfixes
 
 ### v1.9
-https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.9.zip
-
-https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.9-installer.exe
 
 
 - RTSS crashes fix
@@ -170,25 +165,20 @@ https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.9-installer.exe
 - Other fixes
 
 ### v1.8
-https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.8.zip
-
-https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.8-installer.exe
 
 
 - Charts stability fixes
 - Data reports functionality
 
 ### v1.7
-https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.7.zip
-https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.7-installer.exe
+
 
 - Two built-in profules were added Islands of nyne and Quacke Champions
 - Tickrate and ticktime charts via RTSS
 - Crash avoinding bugfixes and improvements
 
 ### v1.6
-https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.6.zip
-https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.6-installer.exe
+
 
 - All network packets monitoring window + filtering
 - Custom game profiles
@@ -200,8 +190,7 @@ https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.6-installer.exe
 - Connections loggin
 
 ### v1.5
-https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.5.zip
-https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.5-installer.exe
+
 
 - Settings read/wrinte settings.ini
 - separate settings window
@@ -211,19 +200,19 @@ https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.5-installer.exe
 - Lot of bugfixes and improvements
 
 ### v1.4
-https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.4.zip
+
 
 - Refactoring
 - Packet timestamp
 
 ### v1.3
-https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.3.zip
+
 
 - English translation
 - adapter selector with IP
 
 ### v1.2 
-https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.2.zip
+
 
 - tickrate chart
 
