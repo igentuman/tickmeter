@@ -147,7 +147,7 @@ P.S. It doesn't support VPN. And probably this won't change
 
 ## CHANGELOG
 ### v2.0
-[https://github.com/igentuman/tickmeter/releases/tag/2.1](https://github.com/igentuman/tickmeter/releases/tag/2.1)
+[https://github.com/igentuman/tickmeter/releases/tag/2.0](https://github.com/igentuman/tickmeter/releases/tag/2.0)
 
 - Packet Stats grid crash fixed
 - Autodetection of active game network activity
@@ -217,7 +217,6 @@ P.S. It doesn't support VPN. And probably this won't change
 - tickrate chart
 
 ### v1.1 
-https://bitbucket.org/dvman8bit/tickmeter/downloads/tickMeter-1.1.zip
 
 - RTSS improvements
 - traffic
