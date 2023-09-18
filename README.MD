@@ -36,6 +36,7 @@ P.S. С VPN не дружит. VPNы делают так, что бы нельз
  - Обработки всяких исключений (улучшена стабильность)
  - Улучшения производительности
  - Более удачный маппинг пакетов к процессам с использованием ETW
+ - Сворачивание в трей и настройка для запуска в трее
 
 ### v2.0
 [https://github.com/igentuman/tickmeter/releases/tag/2.0](https://github.com/igentuman/tickmeter/releases/tag/2.0)
@@ -144,6 +145,7 @@ P.S. It doesn't support VPN. And probably this won't change
  - Stability improvements by handling some exceptions
  - Better perfomance
  - Better packet mapping to process logic with ETW
+ - Minimize to tray and config option "Run minimized"
 
 ## CHANGELOG
 ### v2.0
