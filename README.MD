@@ -17,7 +17,7 @@ P.S. С VPN не дружит. VPNы делают так, что бы нельз
 
 [https://npcap.com/#download](https://npcap.com/#download)
 
-[http://www.microsoft.com/en-us/download/details.aspx?id=14632](http://www.microsoft.com/en-us/download/details.aspx?id=14632)
+[https://www.microsoft.com/ru-RU/download/details.aspx?id=40784](https://www.microsoft.com/ru-RU/download/details.aspx?id=40784)
 
 Для более эффектиного маппинга процесса к сетевому пакету рекомендуется запускать от Администратора
 
