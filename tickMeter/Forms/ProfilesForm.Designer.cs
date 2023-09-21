@@ -45,8 +45,7 @@
             this.built_in_profiles.FormattingEnabled = true;
             this.built_in_profiles.Items.AddRange(new object[] {
             "PUBG",
-            "Dead By Daylight",
-            "Quake Champions"});
+            "Dead By Daylight"});
             this.built_in_profiles.Location = new System.Drawing.Point(12, 36);
             this.built_in_profiles.Name = "built_in_profiles";
             this.built_in_profiles.Size = new System.Drawing.Size(236, 130);

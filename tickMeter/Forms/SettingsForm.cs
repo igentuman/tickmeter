@@ -92,7 +92,7 @@ namespace tickMeter.Forms
             }
             if (RtssPath == "" && MessageBox.Show("RTSS not found. Download?", "RTSS", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                Process.Start("https://bitbucket.org/dvman8bit/tickmeter/downloads/RTSSSetup710.exe");
+                Process.Start("https://www.guru3d.com/download/rtss-rivatuner-statistics-server-download");
                 Close();
             }
 

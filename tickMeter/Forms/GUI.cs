@@ -64,30 +64,41 @@ namespace tickMeter.Forms
         /// </summary>
         public GUI()
         {
+            AppDomain currentDomain = AppDomain.CurrentDomain;
+            currentDomain.UnhandledException += new UnhandledExceptionEventHandler(MyHandler);
             try
             {
                 InitializeComponent();
-            } catch(Exception e)
+                App.Init();
+                App.gui = this;
+
+                for (int i = 0; i != App.GetAdapters().Count; ++i)
+                {
+                    LivePacketDevice Adapter = App.GetAdapters()[i];
+
+                    if (Adapter.Description != null)
+                    {
+                        App.settingsForm.adapters_list.Items.Add(App.GetAdapterAddress(Adapter) + " " + Adapter.Description.Replace("Network adapter ","").Replace("'Microsoft' ",""));
+                    }
+                    else
+                    {
+                        App.settingsForm.adapters_list.Items.Add("Unknown");
+                    }
+                }
+
+            }
+            catch (Exception e)
             {
                 MessageBox.Show(e.Message);
             }
-            App.Init();
-            App.gui = this;
 
-            for (int i = 0; i != App.GetAdapters().Count; ++i)
-            {
-                LivePacketDevice Adapter = App.GetAdapters()[i];
+        }
 
-                if (Adapter.Description != null)
-                {
-                    App.settingsForm.adapters_list.Items.Add(App.GetAdapterAddress(Adapter) + " " + Adapter.Description.Replace("Network adapter ","").Replace("'Microsoft' ",""));
-                }
-                else
-                {
-                    App.settingsForm.adapters_list.Items.Add("Unknown");
-                }
-            }
-            
+        static void MyHandler(object sender, UnhandledExceptionEventArgs args)
+        {
+            Exception e = (Exception)args.ExceptionObject;
+
+            MessageBox.Show(e.Message);
         }
 
         public void InitMeterState()
@@ -336,16 +347,23 @@ namespace tickMeter.Forms
             InitMeterState();
             App.meterState.IsTracking = true;
             ticksLoop.Enabled = true;
-            selectedAdapter = App.GetAdapters()[App.settingsForm.adapters_list.SelectedIndex];
+            List<LivePacketDevice> devices = App.GetAdapters();
+            int deviceId = App.settingsForm.adapters_list.SelectedIndex;
+            if (devices.Count > deviceId && deviceId > 0)
+            {
+                selectedAdapter = App.GetAdapters()[deviceId];
+            } else
+            {
+                return;
+            }
+            
             App.meterState.LocalIP = App.settingsForm.local_ip_textbox.Text;
-            lastSelectedAdapterID = App.settingsForm.adapters_list.SelectedIndex;
+            lastSelectedAdapterID = deviceId;
             try
             {
                 if (PcapThread == null)
                 {
-                    
                     PcapThread = new Thread(InitPcapWorker);
-                    
                     PcapThread.Start();
                     PcapThread.Join();
                     Debug.Print("Starting thread " + PcapThread.ManagedThreadId.ToString());
@@ -503,7 +521,10 @@ namespace tickMeter.Forms
         {
             appInitHeigh = Height;
             appInitWidth = Width;
+
             App.settingsForm.ApplyFromConfig();
+
+            
            // App.settingsForm.CheckNewVersion();
 
             CultureInfo ci = CultureInfo.InstalledUICulture;
@@ -547,11 +568,6 @@ namespace tickMeter.Forms
         {
             Show();
             this.WindowState = FormWindowState.Normal;
-        }
-
-        private void icon_menu_MouseClick(object sender, MouseEventArgs e)
-        {
-
         }
 
         private void GUI_FormClosing(object sender, FormClosingEventArgs e)

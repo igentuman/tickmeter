@@ -55,7 +55,12 @@ namespace tickMeter.Classes
             {
                 fixed (float* lpBuffer = graphData)
                 {
-                    chartSize = osd.EmbedGraph(chartOffset, lpBuffer: lpBuffer, dwBufferPos: 0, 512, dwWidth: -24, dwHeight: -3, dwMargin: 1, fltMin: min, fltMax: max, dwFlags: 0);
+                    try
+                    {
+                        chartSize = osd.EmbedGraph(chartOffset, lpBuffer: lpBuffer, dwBufferPos: 0, 512, dwWidth: -24, dwHeight: -3, dwMargin: 1, fltMin: min, fltMax: max, dwFlags: 0);
+                    } catch (Exception e) {
+                        chartSize = 3;
+                    }
                 }
                 string chartEntry = "<C4><S2>" + max + "<OBJ=" + chartOffset.ToString("X8") + "><C>";
                 chartOffset += chartSize;

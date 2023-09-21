@@ -33,9 +33,9 @@ namespace tickMeter.Classes
             connections[hash].ticksOut+=tickOut;
             if (tickIn > 0)
             {
+                connections[hash].updateTicktimeBuffer(tickTime.Ticks);
                 connections[hash].lastUpdate = tickTime;
                 connections[hash].downloaded += (int)traffic;
-                connections[hash].updateTicktimeBuffer(tickTime.Ticks);
             }
             if(tickOut > 0)
             {

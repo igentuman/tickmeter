@@ -310,7 +310,6 @@
             this.icon_menu.Text = "TickMeter";
             this.icon_menu.Opening += new System.ComponentModel.CancelEventHandler(this.icon_menu_Opening);
             this.icon_menu.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.icon_menu_ItemClicked);
-            this.icon_menu.MouseClick += new System.Windows.Forms.MouseEventHandler(this.icon_menu_MouseClick);
             // 
             // exit
             // 
@@ -350,7 +349,6 @@
             this.Text = "tickMeter 2.1";
             this.TransparencyKey = System.Drawing.SystemColors.Info;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GUI_FormClosing);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.GUI_FormClosed);
             this.Load += new System.EventHandler(this.GUI_Load);
             this.Resize += new System.EventHandler(this.GUI_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.webStatsButton)).EndInit();

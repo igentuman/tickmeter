@@ -23,7 +23,7 @@ namespace tickMeter.Classes
         public static TickMeterState meterState;
         public static SettingsManager settingsManager;
         public static ConnectionsManager connMngr;
-        static IList<LivePacketDevice> AdaptersList;
+        static List<LivePacketDevice> AdaptersList;
 
         public static void Init()
         {
@@ -37,7 +37,7 @@ namespace tickMeter.Classes
             connMngr = new ConnectionsManager();
         }
 
-        public static IList<LivePacketDevice> GetAdapters()
+        public static List<LivePacketDevice> GetAdapters()
         {
             try
             {
