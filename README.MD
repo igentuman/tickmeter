@@ -11,6 +11,18 @@
 
 P.S. С VPN не дружит. VPNы делают так, что бы нельзя было трафик подслушивать.
 
+Для работы требуется:
+
+[https://www.microsoft.com/en-us/download/details.aspx?id=30653](https://www.microsoft.com/en-us/download/details.aspx?id=30653)
+
+[https://npcap.com/#download](https://npcap.com/#download)
+
+[http://www.microsoft.com/en-us/download/details.aspx?id=14632](http://www.microsoft.com/en-us/download/details.aspx?id=14632)
+
+Для более эффектиного маппинга процесса к сетевому пакету рекомендуется запускать от Администратора
+
+
+
 ## Актуальная версия 2.1
 
 ### Функционал
@@ -124,6 +136,17 @@ P.S. С VPN не дружит. VPNы делают так, что бы нельз
 If you curious about ping and tickrate in games (PUBG, Dead by Daylight, Quake Champions, etc.), this is easy way to track this data. It has 2 built in game profiles for monitoring and easy way to create custom game profile to track any game.
 
 P.S. It doesn't support VPN. And probably this won't change
+
+
+Requires:
+
+[https://www.microsoft.com/en-us/download/details.aspx?id=30653](https://www.microsoft.com/en-us/download/details.aspx?id=30653)
+
+[https://npcap.com/#download](https://npcap.com/#download)
+
+[http://www.microsoft.com/en-us/download/details.aspx?id=14632](http://www.microsoft.com/en-us/download/details.aspx?id=14632)
+
+Recommended to run as Administrator in order to get better packet mapping to process
 
 
 ### Functionality
