@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Diagnostics.Tracing.Parsers;
 using Microsoft.Diagnostics.Tracing.Parsers.Kernel;
@@ -64,7 +65,14 @@ namespace tickMeter.Classes
         }
 
         public static Dictionary<string, ProcessNetworkData> processes = new Dictionary<string, ProcessNetworkData>();
-        public static async void init()
+        public static void init()
+        {
+            Thread t = new Thread(ETWSessionThread);
+            t.IsBackground = true;
+            t.Start();
+        }
+
+        private static async void ETWSessionThread()
         {
             await Task.Run(() =>
             {

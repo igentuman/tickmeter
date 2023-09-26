@@ -75,7 +75,7 @@ namespace tickMeter.Classes
             }
             if (lastUpdate != null)
             {
-                float tickTime = Math.Min((float)(packetTicks - lastUpdate.Ticks) / 10000, 200);
+                float tickTime = Math.Abs(Math.Min((float)(packetTicks - lastUpdate.Ticks) / 10000, 100));
 
                 tickTimeBuffer.Add(tickTime);
             }

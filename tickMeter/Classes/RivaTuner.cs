@@ -60,6 +60,7 @@ namespace tickMeter.Classes
                         chartSize = osd.EmbedGraph(chartOffset, lpBuffer: lpBuffer, dwBufferPos: 0, 512, dwWidth: -24, dwHeight: -3, dwMargin: 1, fltMin: min, fltMax: max, dwFlags: 0);
                     } catch (Exception e) {
                         chartSize = 3;
+                        DebugLogger.log(e);
                     }
                 }
                 string chartEntry = "<C4><S2>" + max + "<OBJ=" + chartOffset.ToString("X8") + "><C>";
@@ -115,9 +116,9 @@ namespace tickMeter.Classes
                     Thread.Sleep(2000);
                     hasToKillRtssFlag = true;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    throw;
+                    DebugLogger.log(ex);
                 }
             }
         }
@@ -133,7 +134,9 @@ namespace tickMeter.Classes
                 Process[] proc = Process.GetProcessesByName("RTSSHooksLoader64");
                 proc[0].Kill();
             }
-            catch (Exception) { }
+            catch (Exception ex) {
+                DebugLogger.log(ex);
+            }
             
         }
 

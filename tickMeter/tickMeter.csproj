@@ -234,6 +234,7 @@
     <Compile Include="Classes\ListViewNF.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Classes\DebugLogger.cs" />
     <Compile Include="Classes\PacketFilter.cs" />
     <Compile Include="Classes\DbdStatsManager.cs" />
     <Compile Include="Classes\ProcessNetworkStats.cs" />

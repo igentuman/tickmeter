@@ -142,11 +142,11 @@ namespace tickMeter.Forms
             {
                 local_ip_textbox.Text = localIp;
             }
-            ColorLabel.ForeColor = ColorTranslator.FromHtml("#"+ App.settingsManager.GetIntOption("color_label"));
-            ColorBad.ForeColor = ColorTranslator.FromHtml("#"+ App.settingsManager.GetIntOption("color_bad"));
-            ColorMid.ForeColor = ColorTranslator.FromHtml("#"+ App.settingsManager.GetIntOption("color_mid"));
-            ColorGood.ForeColor = ColorTranslator.FromHtml("#"+ App.settingsManager.GetIntOption("color_good"));
-            ColorChart.ForeColor = ColorTranslator.FromHtml("#"+ App.settingsManager.GetIntOption("color_chart"));
+            ColorLabel.ForeColor = ColorTranslator.FromHtml("#"+ App.settingsManager.GetOption("color_label", "636BDA", "SETTINGS"));
+            ColorBad.ForeColor = ColorTranslator.FromHtml("#"+ App.settingsManager.GetOption("color_bad", "FF0000", "SETTINGS"));
+            ColorMid.ForeColor = ColorTranslator.FromHtml("#"+ App.settingsManager.GetOption("color_mid", "FF8040", "SETTINGS"));
+            ColorGood.ForeColor = ColorTranslator.FromHtml("#"+ App.settingsManager.GetOption("color_good", "008000", "SETTINGS"));
+            ColorChart.ForeColor = ColorTranslator.FromHtml("#"+ App.settingsManager.GetOption("color_chart", "FF0080", "SETTINGS"));
             RivaTuner.LabelColor = App.settingsManager.GetOption("color_label");
             RivaTuner.ColorBad = App.settingsManager.GetOption("color_bad");
             RivaTuner.ColorMid = App.settingsManager.GetOption("color_mid");

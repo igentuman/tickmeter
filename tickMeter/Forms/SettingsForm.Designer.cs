@@ -398,7 +398,6 @@ namespace tickMeter.Forms
 
         #endregion
         public System.Windows.Forms.ComboBox adapters_list;
-        private System.Windows.Forms.ColorDialog colorDialog1;
         public System.Windows.Forms.CheckBox settings_log_checkbox;
         public System.Windows.Forms.Label network_connection_lbl;
         public System.Windows.Forms.Label label8;
@@ -431,5 +430,6 @@ namespace tickMeter.Forms
         public CheckBox run_minimized;
         private Label local_ip_lbl;
         public TextBox local_ip_textbox;
+        public ColorDialog colorDialog1;
     }
 }

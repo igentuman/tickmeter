@@ -264,9 +264,9 @@ namespace tickMeter
                 }
             }
 
-            private void PingServerTimer(Object source, System.Timers.ElapsedEventArgs e)
+            private async void PingServerTimer(Object source, System.Timers.ElapsedEventArgs e)
             {
-                PingServer();
+                await Task.Run(() => { PingServer(); });
             }
 
             private class IpInfo
@@ -343,6 +343,7 @@ namespace tickMeter
                 {
                     pingReply = ping.Send(Ip, 1000);
                 } catch(Exception) { return 0; }
+                isWaitingPong = false;
                 return (int)pingReply.RoundtripTime;
             }
 
@@ -354,15 +355,19 @@ namespace tickMeter
                     Blocking = true,
                     ReceiveTimeout = PingLimit
                 };
-                if(PingPortFails > 3)
-                {
+                if (PingPortFails > 3) { 
                     PingPort = PortsToPing.Last();
                     PingPortFails = 0;
-                    PortsToPing.RemoveAt(PortsToPing.Count - 1);
-                    if(PortsToPing.Count < 1)
-                    {
-                        PortsToPing.Add(80);
-                    }
+                    try  {
+                        if (PortsToPing.Count > 0)
+                        {
+                            PortsToPing.RemoveAt(PortsToPing.Count - 1);
+                        }
+                        if (PortsToPing.Count < 1)
+                        {
+                            PortsToPing.Add(80);
+                        }
+                    } catch(Exception) { }
                 }
                 EndPoint ep = CreateIPEndPoint(Ip,PingPort);
                 Stopwatch stopwatch = new Stopwatch();
@@ -371,14 +376,16 @@ namespace tickMeter
                 try { sock.Connect(ep); } catch (Exception) {  }
                 stopwatch.Stop();
                 sock.Close();
+                isWaitingPong = false;
                 return (int)stopwatch.ElapsedMilliseconds;
             }
 
             int ICMPfails = 0;
+            bool isWaitingPong = false;
             private async void PingServer()
             {
-                if (Ip == "") return;
-                
+                if (Ip == "" || isWaitingPong) return;
+                isWaitingPong = true;
                 await Task.Run(() =>
                 {
                     int pingTime = PingICMP();

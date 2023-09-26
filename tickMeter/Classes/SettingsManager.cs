@@ -48,6 +48,16 @@ namespace tickMeter
             return "";
         }
 
+        public string GetOption(string optionName, string defaultValue, string scope = "SETTINGS")
+        {
+
+            if (data[scope] != null && data[scope][optionName] != null)
+            {
+                return data[scope][optionName];
+            }
+            return defaultValue;
+        }
+
         public void SetOption(string optionName, string value, string scope = "SETTINGS")
         {
             if (data[scope] == null) return;

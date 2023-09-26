@@ -14,7 +14,7 @@ using System.Diagnostics;
 using tickMeter.Classes;
 using System.Threading;
 using System.Net.Sockets;
-
+using System.Linq;
 
 namespace tickMeter.Forms
 {
@@ -38,6 +38,7 @@ namespace tickMeter.Forms
         bool OnScreen;
         public PubgStatsManager PubgMngr;
         public DbdStatsManager DbdMngr;
+        public string targetKey = "";
 
         private const int WM_ACTIVATE = 0x0006;
         private const int WA_ACTIVE = 1;
@@ -89,6 +90,7 @@ namespace tickMeter.Forms
             }
             catch (Exception e)
             {
+                DebugLogger.log(e);
                 MessageBox.Show(e.Message);
             }
 
@@ -97,7 +99,7 @@ namespace tickMeter.Forms
         static void MyHandler(object sender, UnhandledExceptionEventArgs args)
         {
             Exception e = (Exception)args.ExceptionObject;
-
+            DebugLogger.log(e);
             MessageBox.Show(e.Message);
         }
 
@@ -219,10 +221,10 @@ namespace tickMeter.Forms
             if (App.settingsForm.settings_rtss_output.Checked)
             {
                 await Task.Run(() => {
-                    try { RivaTuner.BuildRivaOutput(); } catch (Exception exc) {
+                    try { RivaTuner.BuildRivaOutput(); } catch (Exception ex) {
                         if(!RTSS_Failed)
                         {
-                            MessageBox.Show(exc.Message);
+                            DebugLogger.log(ex);
                             RTSS_Failed = true;
                         }
                     }
@@ -286,24 +288,43 @@ namespace tickMeter.Forms
             }
         }
 
+        private bool isValidToTrack(string key)
+        {
+            if(key != "" && !ActiveWindowTracker.connections.Keys.Contains(key))
+            {
+                ProcessNetworkStats connection = ActiveWindowTracker.connections[key];
+                return
+                    AutoDetectMngr.GetActiveProcessName() == connection.name
+                    && ActiveWindowTracker.connections[key].TrackingDelta() > 3
+                    && ActiveWindowTracker.connections[key].LastUpdateDelta() < 2
+                    && ActiveWindowTracker.connections[key].downloaded > 0;
+
+            }
+            return false;
+        }
+
         private void updateMetherStateFromActiveWindow()
         {
             int maxTicks = 0;
-            string targetKey = "";
             string activeProcess = AutoDetectMngr.GetActiveProcessName();
-            int maxDuration = 0;
 
-            foreach(string procKey in ActiveWindowTracker.connections.Keys)
+            if(!isValidToTrack(targetKey))
             {
-                if (ActiveWindowTracker.connections[procKey].name != activeProcess) continue;
-                if(ActiveWindowTracker.connections[procKey].ticksIn > maxTicks)
+                foreach (string procKey in ActiveWindowTracker.connections.Keys)
                 {
-                    maxTicks = ActiveWindowTracker.connections[procKey].ticksIn;
-                    targetKey = procKey;
-                    maxDuration = ActiveWindowTracker.connections[procKey].TrackingDelta();
+                    if (
+                        ActiveWindowTracker.connections[procKey].ticksIn > maxTicks
+                        && isValidToTrack(procKey)
+                        )
+                    {
+                        maxTicks = ActiveWindowTracker.connections[procKey].ticksIn;
+                        targetKey = procKey;
+                    }
                 }
             }
-            if(targetKey != "" && maxDuration > 3)
+            
+            
+            if(targetKey != "")
             {
                 ProcessNetworkStats procStats = ActiveWindowTracker.connections[targetKey];
                 App.meterState.tickTimeBuffer = procStats.tickTimeBuffer;
@@ -537,7 +558,6 @@ namespace tickMeter.Forms
                 Hide();
             }
             ETW.init();
-
         }
 
         private void SettingsButton_Click(object sender, EventArgs e)
