@@ -9,6 +9,8 @@
 
 namespace RTSS {
 
+
+
     ///<param name="entryName">
     ///The name of the OSD entry. Should be unique and not more than 255 chars once converted to ANSI.
     ///</param>
@@ -89,6 +91,7 @@ namespace RTSS {
 
 	inline DWORD OSD::EmbedGraph(DWORD dwOffset, FLOAT * lpBuffer, DWORD dwBufferPos, DWORD dwBufferSize, LONG dwWidth, LONG dwHeight, LONG dwMargin, FLOAT fltMin, FLOAT fltMax, DWORD dwFlags)
 	{
+
 		DWORD dwResult = 0;
 
 		HANDLE hMapFile = NULL;
@@ -145,11 +148,13 @@ namespace RTSS {
 							{
 								for (DWORD dwPos = 0; dwPos < dwBufferSize; dwPos++)
 								{
-									FLOAT fltData = lpBuffer[dwBufferPos];
+                                    FLOAT fltData = 0;
+                                    try {
+                                        fltData = lpBuffer[dwBufferPos];
+                                    } catch(...) { }
+                                    lpGraph->fltData[dwPos] = (fltData == 120) ? 0 : fltData;
+                                    dwBufferPos = (dwBufferPos + 1) & (dwBufferSize - 1);
 
-									lpGraph->fltData[dwPos] = (fltData == 120) ? 0 : fltData;
-
-									dwBufferPos = (dwBufferPos + 1) & (dwBufferSize - 1);
 								}
 							}
 

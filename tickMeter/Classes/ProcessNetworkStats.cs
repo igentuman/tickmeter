@@ -40,10 +40,6 @@ namespace tickMeter.Classes
 
                     ticksIn = 0;
                     ticksOut = 0;
-                    Debug.Print("reset ticks for " + name +" "+value.Second+" "+ value.Millisecond);
-                    Debug.Print(value.ToLongTimeString());
-                    Debug.Print(_lastUpate.ToLongTimeString());
-                    Debug.Print("_______");
                 }
                 _lastUpate = value;
             }
@@ -59,17 +55,17 @@ namespace tickMeter.Classes
 
         public int TrackingDelta()
         {
-            return (int)(DateTime.Now.Subtract(startTrack).TotalSeconds);
+            return (int)Math.Abs(DateTime.Now.Subtract(startTrack).TotalSeconds);
         }
 
         public int LastUpdateDelta()
         {
-            return (int)(DateTime.Now.Subtract(lastUpdate).TotalSeconds);
+            return (int)Math.Abs(DateTime.Now.Subtract(lastUpdate).TotalSeconds);
         }
 
         public void updateTicktimeBuffer(long packetTicks)
         {
-            if (tickTimeBuffer.Count > 512)
+            if (tickTimeBuffer.Count > 511)
             {
                 tickTimeBuffer.RemoveAt(0);
             }

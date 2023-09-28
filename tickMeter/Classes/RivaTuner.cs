@@ -29,6 +29,12 @@ namespace tickMeter.Classes
             {
                 osd = new OSD("TickMeter");
             }
+            if(graphData.Length < 512)
+            {
+                float[] tmp = new float[512];
+                graphData.CopyTo(tmp,0);
+                graphData = tmp;
+            }
             uint chartSize;
             if(max == 0)
             {

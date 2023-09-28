@@ -290,15 +290,16 @@ namespace tickMeter.Forms
 
         private bool isValidToTrack(string key)
         {
-            if(key != "" && !ActiveWindowTracker.connections.Keys.Contains(key))
+            if(key != "" && ActiveWindowTracker.connections.Keys.Contains(key))
             {
                 ProcessNetworkStats connection = ActiveWindowTracker.connections[key];
                 return
                     AutoDetectMngr.GetActiveProcessName() == connection.name
                     && ActiveWindowTracker.connections[key].TrackingDelta() > 3
                     && ActiveWindowTracker.connections[key].LastUpdateDelta() < 2
+                    && ActiveWindowTracker.connections[key].remoteIp != App.meterState.LocalIP
+                    && ActiveWindowTracker.connections[key].ticksIn > 3
                     && ActiveWindowTracker.connections[key].downloaded > 0;
-
             }
             return false;
         }
@@ -306,26 +307,29 @@ namespace tickMeter.Forms
         private void updateMetherStateFromActiveWindow()
         {
             int maxTicks = 0;
-            string activeProcess = AutoDetectMngr.GetActiveProcessName();
 
             if(!isValidToTrack(targetKey))
             {
-                foreach (string procKey in ActiveWindowTracker.connections.Keys)
+                foreach (var connection in ActiveWindowTracker.connections)
                 {
                     if (
-                        ActiveWindowTracker.connections[procKey].ticksIn > maxTicks
-                        && isValidToTrack(procKey)
+                        connection.Value.ticksIn > maxTicks
+                        && isValidToTrack(connection.Key)
                         )
                     {
-                        maxTicks = ActiveWindowTracker.connections[procKey].ticksIn;
-                        targetKey = procKey;
+                        maxTicks = connection.Value.ticksIn;
+                        targetKey = connection.Key;
                     }
                 }
             }
             
             
-            if(targetKey != "")
-            {
+            if(targetKey != "") { 
+                if(!ActiveWindowTracker.connections.ContainsKey(targetKey))
+                {
+                    targetKey = "";
+                    return;
+                }
                 ProcessNetworkStats procStats = ActiveWindowTracker.connections[targetKey];
                 App.meterState.tickTimeBuffer = procStats.tickTimeBuffer;
                 App.meterState.CurrentTimestamp = DateTime.Now;
