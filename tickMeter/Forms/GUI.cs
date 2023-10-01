@@ -310,15 +310,17 @@ namespace tickMeter.Forms
 
             if(!isValidToTrack(targetKey))
             {
-                foreach (var connection in ActiveWindowTracker.connections)
+                string[] connectionNames = ActiveWindowTracker.connections.Keys.ToArray();
+                foreach (string connection in connectionNames)
                 {
+                    if(!ActiveWindowTracker.connections.ContainsKey(connection)) { continue; }
                     if (
-                        connection.Value.ticksIn > maxTicks
-                        && isValidToTrack(connection.Key)
+                        ActiveWindowTracker.connections[connection].ticksIn > maxTicks
+                        && isValidToTrack(connection)
                         )
                     {
-                        maxTicks = connection.Value.ticksIn;
-                        targetKey = connection.Key;
+                        maxTicks = ActiveWindowTracker.connections[connection].ticksIn;
+                        targetKey = connection;
                     }
                 }
             }
