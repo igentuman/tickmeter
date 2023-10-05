@@ -23,7 +23,7 @@ P.S. С VPN не дружит. VPNы делают так, что бы нельз
 
 
 
-## Актуальная версия 2.1
+## Актуальная версия 2.2
 
 ### Функционал
  - Мониторинг всех сетевых пакетов. Годно для анализа сетевой активности чего угодно
@@ -40,6 +40,13 @@ P.S. С VPN не дружит. VPNы делают так, что бы нельз
  - Автоматический мониторинг активного окна (если включено в настройках)
 
 ## CHANGELOG
+
+### v2.2
+[https://github.com/igentuman/tickmeter/releases/tag/2.2](https://github.com/igentuman/tickmeter/releases/tag/2.2)
+
+ - Исправление крашей RTSS
+ - Улучшение автоматического треккинга
+ - Исправления в работе с коллекциями данных и прочие улучшения
 
 ### v2.1
 [https://github.com/igentuman/tickmeter/releases/tag/2.1](https://github.com/igentuman/tickmeter/releases/tag/2.1)
