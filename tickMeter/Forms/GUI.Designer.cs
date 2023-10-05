@@ -346,7 +346,7 @@
             this.MinimumSize = new System.Drawing.Size(454, 438);
             this.Name = "GUI";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "tickMeter 2.1";
+            this.Text = "tickMeter 2.2";
             this.TransparencyKey = System.Drawing.SystemColors.Info;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GUI_FormClosing);
             this.Load += new System.EventHandler(this.GUI_Load);

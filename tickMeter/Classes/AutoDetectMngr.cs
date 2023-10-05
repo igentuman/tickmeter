@@ -174,12 +174,16 @@ namespace tickMeter.Classes
         public static string activeProcess = "";
         public static string GetActiveProcessName(Boolean refresh = false)
         {
-            if(!refresh) return activeProcess;
-            IntPtr hwnd = GetForegroundWindow();
-            uint pid;
-            GetWindowThreadProcessId(hwnd, out pid);
-            Process p = Process.GetProcessById((int)pid);
-            string newName = p.ProcessName != null ? p.ProcessName : pid.ToString();
+            string newName = "";
+            try
+            {
+                if (!refresh) return activeProcess;
+                IntPtr hwnd = GetForegroundWindow();
+                uint pid;
+                GetWindowThreadProcessId(hwnd, out pid);
+                Process p = Process.GetProcessById((int)pid);
+                newName = p.ProcessName != null ? p.ProcessName : pid.ToString();
+            } catch (Exception) { }
             if(activeProcess != newName)
             {
                 App.gui.targetKey = "";
