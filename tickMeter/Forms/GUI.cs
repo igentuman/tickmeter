@@ -342,6 +342,7 @@ namespace tickMeter.Forms
                 App.meterState.Server.PingPort = (int)procStats.remotePort;
                 App.meterState.SessionStart = procStats.startTrack;
                 App.meterState.IsTracking = true;
+                App.meterState.drops = procStats.getDrops();
             }
         }
 

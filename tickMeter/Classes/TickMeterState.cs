@@ -35,7 +35,8 @@ namespace tickMeter
         public List<float> tickTimeBuffer = new List<float>();
         public List<float> pingBuffer = new List<float>();
         public List<float> tickrateGraph = new List<float>();
-        
+        public int drops = 0;
+
         public int TickRate {
             get { return _tickrate; }
             set {
@@ -163,6 +164,10 @@ namespace tickMeter
             Server.KillTimer();
         }
 
+        public int GetDrops()
+        {
+            return drops;
+        }
 
         public class GameServer
         {

@@ -133,6 +133,15 @@ namespace tickMeter.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Show Packet Drops.
+        /// </summary>
+        internal static string packet_drops_checkbox {
+            get {
+                return ResourceManager.GetString("packet_drops_checkbox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Possible Risks.
         /// </summary>
         internal static string possible_risks_lbl {

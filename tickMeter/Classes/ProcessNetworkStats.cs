@@ -52,6 +52,31 @@ namespace tickMeter.Classes
         }
 
         public List<float> tickTimeBuffer = new List<float>();
+        private uint pcktId = 0;
+        public int loss = 0;
+        public int totalTicksCnt = 0;
+
+        public uint id { 
+            set { 
+                if(value != 0)
+                {
+                    if(pcktId == value)
+                    {
+                        loss++;
+                        pcktId = value;
+                    }
+                }
+            }
+            get
+            {
+                return pcktId;
+            }
+        }
+
+        public int getDrops()
+        {
+            return (loss / totalTicksCnt) * 100;
+        }
 
         public int TrackingDelta()
         {
@@ -65,6 +90,7 @@ namespace tickMeter.Classes
 
         public void updateTicktimeBuffer(long packetTicks)
         {
+            totalTicksCnt++;
             if (tickTimeBuffer.Count > 511)
             {
                 tickTimeBuffer.RemoveAt(0);

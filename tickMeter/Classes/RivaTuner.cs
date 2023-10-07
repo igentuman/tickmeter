@@ -182,6 +182,12 @@ namespace tickMeter.Classes
             return "<S><C0>UP/DL: <C>" + formatedUpload.ToString("N2") + " / " + formatedDownload.ToString("N2") + "<S0> Mb" + Environment.NewLine;
         }
 
+        public static string FormatDrops()
+        {
+            int drops = meterState.GetDrops();
+            return "<S><C0>DR: <C>" + drops + "%" + Environment.NewLine;
+        }
+
         public static string FormatTime()
         {
             TimeSpan result = DateTime.Now.Subtract(App.meterState.SessionStart);

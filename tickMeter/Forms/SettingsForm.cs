@@ -117,6 +117,7 @@ namespace tickMeter.Forms
             settings_ping_checkbox.Checked = App.settingsManager.GetOption("ping") == "True";
 
             settings_traffic_checkbox.Checked = App.settingsManager.GetOption("traffic") == "True";
+            packet_drops_checkbox.Checked = App.settingsManager.GetOption("show_packet_drops") == "True";
             settings_rtss_output.Checked = App.settingsManager.GetOption("rtss") == "True";
             settings_tickrate_show.Checked = App.settingsManager.GetOption("tickrate") == "True";
             settings_autodetect_checkbox.Checked = App.settingsManager.GetOption("autodetect") == "True";
@@ -185,6 +186,7 @@ namespace tickMeter.Forms
             App.settingsManager.SetOption("last_selected_adapter_id", adapters_list.SelectedIndex.ToString());
             App.settingsManager.SetOption("run_minimized", run_minimized.Checked.ToString());
             App.settingsManager.SetOption("local_ip", local_ip_textbox.Text);
+            App.settingsManager.SetOption("show_packet_drops", packet_drops_checkbox.Checked.ToString());
             App.settingsManager.SaveConfig();
         }
 
@@ -204,6 +206,7 @@ namespace tickMeter.Forms
             network_connection_lbl.Text = eng.GetString(network_connection_lbl.Name);
             settings_ping_chart.Text = eng.GetString(settings_ping_chart.Name);
             settings_autodetect_checkbox.Text = eng.GetString(settings_autodetect_checkbox.Name);
+            packet_drops_checkbox.Text = eng.GetString(packet_drops_checkbox.Name);
             ColorLabel.Text = eng.GetString(ColorLabel.Name);
             ColorBad.Text = eng.GetString(ColorBad.Name);
             ColorMid.Text = eng.GetString(ColorMid.Name);

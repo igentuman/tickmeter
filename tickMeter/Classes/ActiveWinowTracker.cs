@@ -13,7 +13,7 @@ namespace tickMeter.Classes
        
         public static Dictionary<string, ProcessNetworkStats> connections = new Dictionary<string, ProcessNetworkStats>();
 
-        public static void trackTick(string name, string localIp, uint localPort, string remoteIp, uint remotePort, int tickIn, int tickOut, uint traffic, DateTime tickTime)
+        public static void trackTick(string name, string localIp, uint localPort, string remoteIp, uint remotePort, int tickIn, int tickOut, uint traffic, DateTime tickTime, uint id)
         {
             string hash = Hash(name, remoteIp, remotePort);
             if (!connections.ContainsKey(hash)) { 
@@ -28,14 +28,17 @@ namespace tickMeter.Classes
                 connections[hash].ticksIn = 0;
                 connections[hash].ticksOut = 0;
                 connections[hash].startTrack = tickTime;
+                connections[hash].id = 0;
             }
             connections[hash].ticksIn +=tickIn;
             connections[hash].ticksOut+=tickOut;
+
             if (tickIn > 0)
             {
                 connections[hash].updateTicktimeBuffer(tickTime.Ticks);
                 connections[hash].lastUpdate = tickTime;
                 connections[hash].downloaded += (int)traffic;
+                connections[hash].id = id;
             }
             if(tickOut > 0)
             {
@@ -73,6 +76,7 @@ namespace tickMeter.Classes
             uint fromPort = 0;
             uint toPort = 0;
             string processName = @"n\a";
+            uint id = 0;
             if (protocol == IpV4Protocol.Udp.ToString())
             {
                 fromPort = udp.SourcePort;
@@ -95,6 +99,10 @@ namespace tickMeter.Classes
             }
             else
             {
+                if(tcp.IsAcknowledgment)
+                {
+                    id = tcp.AcknowledgmentNumber;
+                }
                 fromPort = tcp.SourcePort;
                 toPort = tcp.DestinationPort;
                 try
@@ -137,7 +145,7 @@ namespace tickMeter.Classes
                         localPort = tcp.DestinationPort;
                         break;
                 }
-                trackTick(processName, App.meterState.LocalIP, localPort, ip.Source.ToString(), remotePort, 1, 0, packetSize, packet.Timestamp);
+                trackTick(processName, App.meterState.LocalIP, localPort, ip.Source.ToString(), remotePort, 1, 0, packetSize, packet.Timestamp, id);
             } else
             {
                 switch (protocol.ToLower())
@@ -151,7 +159,7 @@ namespace tickMeter.Classes
                         localPort = tcp.SourcePort;
                         break;
                 }
-                trackTick(processName, App.meterState.LocalIP, localPort, ip.Source.ToString(), remotePort, 0, 1, packetSize, packet.Timestamp);
+                trackTick(processName, App.meterState.LocalIP, localPort, ip.Source.ToString(), remotePort, 0, 1, packetSize, packet.Timestamp, 0);
             }
         }
 

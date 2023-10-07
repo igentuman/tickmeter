@@ -65,6 +65,7 @@ namespace tickMeter.Forms
             this.run_minimized = new System.Windows.Forms.CheckBox();
             this.local_ip_lbl = new System.Windows.Forms.Label();
             this.local_ip_textbox = new System.Windows.Forms.TextBox();
+            this.packet_drops_checkbox = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ping_interval)).BeginInit();
@@ -198,6 +199,7 @@ namespace tickMeter.Forms
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.packet_drops_checkbox);
             this.groupBox2.Controls.Add(this.settings_ping_chart);
             this.groupBox2.Controls.Add(this.settings_tickrate_show);
             this.groupBox2.Controls.Add(this.settings_ticktime_chart);
@@ -359,6 +361,15 @@ namespace tickMeter.Forms
             this.local_ip_textbox.Name = "local_ip_textbox";
             this.local_ip_textbox.TextChanged += new System.EventHandler(this.local_ip_textbox_TextChanged);
             // 
+            // packet_drops_checkbox
+            // 
+            resources.ApplyResources(this.packet_drops_checkbox, "packet_drops_checkbox");
+            this.packet_drops_checkbox.Checked = true;
+            this.packet_drops_checkbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.packet_drops_checkbox.ForeColor = System.Drawing.Color.Black;
+            this.packet_drops_checkbox.Name = "packet_drops_checkbox";
+            this.packet_drops_checkbox.UseVisualStyleBackColor = true;
+            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
@@ -431,5 +442,6 @@ namespace tickMeter.Forms
         private Label local_ip_lbl;
         public TextBox local_ip_textbox;
         public ColorDialog colorDialog1;
+        public CheckBox packet_drops_checkbox;
     }
 }

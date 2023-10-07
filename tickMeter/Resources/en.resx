@@ -141,6 +141,9 @@
   <data name="network_connection_lbl" xml:space="preserve">
     <value>Network connection:</value>
   </data>
+  <data name="packet_drops_checkbox" xml:space="preserve">
+    <value>Show Packet Drops</value>
+  </data>
   <data name="possible_risks_lbl" xml:space="preserve">
     <value>Possible Risks</value>
   </data>
