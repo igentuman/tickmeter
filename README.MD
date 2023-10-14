@@ -21,6 +21,7 @@ P.S. С VPN не дружит. VPNы делают так, что бы нельз
 
 Для более эффектиного маппинга процесса к сетевому пакету рекомендуется запускать от Администратора
 
+За поддержку спасибо Andaletru, Susmix, Юрас, triton, Bad Koala и др.
 
 
 ## Актуальная версия 2.3
@@ -30,6 +31,7 @@ P.S. С VPN не дружит. VPNы делают так, что бы нельз
  - Измерение тикрейта в играх и приложениях - главнейшая фича
  - Измерение пинга и определение локации IP адреса - вторая по главности фича
  - Мониторинг исходящего/входящего трафика
+ - Мониторинг потерь
  - Время подключения - довольно полезная фича
  - График тикрейта.
  - Экспорт тикрейта в CSV. Можно графики строить в экселе
@@ -166,6 +168,7 @@ Recommended to run as Administrator in order to get better packet mapping to pro
  - Tickrate meater - major feature
  - Ping and IP location detection. Second majority feature
  - Track upload/download traffic
+ - Drops monitoring
  - Connection time - useful sometimes
  - Tickrate chart
  - Export tickrate history to CSV - to build great charts in Excell
