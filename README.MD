@@ -23,7 +23,7 @@ P.S. С VPN не дружит. VPNы делают так, что бы нельз
 
 
 
-## Актуальная версия 2.2
+## Актуальная версия 2.3
 
 ### Функционал
  - Мониторинг всех сетевых пакетов. Годно для анализа сетевой активности чего угодно
@@ -40,6 +40,11 @@ P.S. С VPN не дружит. VPNы делают так, что бы нельз
  - Автоматический мониторинг активного окна (если включено в настройках)
 
 ## CHANGELOG
+
+### v2.3
+[https://github.com/igentuman/tickmeter/releases/tag/2.3](https://github.com/igentuman/tickmeter/releases/tag/2.3)
+
+ - Статистика дропа пакетов
 
 ### v2.2
 [https://github.com/igentuman/tickmeter/releases/tag/2.2](https://github.com/igentuman/tickmeter/releases/tag/2.2)
@@ -167,6 +172,12 @@ Recommended to run as Administrator in order to get better packet mapping to pro
  - All game connections logging - you asked for this
  - Custom game profiles
  - Overlay output
+
+### v2.3
+[https://github.com/igentuman/tickmeter/releases/tag/2.3](https://github.com/igentuman/tickmeter/releases/tag/2.3)
+
+ - Packet drops statistics
+
 
 ### v2.1
 [https://github.com/igentuman/tickmeter/releases/tag/2.1](https://github.com/igentuman/tickmeter/releases/tag/2.1)
