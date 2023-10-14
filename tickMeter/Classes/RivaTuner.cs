@@ -184,8 +184,22 @@ namespace tickMeter.Classes
 
         public static string FormatDrops()
         {
-            int drops = meterState.GetDrops();
-            return "<S><C0>DR: <C>" + drops + "%" + Environment.NewLine;
+            string dropsStr = "<S><C0>Drops: ";
+            float drops = meterState.GetDropsNumber();
+            if (drops > 5)
+            {
+                dropsStr += "<C1>" + meterState.GetDrops();
+            }
+            else if (drops > 1)
+            {
+                dropsStr += "<C2>" + meterState.GetDrops();
+            }
+            else
+            {
+                dropsStr += "<C3>" + meterState.GetDrops();
+            }
+
+            return dropsStr + "%" + Environment.NewLine;
         }
 
         public static string FormatTime()
@@ -244,6 +258,10 @@ namespace tickMeter.Classes
             if (App.settingsForm.settings_session_time_checkbox.Checked)
             {
                 output += FormatTime();
+            }
+            if (App.settingsForm.packet_drops_checkbox.Checked)
+            {
+                output += FormatDrops();
             }
             if (App.settingsForm.settings_chart_checkbox.Checked)
             {

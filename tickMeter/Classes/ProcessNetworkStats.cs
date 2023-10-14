@@ -15,7 +15,7 @@ namespace tickMeter.Classes
         public int ticksIn;
         private int _ticksIn;
         private int _ticksOut;
-
+        private int avgStableTickrate;
         public int ticksOut;
         public int downloaded;
         public int sent;
@@ -38,6 +38,26 @@ namespace tickMeter.Classes
                     _ticksIn = ticksIn;
                     _ticksOut = ticksOut;
 
+                    if(avgStableTickrate == 0)
+                    {
+                        avgStableTickrate = _ticksIn;
+                    }
+
+                    float ratio = ((float)avgStableTickrate / (float)ticksIn);
+
+                    if (ratio < 1.5 && ratio > 0.5)
+                    {
+                        avgStableTickrate += (ticksIn+avgStableTickrate);
+                        avgStableTickrate /= 3;
+                    }
+
+                    if(TrackingDelta() > 5)
+                    {
+                        avgStableTickrate = (int) Math.Round(avgStableTickrate / 5.0) * 5;
+                    }
+                    int dropped = avgStableTickrate - ticksIn;
+                    if(dropped < 0) { dropped = 0; }
+                    loss += dropped;
                     ticksIn = 0;
                     ticksOut = 0;
                 }
@@ -71,11 +91,6 @@ namespace tickMeter.Classes
             {
                 return pcktId;
             }
-        }
-
-        public int getDrops()
-        {
-            return (loss / totalTicksCnt) * 100;
         }
 
         public int TrackingDelta()

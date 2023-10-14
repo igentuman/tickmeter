@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using tickMeter.Classes;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 
 namespace tickMeter
 {
@@ -35,8 +36,8 @@ namespace tickMeter
         public List<float> tickTimeBuffer = new List<float>();
         public List<float> pingBuffer = new List<float>();
         public List<float> tickrateGraph = new List<float>();
-        public int drops = 0;
-
+        public int loss = 0;
+        public int totalTicksCnt = 0;
         public int TickRate {
             get { return _tickrate; }
             set {
@@ -45,9 +46,17 @@ namespace tickMeter
             }
         }
 
+        public static DateTime Trim(DateTime date)
+        {
+            return new DateTime(date.Ticks - (date.Ticks % TimeSpan.TicksPerSecond), date.Kind);
+        }
+
+        public int avgStableTickrate = 0;
+
         public void updateTicktimeBuffer(long packetTicks)
         {
-            if (tickTimeBuffer.Count > 512)
+            totalTicksCnt++;
+            if (tickTimeBuffer.Count > 511)
             {
                 tickTimeBuffer.RemoveAt(0);
             }
@@ -111,15 +120,31 @@ namespace tickMeter
                 if(value.ToString() != timeStamp.ToString())
                 {
                     OutputTickRate = TickRate;
-                    AvgTickrate = (AvgTickrate+OutputTickRate)/2;
+                    AvgTickrate = (AvgTickrate + OutputTickRate) / 2;
+                    if (avgStableTickrate == 0)
+                    {
+                        avgStableTickrate = OutputTickRate;
+                    }
+                    float ratio = ((float)avgStableTickrate / (float)AvgTickrate);
+
+                    if (ratio < 1.5 && ratio > 0.5)
+                    {
+                        avgStableTickrate += (AvgTickrate + avgStableTickrate);
+                        avgStableTickrate /= 3;
+                    }
+                    if (totalTicksCnt > 300)
+                    {
+                        avgStableTickrate = (int)Math.Round(avgStableTickrate / 5.0) * 5;
+                        int dropped = avgStableTickrate - OutputTickRate;
+                        if (dropped < 0) { dropped = 0; }
+                        loss += dropped;
+                    }
+                    
                     TicksHistory.Add(OutputTickRate);
-                    if(tickrateGraph.Count > 512)
+                    if(tickrateGraph.Count > 511)
                     {
                         tickrateGraph.RemoveAt(0);
-                        tickrateGraph.RemoveAt(0);
-                        
                     }
-                    tickrateGraph.Add(OutputTickRate);
                     tickrateGraph.Add(OutputTickRate);
                     TickRateLog += timeStamp.ToString() + ";" + OutputTickRate.ToString() + Environment.NewLine;
                     TickRate = 0;
@@ -128,6 +153,8 @@ namespace tickMeter
                 timeStamp = value;
             }
         }
+
+
 
         public int OutputTickRate { get; set; }
         public int UploadTraffic { get; set; } = 0;
@@ -141,13 +168,16 @@ namespace tickMeter
         public void Reset()
         {
             IsTracking = false;
-            
+            SessionStart = DateTime.Now;
             Game = "";
             TicksHistory = new List<int>();
             UploadTraffic = 0;
             DownloadTraffic = 0;
             TickRate = 0;
             OutputTickRate = 0;
+            totalTicksCnt = 0;
+            loss = 0;
+            avgStableTickrate = 0;
             TickRateLog = "";           
         }
 
@@ -164,9 +194,14 @@ namespace tickMeter
             Server.KillTimer();
         }
 
-        public int GetDrops()
+        internal string GetDrops()
         {
-            return drops;
+            return Math.Min(100, (((float)loss / (float)totalTicksCnt) * 100)).ToString("n2");
+        }
+
+        internal float GetDropsNumber()
+        {
+            return Math.Min(100, (((float)loss / (float)totalTicksCnt) * 100));
         }
 
         public class GameServer
@@ -218,10 +253,14 @@ namespace tickMeter
                     CurrentIP = value;
                     if (oldIP != CurrentIP && CurrentIP != "")
                     {
+                        App.meterState.totalTicksCnt = 0;
+                        App.meterState.loss = 0;
+                        App.meterState.avgStableTickrate = 0;
                         App.meterState.SessionStart = DateTime.Now;
                         if(PingTimer == null)
                         SetPingTimer();
                         DetectLocation();
+                        App.meterState.totalTicksCnt = 0;
                     }
                 }
             }
@@ -255,7 +294,7 @@ namespace tickMeter
                 int PingInterval = 2000;
                 if(App.settingsManager.GetOption("ping_interval") != null && App.settingsManager.GetOption("ping_interval") != "")
                 {
-                    PingInterval = int.Parse(App.settingsManager.GetOption("ping_interval"));
+                    PingInterval = App.settingsManager.GetIntOption("ping_interval");
                 }
                 if (PingTimer == null || !PingTimer.Enabled)
                 {

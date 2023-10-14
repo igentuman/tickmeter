@@ -13,7 +13,7 @@ namespace tickMeter.Classes
        
         public static Dictionary<string, ProcessNetworkStats> connections = new Dictionary<string, ProcessNetworkStats>();
 
-        public static void trackTick(string name, string localIp, uint localPort, string remoteIp, uint remotePort, int tickIn, int tickOut, uint traffic, DateTime tickTime, uint id)
+        public static void trackTick(string name, string protocol, string localIp, uint localPort, string remoteIp, uint remotePort, int tickIn, int tickOut, uint traffic, DateTime tickTime, uint id)
         {
             string hash = Hash(name, remoteIp, remotePort);
             if (!connections.ContainsKey(hash)) { 
@@ -30,8 +30,9 @@ namespace tickMeter.Classes
                 connections[hash].startTrack = tickTime;
                 connections[hash].id = 0;
             }
-            connections[hash].ticksIn +=tickIn;
-            connections[hash].ticksOut+=tickOut;
+            connections[hash].protocol = protocol;
+            connections[hash].ticksIn  += tickIn;
+            connections[hash].ticksOut += tickOut;
 
             if (tickIn > 0)
             {
@@ -145,7 +146,7 @@ namespace tickMeter.Classes
                         localPort = tcp.DestinationPort;
                         break;
                 }
-                trackTick(processName, App.meterState.LocalIP, localPort, ip.Source.ToString(), remotePort, 1, 0, packetSize, packet.Timestamp, id);
+                trackTick(processName,  protocol.ToLower(), App.meterState.LocalIP, localPort, ip.Source.ToString(), remotePort, 1, 0, packetSize, packet.Timestamp, id);
             } else
             {
                 switch (protocol.ToLower())
@@ -159,7 +160,7 @@ namespace tickMeter.Classes
                         localPort = tcp.SourcePort;
                         break;
                 }
-                trackTick(processName, App.meterState.LocalIP, localPort, ip.Source.ToString(), remotePort, 0, 1, packetSize, packet.Timestamp, 0);
+                trackTick(processName, protocol.ToLower(), App.meterState.LocalIP, localPort, ip.Source.ToString(), remotePort, 0, 1, packetSize, packet.Timestamp, 0);
             }
         }
 

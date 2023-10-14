@@ -51,6 +51,8 @@
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.icon_menu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.exit = new System.Windows.Forms.ToolStripMenuItem();
+            this.drops_lbl = new System.Windows.Forms.Label();
+            this.drops_lbl_val = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.webStatsButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gameProfilesButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.packetStatsBtn)).BeginInit();
@@ -286,7 +288,7 @@
             this.graph.Enabled = false;
             this.graph.Image = global::tickMeter.Properties.Resources.grid;
             this.graph.InitialImage = global::tickMeter.Properties.Resources.grid;
-            this.graph.Location = new System.Drawing.Point(11, 214);
+            this.graph.Location = new System.Drawing.Point(6, 258);
             this.graph.Name = "graph";
             this.graph.Size = new System.Drawing.Size(416, 175);
             this.graph.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -317,12 +319,43 @@
             this.exit.Size = new System.Drawing.Size(92, 22);
             this.exit.Text = "Exit";
             // 
+            // drops_lbl
+            // 
+            this.drops_lbl.AutoSize = true;
+            this.drops_lbl.BackColor = System.Drawing.Color.Transparent;
+            this.drops_lbl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.drops_lbl.Font = new System.Drawing.Font("Unispace", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.drops_lbl.ForeColor = System.Drawing.Color.OrangeRed;
+            this.drops_lbl.Location = new System.Drawing.Point(12, 211);
+            this.drops_lbl.Name = "drops_lbl";
+            this.drops_lbl.Size = new System.Drawing.Size(111, 39);
+            this.drops_lbl.TabIndex = 45;
+            this.drops_lbl.Text = "Drops:";
+            this.drops_lbl.UseCompatibleTextRendering = true;
+            // 
+            // drops_lbl_val
+            // 
+            this.drops_lbl_val.AutoSize = true;
+            this.drops_lbl_val.BackColor = System.Drawing.Color.Transparent;
+            this.drops_lbl_val.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.drops_lbl_val.Font = new System.Drawing.Font("Unispace", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.drops_lbl_val.ForeColor = System.Drawing.Color.OrangeRed;
+            this.drops_lbl_val.Location = new System.Drawing.Point(177, 211);
+            this.drops_lbl_val.Name = "drops_lbl_val";
+            this.drops_lbl_val.Size = new System.Drawing.Size(43, 39);
+            this.drops_lbl_val.TabIndex = 46;
+            this.drops_lbl_val.Text = "0%";
+            this.drops_lbl_val.UseCompatibleTextRendering = true;
+            this.drops_lbl_val.UseMnemonic = false;
+            // 
             // GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(434, 395);
+            this.ClientSize = new System.Drawing.Size(434, 445);
+            this.Controls.Add(this.drops_lbl_val);
+            this.Controls.Add(this.drops_lbl);
             this.Controls.Add(this.webStatsButton);
             this.Controls.Add(this.gameProfilesButton);
             this.Controls.Add(this.time_lbl);
@@ -342,7 +375,7 @@
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(454, 438);
+            this.MaximumSize = new System.Drawing.Size(454, 488);
             this.MinimumSize = new System.Drawing.Size(454, 438);
             this.Name = "GUI";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -384,6 +417,8 @@
         public System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.ContextMenuStrip icon_menu;
         private System.Windows.Forms.ToolStripMenuItem exit;
+        public System.Windows.Forms.Label drops_lbl;
+        public System.Windows.Forms.Label drops_lbl_val;
     }
 }
 

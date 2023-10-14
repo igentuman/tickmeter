@@ -153,10 +153,14 @@ namespace tickMeter.Forms
             RivaTuner.ColorMid = App.settingsManager.GetOption("color_mid");
             RivaTuner.ColorGood = App.settingsManager.GetOption("color_good");
             RivaTuner.ColorChart = App.settingsManager.GetOption("color_chart");
+
+            App.gui.drops_lbl_val.ForeColor = ColorBad.ForeColor;
+
             App.gui.tickrate_lbl.ForeColor =
                 App.gui.ping_lbl.ForeColor =
                 App.gui.ip_lbl.ForeColor =
                 App.gui.traffic_lbl.ForeColor =
+                App.gui.drops_lbl.ForeColor =
                 App.gui.time_lbl.ForeColor =
                 ColorLabel.ForeColor;
             InitRtss();

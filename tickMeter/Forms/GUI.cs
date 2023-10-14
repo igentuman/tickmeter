@@ -124,6 +124,8 @@ namespace tickMeter.Forms
             time_val.Visible = 
             SettingsButton.Visible =
             gameProfilesButton.Visible =
+            drops_lbl.Visible = 
+            drops_lbl_val.Visible = 
             packetStatsBtn.Visible = true;
         }
 
@@ -194,6 +196,12 @@ namespace tickMeter.Forms
                 {
                     time_lbl.Visible = false;
                     time_val.Visible = false;
+                }
+
+                if (!App.settingsForm.packet_drops_checkbox.Checked)
+                {
+                    drops_lbl.Visible = false;
+                    drops_lbl_val.Visible = false;
                 }
             }
             base.WndProc(ref m);
@@ -281,6 +289,11 @@ namespace tickMeter.Forms
                             string Duration = result.ToString("mm':'ss");
                             ip_val.Invoke(new Action(() => time_val.Text = Duration));
                         }
+                        //update drops
+                        if (App.settingsForm.packet_drops_checkbox.Checked && App.meterState.Server.Ip != "")
+                        {
+                            ip_val.Invoke(new Action(() => drops_lbl_val.Text = App.meterState.GetDrops()+"%"));
+                        }
                     });
             if (!App.meterState.IsTracking)
             {
@@ -342,7 +355,8 @@ namespace tickMeter.Forms
                 App.meterState.Server.PingPort = (int)procStats.remotePort;
                 App.meterState.SessionStart = procStats.startTrack;
                 App.meterState.IsTracking = true;
-                App.meterState.drops = procStats.getDrops();
+                App.meterState.loss = procStats.loss;
+                App.meterState.totalTicksCnt = procStats.totalTicksCnt;
             }
         }
 
