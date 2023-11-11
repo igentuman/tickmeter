@@ -1,5 +1,8 @@
 ﻿using Microsoft.Win32;
 using Newtonsoft.Json;
+using PcapDotNet.Base;
+using PcapDotNet.Core;
+using PcapDotNet.Core.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -133,7 +136,20 @@ namespace tickMeter.Forms
             {
                 try
                 {
-                    adapters_list.SelectedIndex = App.settingsManager.GetIntOption("last_selected_adapter_id");
+                    adapters_list.SelectedIndex = 0;
+                    string adapterID = App.settingsManager.GetOption("last_selected_adapter");
+                    if(!adapterID.IsNullOrEmpty())
+                    {
+                        int i = 0;
+                        foreach(LivePacketDevice device in App.GetAdapters())
+                        {
+                            if(device.GetGuid().ToLower().Equals(adapterID))
+                            {
+                                adapters_list.SelectedIndex = i; break;
+                            }
+                            i++;
+                        }
+                    }
                 }
                 catch (Exception) { }
                 
@@ -187,7 +203,7 @@ namespace tickMeter.Forms
             App.settingsManager.SetOption("data_send", settings_data_send.Checked.ToString());
             App.settingsManager.SetOption("remember_adapter", rememberAdapter.Checked.ToString());
             App.settingsManager.SetOption("session_time", settings_session_time_checkbox.Checked.ToString());
-            App.settingsManager.SetOption("last_selected_adapter_id", adapters_list.SelectedIndex.ToString());
+            App.settingsManager.SetOption("last_selected_adapter", App.GetAdapters()[adapters_list.SelectedIndex].GetGuid().ToLower());
             App.settingsManager.SetOption("run_minimized", run_minimized.Checked.ToString());
             App.settingsManager.SetOption("local_ip", local_ip_textbox.Text);
             App.settingsManager.SetOption("show_packet_drops", packet_drops_checkbox.Checked.ToString());

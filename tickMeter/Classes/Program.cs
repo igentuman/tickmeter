@@ -22,7 +22,6 @@ namespace tickMeter
         static void MyHandler(object sender, UnhandledExceptionEventArgs args)
         {
             Exception e = (Exception)args.ExceptionObject;
-            
             MessageBox.Show(e.Message);
         }
     }
