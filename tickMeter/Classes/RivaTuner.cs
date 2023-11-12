@@ -273,11 +273,14 @@ namespace tickMeter.Classes
                 output += Environment.NewLine + "<S0><C4>Ticktime" + Environment.NewLine;
                 output += DrawChart(App.meterState.tickTimeBuffer.ToArray(),0,100);
             }
-            if(App.settingsForm.settings_ping_chart.Checked && App.meterState.pingBuffer.Count() > 1)
+            try
             {
-                output += Environment.NewLine + "<S0><C4>Ping" + Environment.NewLine;
-                output += DrawChart(App.meterState.pingBuffer.ToArray(), (int)App.meterState.pingBuffer.Min());
-            }
+                if (App.settingsForm.settings_ping_chart.Checked && App.meterState.pingBuffer.Count() > 1)
+                {
+                    output += Environment.NewLine + "<S0><C4>Ping" + Environment.NewLine;
+                    output += DrawChart(App.meterState.pingBuffer.ToArray(), (int)App.meterState.pingBuffer.Min());
+                }
+            } catch (InvalidOperationException) { }
             PrintData(output, true);
         }
 
