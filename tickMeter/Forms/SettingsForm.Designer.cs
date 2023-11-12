@@ -48,6 +48,7 @@ namespace tickMeter.Forms
             this.ColorBad = new System.Windows.Forms.Label();
             this.ColorLabel = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.packet_drops_checkbox = new System.Windows.Forms.CheckBox();
             this.settings_ping_chart = new System.Windows.Forms.CheckBox();
             this.settings_tickrate_show = new System.Windows.Forms.CheckBox();
             this.settings_ticktime_chart = new System.Windows.Forms.CheckBox();
@@ -65,7 +66,6 @@ namespace tickMeter.Forms
             this.run_minimized = new System.Windows.Forms.CheckBox();
             this.local_ip_lbl = new System.Windows.Forms.Label();
             this.local_ip_textbox = new System.Windows.Forms.TextBox();
-            this.packet_drops_checkbox = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ping_interval)).BeginInit();
@@ -124,6 +124,7 @@ namespace tickMeter.Forms
             this.rtss_dialog.FileName = "RTSS.exe";
             resources.ApplyResources(this.rtss_dialog, "rtss_dialog");
             this.rtss_dialog.InitialDirectory = "C:\\";
+            this.rtss_dialog.FileOk += new System.ComponentModel.CancelEventHandler(this.rtss_dialog_FileOk);
             // 
             // donate_lbl
             // 
@@ -212,6 +213,15 @@ namespace tickMeter.Forms
             resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
+            // 
+            // packet_drops_checkbox
+            // 
+            resources.ApplyResources(this.packet_drops_checkbox, "packet_drops_checkbox");
+            this.packet_drops_checkbox.Checked = true;
+            this.packet_drops_checkbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.packet_drops_checkbox.ForeColor = System.Drawing.Color.Black;
+            this.packet_drops_checkbox.Name = "packet_drops_checkbox";
+            this.packet_drops_checkbox.UseVisualStyleBackColor = true;
             // 
             // settings_ping_chart
             // 
@@ -360,15 +370,6 @@ namespace tickMeter.Forms
             resources.ApplyResources(this.local_ip_textbox, "local_ip_textbox");
             this.local_ip_textbox.Name = "local_ip_textbox";
             this.local_ip_textbox.TextChanged += new System.EventHandler(this.local_ip_textbox_TextChanged);
-            // 
-            // packet_drops_checkbox
-            // 
-            resources.ApplyResources(this.packet_drops_checkbox, "packet_drops_checkbox");
-            this.packet_drops_checkbox.Checked = true;
-            this.packet_drops_checkbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.packet_drops_checkbox.ForeColor = System.Drawing.Color.Black;
-            this.packet_drops_checkbox.Name = "packet_drops_checkbox";
-            this.packet_drops_checkbox.UseVisualStyleBackColor = true;
             // 
             // SettingsForm
             // 

@@ -203,7 +203,9 @@ namespace tickMeter.Forms
             App.settingsManager.SetOption("data_send", settings_data_send.Checked.ToString());
             App.settingsManager.SetOption("remember_adapter", rememberAdapter.Checked.ToString());
             App.settingsManager.SetOption("session_time", settings_session_time_checkbox.Checked.ToString());
-            App.settingsManager.SetOption("last_selected_adapter", App.GetAdapters()[adapters_list.SelectedIndex].GetGuid().ToLower());
+            int selectedAdapter = adapters_list.SelectedIndex;
+            if(selectedAdapter < 0) selectedAdapter = 0;
+            App.settingsManager.SetOption("last_selected_adapter", App.GetAdapters()[selectedAdapter].GetGuid().ToLower());
             App.settingsManager.SetOption("run_minimized", run_minimized.Checked.ToString());
             App.settingsManager.SetOption("local_ip", local_ip_textbox.Text);
             App.settingsManager.SetOption("show_packet_drops", packet_drops_checkbox.Checked.ToString());
@@ -361,6 +363,11 @@ namespace tickMeter.Forms
         private void local_ip_textbox_TextChanged(object sender, EventArgs e)
         {
             App.gui.StartTracking();
+        }
+
+        private void rtss_dialog_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
         }
     }
 }

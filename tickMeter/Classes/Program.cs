@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Diagnostics.Tracing.Analysis;
+using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 using tickMeter.Forms;
 
@@ -12,6 +14,16 @@ namespace tickMeter
         [STAThread]
         static void Main()
         {
+            int curId = Process.GetCurrentProcess().Id;
+            Process[] instances = Process.GetProcessesByName("tickmeter");
+            foreach(Process proc in instances)
+            {
+                if(proc.Id != curId)
+                {
+                    Application.Exit();
+                    return;
+                }
+            }
             AppDomain currentDomain = AppDomain.CurrentDomain;
             currentDomain.UnhandledException += new UnhandledExceptionEventHandler(MyHandler);
             Application.EnableVisualStyles();
